@@ -6,13 +6,13 @@ export default hopeTheme({
   hostname: "https://mister-hope.github.io",
 
   author: {
-    name: "Mr.Hope",
+    name: "SongXinXin",
     url: "https://mrhope.site",
   },
 
   iconAssets: "iconfont",
-
-  logo: "/logo.svg",
+  //首页左上角图标
+  logo: "/images/s.png",
 
   repo: "vuepress-theme-hope/vuepress-theme-hope",
 
@@ -21,6 +21,9 @@ export default hopeTheme({
   pageInfo: ["Author", "Original", "Date", "Category", "Tag", "ReadingTime"],
 
   blog: {
+    avatar:'/images/hejiu.jpg',
+    name:'SongXinXin',
+    roundAvatar: true,
     medias: {
       Baidu: "https://example.com",
       BiliBili: "https://example.com",
@@ -61,30 +64,6 @@ export default hopeTheme({
   },
 
   locales: {
-    // "/": {
-    //   // navbar
-    //   navbar: enNavbar,
-
-    //   // sidebar
-    //   sidebar: enSidebar,
-
-    //   footer: "Default footer",
-
-    //   displayFooter: true,
-
-    //   blog: {
-    //     description: "A FrontEnd programmer",
-    //     intro: "/intro.html",
-    //   },
-
-    //   metaLocales: {
-    //     editLink: "Edit this page on GitHub",
-    //   },
-    // },
-
-    /**
-     * Chinese locale config
-     */
     "/": {
       // navbar
       navbar: zhNavbar,
@@ -97,8 +76,8 @@ export default hopeTheme({
       displayFooter: true,
 
       blog: {
-        description: "一个前端开发者",
-        intro: "/zh/intro.html",
+        description: "一个.Net程序员",
+        intro: "/intro.html",
       },
 
       // page meta
@@ -111,7 +90,6 @@ export default hopeTheme({
   encrypt: {
     config: {
       "/demo/encrypt.html": ["1234"],
-      "/zh/demo/encrypt.html": ["1234"],
     },
   },
 

@@ -2,11 +2,10 @@
 home: true
 layout: Blog
 icon: home
-title: 博客主页
-heroImage: /logo.svg
-heroText: 你博客的名称
+title: 首页
+heroText: Growing Notes
 heroFullScreen: true
-tagline: 你可以在这里放置你的口号与标语
+tagline: 慢慢理解世界 慢慢更新自己
 projects:
   - icon: project
     name: 项目名称
@@ -39,6 +38,8 @@ projects:
     link: https://你的自定义链接
 
 footer: 自定义你的页脚文字
+# 你可以自定义版权信息
+copyright: Copyright SongXinXin@2022
 ---
 
 这是一个博客主页的案例。
