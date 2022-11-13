@@ -131,6 +131,7 @@ export default hopeTheme({
       category: "General",
       categoryId: "DIC_kwDOIahFXM4CShvl",
       mapping: "title",
+      reactionsEnabled: false
     },
     copyright:{
       hostname: "http://goodsxx.cn",
