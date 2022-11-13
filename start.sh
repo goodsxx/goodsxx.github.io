@@ -1,6 +1,6 @@
 #!/bin/bash
 # 切入源码目录，以确保能正常执行
-cd /home/my/my-vuepress
+cd /home/my/my-blog
 # 启动webhook接口
 nohup dotnet /home/my/script-executor/ScriptExecutor.dll&
 # 拉取最新代码1
