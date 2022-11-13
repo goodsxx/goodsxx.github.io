@@ -37,13 +37,6 @@ projects:
     desc: 自定义详细介绍
     link: https://你的自定义链接
 
-footer: 自定义你的页脚文字
-# 你可以自定义版权信息
-copyright: Copyright SongXinXin@2022
+footer: <a href="https://beian.miit.gov.cn/#/Integrated/recordQuery">豫ICP备2021036390号</a>
+copyright: Copyright © 2022-SongXinXin
 ---
-
-这是一个博客主页的案例。
-
-要使用此布局，你应该在页面前端设置 `layout: Blog` 和 `home: true`。
-
-相关配置文档请见 [博客主页](https://vuepress-theme-hope.github.io/v2/zh/guide/blog/home/)。

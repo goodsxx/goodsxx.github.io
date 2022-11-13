@@ -1,28 +1,28 @@
 import { hopeTheme } from "vuepress-theme-hope";
-import { zhNavbar } from "./navbar/index.js";
-import { zhSidebar } from "./sidebar/index.js";
+import { zhNavbar } from "./navbar.js";
+import { zhSidebar } from "./sidebar.js";
 
 export default hopeTheme({
-  hostname: "https://mister-hope.github.io",
-
+  //基本配置
+  //https://vuepress-theme-hope.github.io/v2/zh/config/theme/basic.html
+  hostname: "http://goodsxx.cn",
   author: {
     name: "SongXinXin",
-    url: "https://mrhope.site",
+    //url: "https://mrhope.site",
   },
-
-  iconAssets: "iconfont",
-  //首页左上角图标
-  logo: "/images/s.png",
-
-  repo: "vuepress-theme-hope/vuepress-theme-hope",
-
-  docsDir: "docs",
-
-  pageInfo: ["Author", "Original", "Date", "Category", "Tag", "ReadingTime"],
-
+  navbarLayout: {
+    left: ["Brand"],
+    center: ["Links"],
+    right: ["Search","Outlook","Repo"],
+  },
+  
+  //功能配置
+  //https://vuepress-theme-hope.github.io/v2/zh/config/theme/feature.html
   blog: {
     avatar:'/images/hejiu.jpg',
     name:'SongXinXin',
+    description: "一个.Net程序员",
+    intro: "/intro.html",
     roundAvatar: true,
     medias: {
       Baidu: "https://example.com",
@@ -63,29 +63,56 @@ export default hopeTheme({
     },
   },
 
-  locales: {
-    "/": {
-      // navbar
-      navbar: zhNavbar,
+  //布局配置
+  //https://vuepress-theme-hope.github.io/v2/zh/config/theme/layout.html
+  //导航栏
+  navbar: zhNavbar,
+  navbarIcon: true,
+  repoDisplay: true,
+  repo: "https://github.com/goodsxx/my-blog",
+  navbarAutoHide: "mobile",
+  hideSiteNameonMobile: true,
+  //侧边栏
+  sidebar: zhSidebar,
+  sidebarIcon: true,
+  sidebarSorter: ["readme", "order", "title"],
+  headerDepth: 2,
+  //路径导航
+  breadcrumb: true,
+  breadcrumbIcon: true,
+  prevLink: true,
+  nextLink: true,
+  titleIcon: true,
+  pageInfo:["Author", "Original", "Date", "Category", "Tag", "ReadingTime"],
+  //Meta
+  lastUpdated: true,
+  contributors: true,
+  editLink: false,
+  //页脚
+  displayFooter: false,
+  footer: "",
+  copyright: "",
+  //杂项
+  toc: true,
 
-      // sidebar
-      sidebar: zhSidebar,
-
-      footer: "默认页脚",
-
-      displayFooter: true,
-
-      blog: {
-        description: "一个.Net程序员",
-        intro: "/intro.html",
-      },
-
-      // page meta
-      metaLocales: {
-        editLink: "在 GitHub 上编辑此页",
-      },
-    },
+  //外观配置
+  iconAssets: "iconfont",
+  darkmode: "switch",
+  fullscreen: true,
+  themeColor: {
+    blue: "#2196f3",
+    red: "#f26d6d",
+    orange: "#fb9b5f",
   },
+
+  
+  //首页左上角图标
+  logo: "/images/s.png",
+
+  docsDir: "docs",
+
+
+
 
   encrypt: {
     config: {
@@ -97,34 +124,30 @@ export default hopeTheme({
     blog: {
       autoExcerpt: true,
     },
-
-    // If you don’t need comment feature, you can remove following option
-    // The following config is for demo ONLY, if you need comment feature, please generate and use your own config, see comment plugin documentation for details.
-    // To avoid disturbing the theme developer and consuming his resources, please DO NOT use the following config directly in your production environment!!!!!
     comment: {
-      /**
-       * Using Giscus
-       */
       provider: "Giscus",
-      repo: "vuepress-theme-hope/giscus-discussions",
-      repoId: "R_kgDOG_Pt2A",
-      category: "Announcements",
-      categoryId: "DIC_kwDOG_Pt2M4COD69",
-
-      /**
-       * Using Twikoo
-       */
-      // provider: "Twikoo",
-      // envId: "https://twikoo.ccknbc.vercel.app",
-
-      /**
-       * Using Waline
-       */
-      // provider: "Waline",
-      // serverURL: "https://vuepress-theme-hope-comment.vercel.app",
+      repo: "goodsxx/my-blog",
+      repoId: "R_kgDOIahFXA",
+      category: "General",
+      categoryId: "DIC_kwDOIahFXM4CShvl",
+      mapping: "title",
     },
-
-    // Disable features you don’t want here
+    copyright:{
+      hostname: "http://goodsxx.cn",
+      author: "SongXinXin",
+      license: "MIT",
+      triggerWords: 100,
+      global: true,
+    },
+    components:[
+      "Badge",
+      "BiliBili",
+      "CodePen",
+      "PDF",
+      "StackBlitz",
+      "VideoPlayer",
+      "YouTube"
+    ],
     mdEnhance: {
       align: true,
       attrs: true,
@@ -167,7 +190,6 @@ export default hopeTheme({
       vPre: true,
       vuePlayground: true,
     },
-
     pwa: {
       favicon: "/favicon.ico",
       cacheHTML: true,

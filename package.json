@@ -6,11 +6,13 @@
   "type": "module",
   "scripts": {
     "build": "vuepress build src",
-    "clean-dev": "vuepress dev src --clean-cache",
-    "dev": "vuepress dev src"
+    "clean-dev": "vuepress dev src --port=8080 --clean-cache",
+    "pro": "vuepress dev src --port=8800 --clean-cache",
+    "dev": "vuepress dev src --port=8080 --clean-cache"
   },
   "devDependencies": {
     "@vuepress/client": "2.0.0-beta.53",
+    "@vuepress/plugin-search": "^2.0.0-beta.53",
     "vue": "^3.2.41",
     "vuepress": "2.0.0-beta.53",
     "vuepress-theme-hope": "2.0.0-beta.121"
