@@ -1,6 +1,6 @@
 import { hopeTheme } from "vuepress-theme-hope";
-import { zhNavbar } from "./navbar.js";
-import { zhSidebar } from "./sidebar.js";
+import { Navbar } from "./navbar.js";
+import { Sidebar } from "./sidebar.js";
 
 export default hopeTheme({
   //基本配置
@@ -66,14 +66,14 @@ export default hopeTheme({
   //布局配置
   //https://vuepress-theme-hope.github.io/v2/zh/config/theme/layout.html
   //导航栏
-  navbar: zhNavbar,
+  navbar: Navbar,
   navbarIcon: true,
   repoDisplay: true,
   repo: "https://github.com/goodsxx/my-blog",
   navbarAutoHide: "mobile",
   hideSiteNameonMobile: true,
   //侧边栏
-  sidebar: zhSidebar,
+  sidebar: Sidebar,
   sidebarIcon: true,
   sidebarSorter: ["readme", "order", "title"],
   headerDepth: 2,
