@@ -11,7 +11,9 @@ timeline: true
 order: 1
 ---
 
+::: tip ✨✨✨✨✨
 手把手教你使用VuePress搭建自己的个人博客。
+:::
 
 <!-- more -->
 

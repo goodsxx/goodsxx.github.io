@@ -12,14 +12,15 @@ timeline: true
 order: 3
 ---
 
+::: tip ✨✨✨✨✨
 在Linux上部署我们的VuePress个人博客网站
-
+:::
 
 <!-- more -->
 
 1. 将VuePress项目上传至GitHub或Gitee仓库，不会的自行百度
-2. [在Linux上安装Node/Npm](/docs/linux/installation-node.md)
-3. [在Linux上安装Git](/docs/linux/installation-git.md)
+2. [在Linux上安装Node/Npm](/articles/linux/installation-node.md)
+3. [在Linux上安装Git](/articles/linux/installation-git.md)
 4. 复制你的仓库地址(此处以gitee为例)
 
    ![img](./image/vuepress-release/1650813978558.png)

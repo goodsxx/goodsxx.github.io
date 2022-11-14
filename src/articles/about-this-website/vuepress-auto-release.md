@@ -12,11 +12,13 @@ timeline: true
 order: 4
 ---
 
+::: tip ✨✨✨✨✨
 通过gitee仓库的WebHook回调实现VuePress项目的自动化部署
+:::
 
 <!-- more -->
 
-## [在Linux上部署VuePress](/docs/about-this-website/vuepress-release.md)
+## [在Linux上部署VuePress](/articles/about-this-website/vuepress-release.md)
 
 ## 新建脚本文件
 
@@ -114,7 +116,7 @@ order: 4
 ## 部署回调接口
 
 1. 将bin\Release\net6.0\publish\publish文件夹的下的所有项目上传至linux服务器中的/home/my/script-executor文件夹下
-2. [在Linux上安装.Net6环境](/docs/linux/installation-dotnet.md)
+2. [在Linux上安装.Net6环境](/articles/linux/installation-dotnet.md)
 3. 进入home/my/my-vuepress路径下
 
    ```shell
@@ -162,4 +164,4 @@ order: 4
    nohup yarn pro&
    
    ```
-2. [在Linux上设置shell脚本开机启动](/docs/linux/boot-up-script.md)
+2. [在Linux上设置shell脚本开机启动](/articles/linux/boot-up-script.md)
