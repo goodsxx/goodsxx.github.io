@@ -1,5 +1,5 @@
 #!/bin/bash
-# 切入源码目录，以确保能正常执行
+# 切入源码目录，以确保webhook接口能正确找到脚本并执行
 cd /home/my/my-blog
 # 启动webhook接口
 nohup  dotnet /home/my/script-executor/ScriptExecutor.dll
