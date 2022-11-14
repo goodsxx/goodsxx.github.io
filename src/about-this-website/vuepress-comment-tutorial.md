@@ -11,9 +11,9 @@ isOriginal: true
 timeline: true
 order: 2
 ---
-:::info 概述
+
 通过引入第三方插件 `vuepress-plugin-comment` 和 `valine`，让你的博客支持评论功能。
-:::
+
 
 <!-- more -->
 

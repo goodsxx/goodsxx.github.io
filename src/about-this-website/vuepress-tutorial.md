@@ -10,9 +10,9 @@ isOriginal: true
 timeline: true
 order: 1
 ---
-:::info 概述
+
 手把手教你使用VuePress搭建自己的个人博客。
-:::
+
 
 <!-- more -->
 

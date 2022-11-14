@@ -11,9 +11,8 @@ isOriginal: true
 timeline: true
 order: 4
 ---
-:::info 概述
+
 通过gitee仓库的WebHook回调实现VuePress项目的自动化部署
-:::
 
 <!-- more -->
 

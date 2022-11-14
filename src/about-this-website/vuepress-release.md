@@ -11,9 +11,9 @@ isOriginal: true
 timeline: true
 order: 3
 ---
-:::info 概述
+
 在Linux上部署我们的VuePress个人博客网站
-:::
+
 
 <!-- more -->
 

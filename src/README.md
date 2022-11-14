@@ -3,6 +3,7 @@ home: true
 layout: Blog
 icon: home
 title: 首页
+bgImage: /images/bg1.jpg
 heroText: Growing Notes
 heroFullScreen: true
 tagline: 慢慢理解世界 慢慢更新自己
