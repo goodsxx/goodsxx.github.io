@@ -8,35 +8,20 @@ heroText: Growing Notes
 heroFullScreen: true
 tagline: 慢慢理解世界 慢慢更新自己
 projects:
-  - icon: project
-    name: 项目名称
-    desc: 项目详细描述
-    link: https://你的项目链接
-
-  - icon: link
-    name: 链接名称
-    desc: 链接详细描述
-    link: https://链接地址
+  - icon: article
+    name: 本站指南
+    desc: 本系列为大家介绍如何搭建并完善自己的个人博客
+    link: /articles/about-this-website/
 
   - icon: book
-    name: 书籍名称
-    desc: 书籍详细描述
-    link: https://你的书籍链接
+    name: 微服务系列
+    desc: 微服务相关的技术文档
+    link: /articles/blog-posts/series/micro-service/
 
-  - icon: article
-    name: 文章名称
-    desc: 文章详细描述
-    link: https://你的文章链接
-
-  - icon: friend
-    name: 伙伴名称
-    desc: 伙伴详细介绍
-    link: https://你的伙伴链接
-
-  - icon: /logo.svg
-    name: 自定义项目
-    desc: 自定义详细介绍
-    link: https://你的自定义链接
+  - icon: book
+    name: Linux系列
+    desc: Linux相关的技术文档
+    link: /articles/blog-posts/series/linux/
 
 footer: <a href="https://beian.miit.gov.cn/#/Integrated/recordQuery">豫ICP备2021036390号</a>
 copyright: Copyright © 2022-SongXinXin

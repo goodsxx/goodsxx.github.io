@@ -1,6 +1,7 @@
 import { navbar } from "vuepress-theme-hope";
 
 export const Navbar = navbar([
+  //配置说明https://vuepress-theme-hope.github.io/v2/zh/guide/layout/navbar.html
   "/",
   { 
     text: "本站指南", 
@@ -9,48 +10,32 @@ export const Navbar = navbar([
   },
   {
     text: "博文",
-    icon: "edit",
-    prefix: "/posts/",
+    icon: "blog",
     children: [
       {
-        text: "苹果",
-        icon: "edit",
-        prefix: "apple/",
+        text: "系列",
+        prefix: "/articles/blog-posts/series/",
         children: [
-          { text: "苹果1", icon: "edit", link: "1" },
-          { text: "苹果2", icon: "edit", link: "2" },
-          "3",
-          "4",
+          { text: "Linux系列", icon: "blog", link: "linux/" },
+          { text: "微服务系列", icon: "blog", link: "micro-service/" },
+          { text: "设计模式", icon: "blog", link: "design-pattern/" },
+          { text: "工具", icon: "blog", link: "tools/" },
         ],
       },
       {
-        text: "香蕉",
-        icon: "edit",
-        prefix: "banana/",
+        text: "零碎内容",
+        prefix: "/articles/blog-posts/lingsuineirong/",
         children: [
-          {
-            text: "香蕉 1",
-            icon: "edit",
-            link: "1",
-          },
-          {
-            text: "香蕉 2",
-            icon: "edit",
-            link: "2",
-          },
-          "3",
-          "4",
+          { text: "前端", icon: "blog", link: "qianduan/" },
+          { text: "后端", icon: "blog", link: "houduan/" },
+          { text: "其他", icon: "blog", link: "others/" },
         ],
       },
-      { text: "樱桃", icon: "edit", link: "cherry" },
-      { text: "火龙果", icon: "edit", link: "dragonfruit" },
-      "tomato",
-      "strawberry",
     ],
   },
-  {
-    text: "V2 文档",
-    icon: "note",
-    link: "https://vuepress-theme-hope.github.io/v2/zh/",
+  { 
+    text: "留言板", 
+    icon: "edit", 
+    link: "/liuyanban",
   },
 ]);

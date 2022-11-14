@@ -1,7 +1,14 @@
 import { sidebar } from "vuepress-theme-hope";
 
 export const Sidebar = sidebar({
-  "/articles/about-this-website/": "structure"
+  "/articles/about-this-website/": "structure",
+  "/articles/blog-posts/series/linux/": "structure",
+  "/articles/blog-posts/series/micro-service/": "structure",
+  "/articles/blog-posts/series/design-pattern/": "structure",
+  "/articles/blog-posts/series/tools/": "structure",
+  "/articles/blog-posts/lingsuineirong/qianduan/": "structure",
+  "/articles/blog-posts/lingsuineirong/houduan/": "structure",
+  "/articles/blog-posts/lingsuineirong/others/": "structure",
   
   // "/": [
   //   "",
