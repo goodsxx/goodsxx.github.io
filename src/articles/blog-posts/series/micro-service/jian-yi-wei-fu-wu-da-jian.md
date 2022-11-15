@@ -11,7 +11,6 @@ isOriginal: true
 timeline: true
 order: 1
 sticky: 1
-star: 1
 ---
 
 ::: tip ✨✨✨✨✨
