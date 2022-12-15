@@ -1,6 +1,6 @@
 ---
 title: XAML重点基础知识
-date: 2022-12-3
+date: 2022-12-03
 category:
  - MAUI
 tag: 

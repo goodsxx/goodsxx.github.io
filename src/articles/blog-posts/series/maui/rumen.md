@@ -1,6 +1,6 @@
 ---
 title: 快速入门
-date: 2022-12-1
+date: 2022-12-01
 category:
  - MAUI
 tag: 
