@@ -3,6 +3,7 @@ import { Navbar } from "./navbar.js";
 import { Sidebar } from "./sidebar.js";
 
 export default hopeTheme({
+
   //基本配置
   //https://vuepress-theme-hope.github.io/v2/zh/config/theme/basic.html
   hostname: "http://goodsxx.cn",
@@ -76,7 +77,7 @@ export default hopeTheme({
   sidebar: Sidebar,
   sidebarIcon: true,
   sidebarSorter: ["readme", "order", "title"],
-  headerDepth: 2,
+  headerDepth: 5,
   //路径导航
   breadcrumb: true,
   breadcrumbIcon: true,

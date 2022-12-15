@@ -1,6 +1,7 @@
 import { sidebar } from "vuepress-theme-hope";
 
 export const Sidebar = sidebar({
+  
   "/articles/about-this-website/": "structure",
   "/articles/blog-posts/series/linux/": "structure",
   "/articles/blog-posts/series/micro-service/": "structure",

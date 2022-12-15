@@ -11,12 +11,17 @@ export default defineUserConfig({
   description: "SongXinXin的笔记本",
   theme,
   shouldPrefetch: true,
-  
+  markdown:{
+    headers:{
+      level:[2,3,4,5]
+    }
+  },
   plugins: [
     searchPlugin({
       maxSuggestions: 10,
       // 排除首页
       isSearchable: (page) => page.path !== '/',
     }),
+    
   ],
 });

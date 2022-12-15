@@ -24,7 +24,7 @@ XAML重点基础知识
 
 在单个页面中，如果有多个属性相同的控件，而你不想在修改时去更改每一个控件，可使用 共享资源 来避免重复定义属性。
 
-例如：
+例：
 
 ```xml {6-26}
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -74,7 +74,7 @@ XAML重点基础知识
 </ContentPage>
 ```
 
-上述代码定义了两个作用域为当前页面的资源，分别是 horzOptions 和 vertOptions
+上述代码定义了两个值作为当前页面的资源，分别是 horzOptions 和 vertOptions
 
 资源字典使用方法：
 
@@ -138,7 +138,7 @@ namespace XamlSamples
 
 例：
 
-```xml
+```xml{3,6,10-13}
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:sys="clr-namespace:System;assembly=netstandard"
@@ -168,7 +168,7 @@ namespace XamlSamples
 1. **`BindingContext`** 为目标对象指定数据源对象
 2. **`Binding`** 为目标属性绑定源对象中的属性
 
-在 XAML 中定义数据绑定时，也可以通过StaticResource 或 x:Static 标记扩展设置 BindingContext 目标对象。
+在 XAML 中定义数据绑定时，也可以通过 StaticResource 或 x:Static 标记扩展设置 BindingContext 目标对象。
 
 ### View-View 绑定
 
@@ -176,7 +176,7 @@ namespace XamlSamples
 
 例：
 
-```xml
+```xml{7-8,13,17-18}
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="XamlSamples.SliderBindingsPage"
@@ -208,7 +208,7 @@ namespace XamlSamples
 
 **`BindingContext`** 用来设置元素当前要绑定的数据源对象
 
-**`Bing Path`** 用来绑定当前对象中的某个属性，若绑定的属性只有一个，则可以省略 Path
+**`Bingding Path`** 用来绑定当前对象中的某个属性，若绑定的属性只有一个，则可以省略 Path
 
 在本段代码中，第一个 Label 的 Rotation 属性和第二个 Label 的 Text 属性都和 Slider.Value 的值进行了绑定
 
@@ -221,7 +221,7 @@ namespace XamlSamples
 
 MVVM 架构是微软官方推荐用于 MAUI 应用开发的架构，常用于基于基础数据模型的交互式视图的双向数据绑定。
 
-MVVM是一种设计思想，他是 `Model-View-ViewMode`的缩写。
+MVVM是一种设计思想，他是 `Model-View-ViewMode` 的缩写。
 
 - **`Model`** 模型，指后端传递的数据
 - **`View`** 视图，指所看到的页面
@@ -233,9 +233,9 @@ MVVM是一种设计思想，他是 `Model-View-ViewMode`的缩写。
 
 #### 简单MVVM
 
-在 x:Static 标记扩展 章节，我们介绍了如何使用 x:Static 标记扩展从命名空间中的 System 静态 DateTime.Now 属性获取当前日期和时间：
+在 [x:Static 标记扩展](#x-static-标记扩展)章节，我们介绍了如何使用 x:Static 标记扩展从命名空间中的 System 静态 DateTime.Now 属性获取当前日期和时间：
 
-```xml
+```xml{4,7,11-14}
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -255,7 +255,9 @@ MVVM是一种设计思想，他是 `Model-View-ViewMode`的缩写。
 </ContentPage>
 ```
 
+::: center
 ![1671069794185](./image/xaml-jichu/1671069794185.png)
+:::
 
 但问题是这种写法在构造和初始化页面时只会设置日期和时间一次，并且永远不会更改，若想实现页面上的时间自动更新，则需要为该页面创建一个ViewModel。
 
