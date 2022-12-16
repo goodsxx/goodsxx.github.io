@@ -1,8 +1,6 @@
-import theme from "./theme.js";
-import { searchPlugin } from "@vuepress/plugin-search";
 import { defineUserConfig } from "vuepress";
-import { hopeTheme } from "vuepress-theme-hope";
-
+import { searchPlugin } from "@vuepress/plugin-search";
+import theme from "./theme.js";
 
 export default defineUserConfig({
   base: "/",
