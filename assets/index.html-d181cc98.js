@@ -1,0 +1,1 @@
+import{_ as t,Z as c,$ as n,a2 as o,a0 as e}from"./framework-4828f474.js";const s={},a=e("div",{class:"custom-container tip"},[e("p",{class:"custom-container-title"},"✨✨✨✨✨"),e("p",null,"分享一写好用的开发工具")],-1);function r(l,_){return c(),n("div",null,[a,o(" more ")])}const m=t(s,[["render",r],["__file","index.html.vue"]]);export{m as default};
