@@ -173,7 +173,7 @@ public partial class MainPageViewModel : ObservableObject
 
 #### 菜单分组
 
-```xml
+```xml{20,24,30-36}
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -238,6 +238,7 @@ public partial class MainPageViewModel : ObservableObject
 ##### 自定义菜单项控件模板
 
 ::: code-tabs
+
 @tab MenuButtonControl.xaml.cs
 ```csharp
 namespace Mediinfo_MAUI_Demo.Controls;
@@ -255,7 +256,6 @@ public partial class MenuButtonControl : ContentView
         get => (Color)GetValue(StartPointColorProperty);
         set => SetValue(StartPointColorProperty, value);
     }
-
     public Color EndPointColor
     {
         get => (Color)GetValue(EndPointColorProperty);
@@ -277,11 +277,12 @@ public partial class MenuButtonControl : ContentView
         set => SetValue(TextProperty, value);
     }
     public MenuButtonControl()
-	{
-		InitializeComponent();
-	}
+    {
+        InitializeComponent();
+    }
 }
 ```
+
 @tab MenuButtonControl.xaml
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>

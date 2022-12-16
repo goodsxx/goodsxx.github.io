@@ -203,7 +203,7 @@ namespace XamlSamples
 </ContentPage>
 ```
 
-:::info 说明
+:::info
 **`x:Name`** 用来为被引用元素指定一个别名
 
 **`BindingContext`** 用来设置元素当前要绑定的数据源对象
@@ -255,15 +255,15 @@ MVVM是一种设计思想，他是 `Model-View-ViewMode` 的缩写。
 </ContentPage>
 ```
 
-::: center
 ![x:Static 标记扩展的简单使用](./image/xaml-jichu/1671069794185.png)
-:::
 
-但问题是这种写法在构造和初始化页面时只会设置日期和时间一次，并且永远不会更改，若想实现页面上的时间自动更新，则需要为该页面创建一个ViewModel。
+这种写法在构造和初始化页面时只会设置日期和时间一次，并且永远不会更改。
+
+若想实现页面上的时间自动更新，则需要为该页面创建一个ViewModel。
 
 例：
 
-```csharp
+```csharp{8,11-22,29-30}
 using System.ComponentModel;
 
 namespace Mediinfo_MAUI_Demo.ViewModels;
@@ -302,14 +302,17 @@ public class DemoPage1ViewModel : INotifyPropertyChanged
 
 ```
 
-.NET MAUI 中的数据绑定机制将处理程序附加到此 PropertyChanged 事件，以便在属性更改时通知它，并将目标更新为新的值，所以 Viewmodel 需要实现 INotifyPropertyChanged 接口来获取 PropertyChanged 事。
+:::info
+.NET MAUI 中的数据绑定机制将处理程序附加到此 PropertyChanged 事件，以便在属性更改时通知它，并将目标更新为新的值，所以 Viewmodel 需要实现 INotifyPropertyChanged 接口来获取 PropertyChanged 事件。
+
 我们定义了一个私有的计时器 _timer 和一个私有字段 _dataTime，然后分别在构造函数中初始化计时器，并且每秒钟都会通过公共属性 DateTime 对私有字段 _dataTime 更新，同时通知属性变化。
+:::
 
 ViewModel创建完毕后还需要跟视图做绑定，一般有如下两种绑定方式：
 
 ::: tabs
 @tab:active 在.xaml中设置ViewModel数据源
-```xml
+```xml{5,8-10}
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -324,7 +327,7 @@ ViewModel创建完毕后还需要跟视图做绑定，一般有如下两种绑�
 </ContentPage>
 ```
 @tab 在.xaml.cs设置ViewModel数据源
-```csharp
+```csharp{7,10}
 using Mediinfo_MAUI_Demo.ViewModels;
 
 namespace Mediinfo_MAUI_Demo.Views;
@@ -339,7 +342,7 @@ public partial class DemoPage1 : ContentPage
 }
 ```
 由于这种方式用到了依赖注入，所以必须同时在项目的入口文件 MauiProgram 中注入对应的视图和ViewModel：
-```csharp 
+```csharp{18-19}
 //MauiProgram.cs
 using Mediinfo_MAUI_Demo.ViewModels;
 using Mediinfo_MAUI_Demo.Views;
@@ -349,29 +352,25 @@ namespace Mediinfo_MAUI_Demo;
 
 public static class MauiProgram
 {
-	public static MauiApp CreateMauiApp()
-	{
-		var builder = MauiApp.CreateBuilder();
-		builder
-			.UseMauiApp<App>()
-			.ConfigureFonts(fonts =>
-			{
-				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-			});
-
-		builder.Services.AddSingleton<DemoPage1ViewModel>();
+    public static MauiApp CreateMauiApp()
+    {
+        var builder = MauiApp.CreateBuilder();
+        builder.UseMauiApp<App>().ConfigureFonts(fonts =>
+        {
+            fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+            fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+        });
+        builder.Services.AddSingleton<DemoPage1ViewModel>();
         builder.Services.AddSingleton<DemoPage1>();
-
         return builder.Build();
-	}
+    }
 }
 ```
 :::
 
 在页面中绑定时间：
 
-```xml
+```xml{12-15}
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -395,10 +394,12 @@ public static class MauiProgram
 #### 交互式MVVM
 
 很多时候，我们需要在页面上实时修改一个值，并在页面上呈现修改后的内容。
+
 下面是一个简单的例子：
+
 ::: code-tabs
 @tab:active .xaml.cs
-```csharp
+```csharp{9-23}
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -416,7 +417,8 @@ public class DemoPage1ViewModel : INotifyPropertyChanged
             if (_number != value)
             {
                 _number = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Number))); // 通知属性变更
+                //通知属性变更
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Number))); 
             }
         }
     }
@@ -424,7 +426,7 @@ public class DemoPage1ViewModel : INotifyPropertyChanged
 
 ```
 @tab .xaml
-```xml
+```xml{13-16}
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -452,7 +454,7 @@ public class DemoPage1ViewModel : INotifyPropertyChanged
 
 #### [命令](https://learn.microsoft.com/zh-cn/dotnet/maui/fundamentals/data-binding/commanding?view=net-maui-7.0)
 
-在应用当中，我们常常会需要通过**点击**的形式去触发一些操作，比如 Button 按钮的点击事件，在 .NET MAUI 中我们还能用另一种方式去处理事件，即 **命令**。
+在应用当中，我们常常会需要通过 **点击** 的形式去触发一些操作，比如 Button 按钮的点击事件，在 .NET MAUI 中我们还能用另一种方式去处理事件，即 **命令**。
 
 例：
 
@@ -460,7 +462,7 @@ public class DemoPage1ViewModel : INotifyPropertyChanged
 @tab:active 定义命令
 
 定义 NewCommand 命令，并在构造函数中初始化该命令，每当执行该命令时，就在 Text 字段后面追加一个字符串。
-```csharp
+```csharp{28-36}
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -502,7 +504,7 @@ namespace Mediinfo_MAUI_Demo.ViewModels
 ```
 @tab 使用命令
 在 Button 的 Command 属性上绑定创建好的命令
-```csharp
+```csharp{16-19}
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -541,7 +543,7 @@ namespace Mediinfo_MAUI_Demo.ViewModels
 [CommunityToolkit.Mvvm](https://www.nuget.org/packages/CommunityToolkit.Mvvm/8.0.0?_src=template) 社区工具包为我们提供了一个现代、快速和模块化的 MVVM 库。
 使用 CommunityToolkit.Mvvm 定义属性和命令：
 
-```csharp
+```csharp{9-14,16-17}
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -558,7 +560,6 @@ public class DemoPage2ViewModel : ObservableObject
     }
 
     private RelayCommand? newCommand;
-
     public IRelayCommand NewCommand => newCommand ??= new RelayCommand(() => Text += "哈哈");
 }
 ```
@@ -567,7 +568,7 @@ public class DemoPage2ViewModel : ObservableObject
 
 借助 CommunityToolkit.Mvvm 工具包中的代码生成器，我们还可以进一步简化上述代码：
 
-```csharp
+```csharp{8-14}
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 

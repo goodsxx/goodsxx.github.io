@@ -1,6 +1,6 @@
 ---
 title: 进阶
-date: 2022-12-10
+date: 2022-12-11
 category:
  - MAUI
 tag: 
@@ -18,9 +18,10 @@ order: 4
 ## 自定义控件外观
 
 当程序页面中需要一些重复的复杂页面结构时，我们可以使用自定义控件外观的方式来避免重复编码。
+
 例：
 
-```xml
+```xml{8-19}
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -49,7 +50,7 @@ order: 4
 
 上述代码可以通过自定义控件外观来简化：
 
-```xml
+```xml{7-14,17-19}
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -76,8 +77,10 @@ order: 4
 
 ![自定义控件外观(简化)](./image/jinjie/1671070100109.png)
 
+:::info
 本段代码中，我们在 ContentPage.Resources 节点中创建了一个控件外观模板，并且在 RadioButton 控件中引用了该模板，这样我们便实现了自定义 RadioButton 的控件外观。
 需要注意的是，只用具有 ControlTemplate 属性的控件才支持自定义外观，并且在模板中绑定的属性必须为引用该模板的控件的属性，如本示例中，模板绑定的属性 Value 和 Content 都是 RadioButton 控件中的属性。
+:::
 
 ## 自定义控件
 
@@ -90,7 +93,7 @@ order: 4
 ::: tabs
 @tab:active .xaml.cs
 在 MenuButtonControl.xaml.cs 文件中定义该控件的自定义属性
-```csharp 
+```csharp{5-9,11-35}
 namespace Mediinfo_MAUI_Demo.Controls;
 
 public partial class MenuButtonControl : ContentView
@@ -106,7 +109,6 @@ public partial class MenuButtonControl : ContentView
         get => (Color)GetValue(StartPointColorProperty);
         set => SetValue(StartPointColorProperty, value);
     }
-
     public Color EndPointColor
     {
         get => (Color)GetValue(EndPointColorProperty);
@@ -128,14 +130,14 @@ public partial class MenuButtonControl : ContentView
         set => SetValue(TextProperty, value);
     }
     public MenuButtonControl()
-	{
-		InitializeComponent();
-	}
+    {
+        InitializeComponent();
+    }
 }
 ```
 @tab .xaml
 在 MenuButtonControl.xaml 文件中定义该控件的外观
-```xml
+```xml{5-6,20,23,27,33}
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -154,10 +156,12 @@ public partial class MenuButtonControl : ContentView
             StrokeShape="RoundRectangle 20">
             <Border.Background>
                 <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
-                    <GradientStop Color="{Binding Source={x:Reference this},Path=StartPointColor}"
-                          Offset="0.1" />
-                    <GradientStop Color="{Binding Source={x:Reference this},Path=EndPointColor}"
-                          Offset="1.0" />
+                    <GradientStop 
+                        Color="{Binding Source={x:Reference this},Path=StartPointColor}"
+                        Offset="0.1" />
+                    <GradientStop
+                        Color="{Binding Source={x:Reference this},Path=EndPointColor}"
+                        Offset="1.0" />
                 </LinearGradientBrush>
             </Border.Background>
             <Image Source="{Binding Source={x:Reference this},Path=ImageSource}"/>
@@ -170,13 +174,14 @@ public partial class MenuButtonControl : ContentView
     </VerticalStackLayout>
 </ContentView>
 ```
+:::info
 本段代码中，我们在根节点定义了一个别名 this ，并且通过 BindingContext="{x:Reference this}" 将当前控件对象绑定为数据源，这样我们在根结点中定义的任何控件便都可以通过 {Binding Source={x:Reference this},Path=Text} 的形式将隐藏代码文件中的自定义属性绑定在所需控件上了。
 
 :::
 
 ### 使用自定义控件
 
-```xml
+```xml{12-29}
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -210,7 +215,9 @@ public partial class MenuButtonControl : ContentView
 </ContentPage>
 ```
 
-在页面根节点中引入自定义控件的命名空间并设置别名 controls ，然后再需要展示的位置通过 明明控件:空间名称 使用自定义控件 如 controls:MenuButtonControl，在自定义控件中为对应的属性赋值即可。
+:::info
+在页面根节点中引入自定义控件的命名空间并设置别名 controls ，然后再需要展示的位置通过 命名空间:控件名称 使用自定义控件 如 controls:MenuButtonControl，在自定义控件中为对应的属性赋值即可。
+:::
 
 效果：
 
