@@ -28,10 +28,10 @@ order: 3
 
 Shell 表示应用的视觉层次结构，可以理解为应用的壳子，Shell类可以包含以下层次结构对象：
 
-1. **`FlyoutItem`**一个 FlyoutItem 表示浮出控件中的一个或多个项，并且应在应用导航模式需要浮出控件时使用。
-2. **`TabBar`**一个 TabBar 表示底部选项卡栏，并且应在应用导航模式以底部选项卡开头且不需要浮出控件时使用。
-3. **`Tab`**表示分组内容，可通过底部选项卡导航。每个 Tab 对象都是 FlyoutItem 对象或 TabBar 对象的子对象。
-4. **`ShellContent`**表示每个选项卡的 ContentPage 对象。
+1. **`FlyoutItem`** 一个 FlyoutItem 表示浮出控件中的一个或多个项，并且应在应用导航模式需要浮出控件时使用。
+2. **`TabBar`** 一个 TabBar 表示底部选项卡栏，并且应在应用导航模式以底部选项卡开头且不需要浮出控件时使用。
+3. **`Tab`** 表示分组内容，可通过底部选项卡导航。每个 Tab 对象都是 FlyoutItem 对象或 TabBar 对象的子对象。
+4. **`ShellContent`** 表示每个选项卡的 ContentPage 对象。
 
 ### 底部导航栏
 
@@ -71,9 +71,14 @@ Shell 表示应用的视觉层次结构，可以理解为应用的壳子，Shell
 
 </Shell>
 ```
-
 效果：
-![1671069961738](./image/changyongkongjian/1671069961738.png) ![1671069967918](./image/changyongkongjian/1671069967918.png) ![1671069975615](./image/changyongkongjian/1671069975615.png)
+
+![DemoPage1](./image/changyongkongjian/1671069961738.png)
+
+![首页](./image/changyongkongjian/1671069967918.png)
+
+![DemoPage2](./image/changyongkongjian/1671069975615.png)
+
 常用属性说明：
 
 - `ShellContent.Icon` 导航栏按钮图标
@@ -109,7 +114,9 @@ MAUI 的 Shell.TitleView 属性可以用来自定义顶部标题栏，下面是�
 ```
 
 但或许效果并不是你预期的那样：
-![1671069991915](./image/changyongkongjian/1671069991915.png)
+
+![自定义标题栏](./image/changyongkongjian/1671069991915.png)
+
 如果你发现顶部标题栏的左侧并没显示为正确的颜色，这是 .NET MAUI 的一个Bug，我们可以使用另一个属性来暂时解决这个问题：
 
 ```xml
@@ -137,14 +144,15 @@ MAUI 的 Shell.TitleView 属性可以用来自定义顶部标题栏，下面是�
 </ContentPage>
 ```
 
-我们通过 Shell.BackgroundColor 属性将 Shell 的背景色改为红色，再将 Shell.TitleView 下的根节点设为透明，如此我们便能实现语气的效果：
-![1671070002597](./image/changyongkongjian/1671070002597.png)
+我们通过 Shell.BackgroundColor 属性将 Shell 的背景色改为红色，再将 Shell.TitleView 下的根节点设为透明，如此我们便能实现预期的效果：
+
+![自定义标题栏(修复bug)](./image/changyongkongjian/1671070002597.png)
 
 ## 页面控件
 
 ### [ContentPage](https://learn.microsoft.com/zh-cn/dotnet/maui/user-interface/pages/contentpage?view=net-maui-7.0)
 
-![1671070010192](./image/changyongkongjian/1671070010192.png)
+![ContentPage](./image/changyongkongjian/1671070010192.png)
 
 ContentPage 是 .NET MAUI 中最常用的页面类型，通常是页面的根节点。
 
@@ -171,13 +179,13 @@ ContentPage 是 .NET MAUI 中最常用的页面类型，通常是页面的根节
 
 ### [StackLayout](https://learn.microsoft.com/zh-cn/dotnet/maui/user-interface/layouts/stacklayout?view=net-maui-7.0)
 
-![1671070017924](./image/changyongkongjian/1671070017924.png)
+![StackLayout](./image/changyongkongjian/1671070017924.png)
 
 .NET MAUI 中 StackLayout 以水平或垂直方式在一展示内容。 默认情况下 StackLayout 是垂直方向排列。 此外，还可以将一个 StackLayout 用作包含其他子布局的父布局。
 StackLayout 类定义了以下属性：
 
-- **`Orientation`**表示子视图的定位方向。 默认值为 Vertical。
-- **`Spacing`**表示每个子视图之间的空间量。 默认值为 0。
+- **`Orientation`** 表示子视图的定位方向。 默认值为 Vertical。
+- **`Spacing`** 表示每个子视图之间的空间量。 默认值为 0。
 
 ### [VerticalStackLayout](https://learn.microsoft.com/zh-cn/dotnet/maui/user-interface/layouts/verticalstacklayout?view=net-maui-7.0)
 
@@ -189,14 +197,14 @@ HorizontalStackLayout 是更高性能的 StackLayout **水平布局**替代方�
 
 ### [Grid](https://learn.microsoft.com/zh-cn/dotnet/maui/user-interface/layouts/grid?view=net-maui-7.0)
 
-![1671070027182](./image/changyongkongjian/1671070027182.png)
+![Grid](./image/changyongkongjian/1671070027182.png)
 
 Grid 布局可将子级组织成行和列，这些行和列可以具有成比例或绝对大小。 默认情况下，Grid 包含一行和一列。 此外，还可以将一个 Grid 控件用作包含其他子布局的父布局。
 需要注意的是，Grid 只能用作页面布局，不能当做表格来使用。
 
 ### [FlexLayout](https://learn.microsoft.com/zh-cn/dotnet/maui/user-interface/layouts/flexlayout?view=net-maui-7.0)
 
-![1671070036092](./image/changyongkongjian/1671070036092.png)
+![FlexLayout](./image/changyongkongjian/1671070036092.png)
 
 FlexLayout 布局可以以水平和垂直方式排列其子级，如果子级过多，则还可以包装子级，使其子级适合单行或列。 此外， FlexLayout 还可以控制方向和对齐方式，并适应不同的屏幕大小。
 
@@ -205,9 +213,9 @@ FlexLayout 布局可以以水平和垂直方式排列其子级，如果子级过
 BindableLayout 可绑定布局 可以使布局类控件通过绑定到集合来生成其内容，并可以选择使用 DataTemplate 设置每个项的外观。
 BindableLayout  可绑定布局 具有下附加属性：
 
-- **`ItemsSource`**指定要由布局显示的 IEnumerable 集合。
-- **`ItemTemplate`**指定集合中的每个项的模板。
-- **`ItemTemplateSelector`**指定 DataTemplateSelector 用于在运行时为项选择模板。
+- **`ItemsSource`** 指定要由布局显示的 IEnumerable 集合。
+- **`ItemTemplate`** 指定集合中的每个项的模板。
+- **`ItemTemplateSelector`** 指定 DataTemplateSelector 用于在运行时为项选择模板。
 
 ## 视图控件
 

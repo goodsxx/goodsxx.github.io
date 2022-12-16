@@ -256,7 +256,7 @@ MVVM是一种设计思想，他是 `Model-View-ViewMode` 的缩写。
 ```
 
 ::: center
-![1671069794185](./image/xaml-jichu/1671069794185.png)
+![x:Static 标记扩展的简单使用](./image/xaml-jichu/1671069794185.png)
 :::
 
 但问题是这种写法在构造和初始化页面时只会设置日期和时间一次，并且永远不会更改，若想实现页面上的时间自动更新，则需要为该页面创建一个ViewModel。
@@ -307,8 +307,8 @@ public class DemoPage1ViewModel : INotifyPropertyChanged
 
 ViewModel创建完毕后还需要跟视图做绑定，一般有如下两种绑定方式：
 
-1. **在XAML中将VM设置为页面的数据源**
-
+::: tabs
+@tab:active 在.xaml中设置ViewModel数据源
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -323,9 +323,7 @@ ViewModel创建完毕后还需要跟视图做绑定，一般有如下两种绑�
     <!--其他代码-->
 </ContentPage>
 ```
-
-2. **在页面的隐藏代码中将VM设置为页面的数据源**
-
+@tab 在.xaml.cs设置ViewModel数据源
 ```csharp
 using Mediinfo_MAUI_Demo.ViewModels;
 
@@ -340,10 +338,9 @@ public partial class DemoPage1 : ContentPage
     }
 }
 ```
-
 由于这种方式用到了依赖注入，所以必须同时在项目的入口文件 MauiProgram 中注入对应的视图和ViewModel：
-
-```csharp
+```csharp 
+//MauiProgram.cs
 using Mediinfo_MAUI_Demo.ViewModels;
 using Mediinfo_MAUI_Demo.Views;
 using Microsoft.Extensions.Logging;
@@ -370,8 +367,9 @@ public static class MauiProgram
 	}
 }
 ```
+:::
 
-在页面中显示时间：
+在页面中绑定时间：
 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -392,13 +390,14 @@ public static class MauiProgram
 </ContentPage>
 ```
 
-![1671069831145](./image/xaml-jichu/1671069831145.png)
+![显示时间](./image/xaml-jichu/1671069831145.png)
 
 #### 交互式MVVM
 
 很多时候，我们需要在页面上实时修改一个值，并在页面上呈现修改后的内容。
 下面是一个简单的例子：
-
+::: code-tabs
+@tab:active .xaml.cs
 ```csharp
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -424,7 +423,7 @@ public class DemoPage1ViewModel : INotifyPropertyChanged
 }
 
 ```
-
+@tab .xaml
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -445,6 +444,7 @@ public class DemoPage1ViewModel : INotifyPropertyChanged
     </VerticalStackLayout>
 </ContentPage>
 ```
+:::
 
 如此我们便实现了拖动控件，并实时显示当前数值的效果。
 
@@ -456,6 +456,10 @@ public class DemoPage1ViewModel : INotifyPropertyChanged
 
 例：
 
+::: tabs
+@tab:active 定义命令
+
+定义 NewCommand 命令，并在构造函数中初始化该命令，每当执行该命令时，就在 Text 字段后面追加一个字符串。
 ```csharp
 using System;
 using System.Collections.Generic;
@@ -496,11 +500,8 @@ namespace Mediinfo_MAUI_Demo.ViewModels
     }
 }
 ```
-
-本段代码中定义了一个 NewCommand 命令，并在构造函数中初始化该命令，每当执行该命令时，就在 Text 字段后面追加一个字符串。
-
-命令的使用：
-
+@tab 使用命令
+在 Button 的 Command 属性上绑定创建好的命令
 ```csharp
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -524,22 +525,15 @@ namespace Mediinfo_MAUI_Demo.ViewModels
     </VerticalStackLayout>
 </ContentPage>
 ```
-
-在 Button 的 Command 属性上绑定创建好的命令
-
+:::
 效果：
 
 ::: center
-**点击按钮前**
 
-![1671069863920](./image/xaml-jichu/1671069863920.png)
+![点击按钮前](./image/xaml-jichu/1671069863920.png)
 
-**点击按钮后**
-
-![1671069871531](./image/xaml-jichu/1671069871531.png)
+![点击按钮后](./image/xaml-jichu/1671069871531.png)
 :::
-
-
 
 #### [MVVM社区工具包](https://learn.microsoft.com/zh-cn/dotnet/communitytoolkit/mvvm/)
 

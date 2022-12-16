@@ -45,7 +45,7 @@ order: 4
 </ContentPage>
 ```
 
-![1671070091851](./image/jinjie/1671070091851.png)
+![自定义控件外观](./image/jinjie/1671070091851.png)
 
 上述代码可以通过自定义控件外观来简化：
 
@@ -74,7 +74,7 @@ order: 4
 </ContentPage>
 ```
 
-![1671070100109](./image/jinjie/1671070100109.png)
+![自定义控件外观(简化)](./image/jinjie/1671070100109.png)
 
 本段代码中，我们在 ContentPage.Resources 节点中创建了一个控件外观模板，并且在 RadioButton 控件中引用了该模板，这样我们便实现了自定义 RadioButton 的控件外观。
 需要注意的是，只用具有 ControlTemplate 属性的控件才支持自定义外观，并且在模板中绑定的属性必须为引用该模板的控件的属性，如本示例中，模板绑定的属性 Value 和 Content 都是 RadioButton 控件中的属性。
@@ -83,11 +83,14 @@ order: 4
 
 当我们需要定义一个复杂的控件外观时，现有控件提供的属性可能不满足我们的需求，此时我们可以通过自定义控件来实现。
 
-### 为自定义控件定义属性
+### 创建自定义控件
 
 新建名为 MenuButtonControl.xaml 的 ContentView 文件，在隐藏代码文件 MenuButtonControl.xaml 中定义所需的属性：
 
-```csharp
+::: tabs
+@tab:active .xaml.cs
+在 MenuButtonControl.xaml.cs 文件中定义该控件的自定义属性
+```csharp 
 namespace Mediinfo_MAUI_Demo.Controls;
 
 public partial class MenuButtonControl : ContentView
@@ -130,11 +133,8 @@ public partial class MenuButtonControl : ContentView
 	}
 }
 ```
-
-### 为自定义控件定义外观
-
+@tab .xaml
 在 MenuButtonControl.xaml 文件中定义该控件的外观
-
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -170,8 +170,9 @@ public partial class MenuButtonControl : ContentView
     </VerticalStackLayout>
 </ContentView>
 ```
+本段代码中，我们在根节点定义了一个别名 this ，并且通过 BindingContext="{x:Reference this}" 将当前控件对象绑定为数据源，这样我们在根结点中定义的任何控件便都可以通过 {Binding Source={x:Reference this},Path=Text} 的形式将隐藏代码文件中的自定义属性绑定在所需控件上了。
 
-本段代码中，我们在为根节点定义了一个别名 this ，并且通过 BindingContext="{x:Reference this}" 将当前控件对象绑定为数据源，这样我们在根结点中定义的任何控件边都可以通过 {Binding Source={x:Reference this},Path=Text} 的形式将隐藏代码文件中的自定义属性绑定在所需控件的属性上。
+:::
 
 ### 使用自定义控件
 
@@ -210,5 +211,7 @@ public partial class MenuButtonControl : ContentView
 ```
 
 在页面根节点中引入自定义控件的命名空间并设置别名 controls ，然后再需要展示的位置通过 明明控件:空间名称 使用自定义控件 如 controls:MenuButtonControl，在自定义控件中为对应的属性赋值即可。
+
 效果：
-![1671070115354](./image/jinjie/1671070115354.png)
+
+![自定义控件示例](./image/jinjie/1671070115354.png)

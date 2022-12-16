@@ -17,19 +17,17 @@ order: 5
 
 ## 目标效果
 
-![1671070690794](./image/shizhan/1671070690794.png) ![1671070697421](./image/shizhan/1671070697421.png)
+![首页](./image/shizhan/1671070690794.png)
+
+![内容页](./image/shizhan/1671070697421.png)
 
 图标素材库：[https://www.iconfont.cn/](https://www.iconfont.cn/)
 
 ## 结构划分
 
-**首页划分：**
+![首页划分](./image/shizhan/1671070709670.png)
 
-![1671070709670](./image/shizhan/1671070709670.png)
-
-**内容页划分：**
-
-![1671070753239](./image/shizhan/1671070753239.png)
+![内容页划分](./image/shizhan/1671070753239.png)
 
 ## 内容页
 
@@ -225,16 +223,22 @@ public partial class MainPageViewModel : ObservableObject
 
 :::info
 `Border.Background.LinearGradientBrush` 为边框填充一个渐变背景色
+
 `Border.VerticalStackLayout.BindableLayout.ItemsSource` 将前边准备的数据设置为垂直布局的数据源
+
 `Border.VerticalStackLayout.BindableLayout.ItemTemplate` 定义子数据外观模板
 :::
+
 效果：
-![1671070780217](./image/shizhan/1671070780217.png)
+
+![菜单分组呈现效果](./image/shizhan/1671070780217.png)
 
 #### 菜单项
 
 ##### 自定义菜单项控件模板
 
+::: code-tabs
+@tab MenuButtonControl.xaml.cs
 ```csharp
 namespace Mediinfo_MAUI_Demo.Controls;
 
@@ -278,7 +282,7 @@ public partial class MenuButtonControl : ContentView
 	}
 }
 ```
-
+@tab MenuButtonControl.xaml
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -314,6 +318,7 @@ public partial class MenuButtonControl : ContentView
     </VerticalStackLayout>
 </ContentView>
 ```
+:::
 
 ##### 使用自定义控件呈现分组菜单项
 
@@ -383,11 +388,15 @@ public partial class MenuButtonControl : ContentView
 
 :::info
 CollectionView.ItemsSource 将每个分组下的菜单项List作为数据源绑定
+
 CollectionView.ItemsLayout 定义子数据的布局
+
 CollectionView.ItemTemplate 定义子数据外观模板
 :::
+
 效果：
-![1671070794451](./image/shizhan/1671070794451.png)
+
+![自定义菜单项](./image/shizhan/1671070794451.png)
 
 ## 标题栏
 
@@ -397,6 +406,8 @@ CollectionView.ItemTemplate 定义子数据外观模板
 
 新建 ContentView 文件
 
+::: code-tabs
+@tab:active MainPageTitleView.xaml
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -439,7 +450,7 @@ CollectionView.ItemTemplate 定义子数据外观模板
     </Grid>
 </ContentView>
 ```
-
+@tab MainPageTitleView.xaml.cs
 ```csharp
 namespace Mediinfo_MAUI_Demo.Controls;
 
@@ -464,6 +475,7 @@ public partial class MainPageTitleView : ContentView
 	}
 }
 ```
+:::
 
 ### 引入自定义标题栏
 
@@ -488,7 +500,8 @@ public partial class MainPageTitleView : ContentView
 ```
 
 效果：
-![1671070809226](./image/shizhan/1671070809226.png)
+
+![自定义标题栏](./image/shizhan/1671070809226.png)
 
 ## 页面导航
 
@@ -541,7 +554,7 @@ namespace Mediinfo.Vela.YiDongHL.App.ViewModels
 }
 ```
 
-**`Shell.Current.GoToAsync()`**为MAUI提供的页面跳转方法，入参数为目标页面的路由地址(与注册路由时的地址保持一致)
+**`Shell.Current.GoToAsync()`** 为MAUI提供的页面跳转方法，入参数为目标页面的路由地址(与注册路由时的地址保持一致)
 
 #### 绑定跳转事件
 
@@ -621,15 +634,17 @@ namespace Mediinfo.Vela.YiDongHL.App.ViewModels
 </ContentPage>
 ```
 
-**`controls:MenuButtonControl.GestureRecognizers`**提供一个手势识别的集合器
-**`controls:MenuButtonControl.GestureRecognizers.TapGestureRecognizer`**可以设置该控件的点击行为，这里我们通过 **Command** 属性为点击行为绑定了一个事件，通过 **CommandParameter** 属性为该事件传递了一个参数
+**`controls:MenuButtonControl.GestureRecognizers`** 提供一个手势识别的集合器
+
+**`controls:MenuButtonControl.GestureRecognizers.TapGestureRecognizer`** 可以设置该控件的点击行为，这里我们通过 **Command** 属性为点击行为绑定了一个事件，通过 **CommandParameter** 属性为该事件传递了一个参数
 
 至此 我们已经实现了页面的跳转：
+
 ![1671070823193](./image/shizhan/1671070823193.png) ![1671070827956](./image/shizhan/1671070827956.png)
 
 #### 路由传参
 
-前面提到了 **`Shell.Current.GoToAsync()`**是MAUI提供的页面跳转方法，该方法提供了重载可用于在页面间传递参数：
+前面提到了 **`Shell.Current.GoToAsync()`** 是MAUI提供的页面跳转方法，该方法提供了重载可用于在页面间传递参数：
 
 ```csharp
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -712,4 +727,5 @@ public partial class BaiYaoHDViewModel : ObservableObject, IQueryAttributable
 此处使用我们前面讲解过的数据绑定将数据展示在页面上。
 
 效果：
-![1671070839306](./image/shizhan/1671070839306.png)
+
+![参数读取](./image/shizhan/1671070839306.png)
