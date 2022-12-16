@@ -131,7 +131,7 @@ export default hopeTheme({
     components:{
       components:["AudioPlayer","Badge","BiliBili","CodePen","FontIcon","PDF","StackBlitz","VideoPlayer","YouTube"]
     },
-    // Disable features you don’t want here
+    // Disable features you don’t want here 
     mdEnhance: {
       align: true,
       attrs: true,
