@@ -3,7 +3,7 @@ import { searchPlugin } from "@vuepress/plugin-search";
 import theme from "./theme.js";
 
 export default defineUserConfig({
-  base: "/",
+  base: "/my-blog/",
   lang: "zh-CN",
   title: "Growing Notes",
   description: "SongXinXin的笔记本",
