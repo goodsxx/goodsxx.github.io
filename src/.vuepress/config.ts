@@ -8,7 +8,7 @@ export default defineUserConfig({
   title: "Growing Notes",
   description: "SongXinXin的笔记本",
   theme,
-  shouldPrefetch: true,
+  shouldPrefetch: false,
   markdown:{
     headers:{
       level:[2,3,4,5]
