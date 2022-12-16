@@ -13,6 +13,11 @@ projects:
     desc: 本系列为大家介绍如何搭建并完善自己的个人博客
     link: /articles/about-this-website/
 
+  - icon: article
+    name: MAUI
+    desc: MAUI相关的技术文档
+    link: /articles/blog-posts/series/maui/
+
   - icon: book
     name: 微服务系列
     desc: 微服务相关的技术文档

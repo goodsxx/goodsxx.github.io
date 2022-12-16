@@ -10,7 +10,6 @@ tag:
 isOriginal: true
 timeline: true
 order: 1
-sticky: 1
 ---
 
 ::: tip ✨✨✨✨✨
