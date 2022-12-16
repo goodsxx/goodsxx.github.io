@@ -46,7 +46,7 @@ layout: Slide
 
 <!-- .element: class="fragment fade-in" -->
 
-使用 `<!-- .element: ... -->` 在前一个 HTML 元素上添加属性
+使用 `<!-- .element: ... -->` 在前一个 HTML 元素上添加属性.
 
 <!-- .element: class="fragment fade-in" -->
 
