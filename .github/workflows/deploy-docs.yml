@@ -36,7 +36,7 @@ jobs:
           yarn run build
           > src/.vuepress/dist/.nojekyll
 
-      - name: 部署文档
+      - name: 部署 GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           # 这是文档部署到的分支名称
@@ -54,7 +54,7 @@ jobs:
           # 注意替换为你的 Gitee 目标仓库地址
           destination-repo: git@gitee.com:goodsxx/goodsxx.git
 
-      - name: 构建 Gitee Pages
+      - name: 部署 Gitee Pages
         uses: yanglbme/gitee-pages-action@main
         with:
           # 注意替换为你的 Gitee 用户名
