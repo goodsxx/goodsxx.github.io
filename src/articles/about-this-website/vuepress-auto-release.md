@@ -59,7 +59,7 @@ order: 4
 
 **此处以Asp.Net Core Web Api为例**
 
-1. 打开VS2022，选择Asp.Net Core Web Api项目
+1. 打开VS2022，选择 `ASP.Net Core Web Api` 项目
 
    ![创建项目](./image/vuepress-auto-release/1650815065456.png "创建项目")
 2. 为项目命名，勾选'将解决方案和项目放在同一目录'
@@ -68,6 +68,7 @@ order: 4
 3. 框架选择.NET6.0
 
    ![选择框架](./image/vuepress-auto-release/1650815644534.png "选择框架")
+
 4. 在Controllers文件夹下新建WebHookController.cs
 
    ```c#
@@ -116,7 +117,7 @@ order: 4
 ## 部署回调接口
 
 1. 将bin\Release\net6.0\publish\publish文件夹的下的所有项目上传至linux服务器中的/home/my/script-executor文件夹下
-2. [在Linux上安装.Net6环境](/articles/linux/installation-dotnet.md)
+2. [在Linux上安装.Net6环境](/articles/blog-posts/series/linux/installation-dotnet.md)
 3. 进入home/my/my-vuepress路径下
 
    ```shell
@@ -164,4 +165,4 @@ order: 4
    nohup yarn pro&
    
    ```
-2. [在Linux上设置shell脚本开机启动](/articles/linux/boot-up-script.md)
+2. [在Linux上设置shell脚本开机启动](/articles/blog-posts/series/linux/boot-up-script.md)

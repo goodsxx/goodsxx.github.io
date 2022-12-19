@@ -280,7 +280,7 @@ docker run --restart=always -idt -p 2308:80 dotnet --ip=*.*.*.26 --port=2308 --n
 
 ## 4 Ocelot网关集群搭建(Linux4)
 
-### 4.1准备.Net Core Web Api 测试项目
+### 4.1 准备 .Net Core Web Api 测试项目
 
 相相关代码可参考我已经写好的测试项目：[OcelotTest](https://gitee.com/goodsxx/ocelot-test)
 
@@ -393,7 +393,7 @@ docker restart nginx
 
 ## 6 Web客户端搭建(Linux6)
 
-### 6.1 准备.Net Core Web(MVC)测试项目
+### 6.1 准备 .Net Core Web(MVC) 测试项目
 
 相相关代码可参考我已经写好的测试项目：[WebTest](https://gitee.com/goodsxx/web-test)
 

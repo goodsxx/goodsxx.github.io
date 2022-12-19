@@ -41,7 +41,7 @@ Shell 表示应用的视觉层次结构，可以理解为应用的壳子，Shell
 
 代码：
 
-```xml
+```xml{10-26}
 <?xml version="1.0" encoding="UTF-8" ?>
 <Shell
     x:Class="Mediinfo_MAUI_Demo.AppShell"
@@ -79,19 +79,19 @@ Shell 表示应用的视觉层次结构，可以理解为应用的壳子，Shell
 
 ![DemoPage2](./image/changyongkongjian/1671069975615.png)
 
-常用属性说明：
-
+:::info
 - `ShellContent.Icon` 导航栏按钮图标
 - `ShellContent.Title` 导航栏按钮标题
 - `ShellContent.ContentTemplate` 导航栏按钮对应的页面
 - `ShellContent.Route` 生成的路由名称
+:::
 
 ### 标题栏
 
 .NET MAUI 的Shell组件会为 ShellContent 生成一个默认的标题栏，但很多时候我们需要在顶部标题栏提供额外的功能和信息，这往往是默认标题栏无法实现的，这时候我们就需要自定义标题栏来实现效果。
 MAUI 的 Shell.TitleView 属性可以用来自定义顶部标题栏，下面是简单的使用方法：
 
-```xml
+```xml{9-17}
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:Mediinfo_MAUI_Demo.Controls"
@@ -119,7 +119,7 @@ MAUI 的 Shell.TitleView 属性可以用来自定义顶部标题栏，下面是�
 
 如果你发现顶部标题栏的左侧并没显示为正确的颜色，这是 .NET MAUI 的一个Bug，我们可以使用另一个属性来暂时解决这个问题：
 
-```xml
+```xml{9-11,13}
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:Mediinfo_MAUI_Demo.Controls"

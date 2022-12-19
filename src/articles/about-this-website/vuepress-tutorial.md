@@ -42,6 +42,7 @@ VuePress 是一个以 Markdown 为中心的静态网站生成器。你可以使�
    ```
 
    ![代码效果](./image/vuepress-tutorial/1650542457788.png)
+
 2. **初始化项目**
 
    输入以下命令进行项目初始化
@@ -67,6 +68,7 @@ VuePress 是一个以 Markdown 为中心的静态网站生成器。你可以使�
    ![创建成功](./image/vuepress-tutorial/1650543476013.png)
 
    如图，项目已成功创建
+   
 3. **启动项目**
 
    控制台输入 `npm i`下载依赖文件
