@@ -2,4 +2,4 @@
 User-agent:*
 Disallow:
 
-Sitemap: http://goodsxx.cn/my-blog/sitemap.xml
+Sitemap: http://goodsxx.cn/sitemap.xml
