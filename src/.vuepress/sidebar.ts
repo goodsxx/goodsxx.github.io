@@ -2,15 +2,15 @@ import { sidebar } from "vuepress-theme-hope";
 
 export const Sidebar = sidebar({
   
-  "/articles/about-this-website/": "structure",
-  "/articles/blog-posts/series/linux/": "structure",
-  "/articles/blog-posts/series/micro-service/": "structure",
-  "/articles/blog-posts/series/maui/": "structure",
-  "/articles/blog-posts/series/design-pattern/": "structure",
-  "/articles/blog-posts/series/tools/": "structure",
-  "/articles/blog-posts/lingsuineirong/qianduan/": "structure",
-  "/articles/blog-posts/lingsuineirong/houduan/": "structure",
-  "/articles/blog-posts/lingsuineirong/others/": "structure",
+  "/columns/about-this-website/": "structure",
+  "/columns/blog-posts/series/linux/": "structure",
+  "/columns/blog-posts/series/micro-service/": "structure",
+  "/columns/blog-posts/series/maui/": "structure",
+  "/columns/blog-posts/series/design-pattern/": "structure",
+  "/columns/blog-posts/series/tools/": "structure",
+  "/columns/blog-posts/lingsuineirong/qianduan/": "structure",
+  "/columns/blog-posts/lingsuineirong/houduan/": "structure",
+  "/columns/blog-posts/lingsuineirong/others/": "structure",
   
   // "/": [
   //   "",

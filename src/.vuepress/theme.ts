@@ -85,7 +85,15 @@ export default hopeTheme({
   prevLink: true,
   nextLink: true,
   titleIcon: true,
-  pageInfo:["Author", "Original", "Date", "Category", "Tag", "ReadingTime"],
+  pageInfo:[ //文章头部显示内容
+    "Author", //作者
+    //"Original", //是否原创
+    "Date", //写作日期
+    "Category", //分类
+    "Tag", //标签
+    "Word",//字数
+    "ReadingTime",//预计阅读时间
+  ],
   //Meta
   lastUpdated: true,
   contributors: true,
@@ -109,7 +117,7 @@ export default hopeTheme({
 
   encrypt: {
     config: {
-      "/intro.html": ["1234"],
+      "/intro.html": ["1131"],
     },
   },
 

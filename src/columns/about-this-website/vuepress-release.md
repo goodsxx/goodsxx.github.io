@@ -19,8 +19,8 @@ order: 3
 <!-- more -->
 
 1. 将VuePress项目上传至GitHub或Gitee仓库，不会的自行百度
-2. [在Linux上安装Node/Npm](/articles/blog-posts/series/linux/installation-node.md)
-3. [在Linux上安装Git](/articles/blog-posts/series/linux/installation-git.md)
+2. [在Linux上安装Node/Npm](/columns/blog-posts/series/linux/installation-node.md)
+3. [在Linux上安装Git](/columns/blog-posts/series/linux/installation-git.md)
 4. 复制你的仓库地址(此处以gitee为例)
 
    ![img](./image/vuepress-release/1650813978558.png)

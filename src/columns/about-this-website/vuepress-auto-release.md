@@ -18,7 +18,7 @@ order: 4
 
 <!-- more -->
 
-## [在Linux上部署VuePress](/articles/about-this-website/vuepress-release.md)
+## [在Linux上部署VuePress](/columns/about-this-website/vuepress-release.md)
 
 ## 新建脚本文件
 
@@ -117,7 +117,7 @@ order: 4
 ## 部署回调接口
 
 1. 将bin\Release\net6.0\publish\publish文件夹的下的所有项目上传至linux服务器中的/home/my/script-executor文件夹下
-2. [在Linux上安装.Net6环境](/articles/blog-posts/series/linux/installation-dotnet.md)
+2. [在Linux上安装.Net6环境](/columns/blog-posts/series/linux/installation-dotnet.md)
 3. 进入home/my/my-vuepress路径下
 
    ```shell
@@ -165,4 +165,4 @@ order: 4
    nohup yarn pro&
    
    ```
-2. [在Linux上设置shell脚本开机启动](/articles/blog-posts/series/linux/boot-up-script.md)
+2. [在Linux上设置shell脚本开机启动](/columns/blog-posts/series/linux/boot-up-script.md)
