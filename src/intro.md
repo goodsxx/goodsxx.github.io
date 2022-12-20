@@ -8,7 +8,8 @@ layout: Slide
 
 <!--more-->
 
-@slidestart [auto]
+
+@slidestart
 
 ## 宋鑫鑫个人介绍
 
@@ -22,27 +23,24 @@ layout: Slide
 
 ---
 
-## 专业技能
+### 专业技能
 
-**后端：** Asp.Net+EF/掌握；Asp.Net Core+EF Core/掌握；
-
-**中间件：** Redis缓存/应用；消息队列/应用；
-
-**数据库：** SqlServer/掌握；MySQL/应用；Oracle/应用；MongoDB/了解；
-
-**框架：** ABP/应用；ABP vNext/了解；分布式、微服务/了解;
-
-**其他：** Linux/应用；Docker/应用；Nginx/应用；Consul/应用；Ocelot/应用；
-
-**前端：** Vue全家桶/ 掌握；Bootstrap/掌握 ；HTML/掌握；Jquery/掌握；TS/应用；
-
-**前端组件库：** Element/掌握；iView/掌握；Vant/掌握；ECharts/掌握;
-
-**版本/Bug管理：** Git；禅道；YAPI；Tower等
+<div style="text-align:left;">
+    <p style="font-size:25px;"><strong>后端：</strong>Asp.Net+EF/掌握；Asp.Net Core+EF Core/掌握；</p>
+    <p style="font-size:25px;"><strong>中间件：</strong>Redis缓存/应用；消息队列/应用；</p>
+    <p style="font-size:25px;"><strong>数据库：</strong>SqlServer/掌握；MySQL/应用；Oracle/应用；MongoDB/了解；</p>
+    <p style="font-size:25px;"><strong>框架：</strong>ABP/应用；ABP vNext/了解；分布式、微服务/了解;</p>
+    <p style="font-size:25px;"><strong>其他：</strong>Linux/应用；Docker/应用；Nginx/应用；Consul/应用；Ocelot/应用；</p>
+    <p style="font-size:25px;"><strong>前端：</strong>Vue全家桶/ 掌握；Bootstrap/掌握 ；HTML/掌握；Jquery/掌握；TS/应用；</p>
+    <p style="font-size:25px;"><strong>前端组件库：</strong>Element/掌握；iView/掌握；Vant/掌握；ECharts/掌握;</p>
+    <p style="font-size:25px;"><strong>版本/Bug管理：</strong>Git；禅道；YAPI；Tower等</p>
+</div>
 
 ---
 
 ## 项目经历
+
+👇
 
 --
 
