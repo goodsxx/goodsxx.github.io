@@ -3,12 +3,12 @@ icon: info
 sidebar: false
 headerDepth: false
 lastUpdated: false
-layout: Slide
 ---
 
 <!--more-->
 
 测试
+
 <!-- @slidestart
 
 ## 宋鑫鑫个人介绍
