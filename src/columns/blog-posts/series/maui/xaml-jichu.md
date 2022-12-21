@@ -6,7 +6,7 @@ category:
 tag: 
  - MAUI
  - XAML
-isOriginal: true
+
 timeline: true
 order: 2
 ---

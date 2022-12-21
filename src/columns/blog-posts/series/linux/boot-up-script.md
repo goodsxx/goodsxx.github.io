@@ -6,7 +6,7 @@ category:
 tag: 
  - Linux
  - shell脚本
-isOriginal: true
+
 timeline: true
 order: 6
 ---

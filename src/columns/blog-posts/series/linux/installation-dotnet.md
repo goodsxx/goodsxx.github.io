@@ -7,7 +7,7 @@ category:
 tag: 
  - Linux
  - .Net
-isOriginal: true
+
 timeline: true
 order: 4
 ---

@@ -7,7 +7,7 @@ category:
 tag: 
  - Linux
  - Nginx
-isOriginal: true
+
 timeline: true
 order: 5
 ---

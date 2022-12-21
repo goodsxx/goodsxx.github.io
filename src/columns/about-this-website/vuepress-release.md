@@ -7,7 +7,7 @@ category:
 tag: 
  - Linux
  - VuePress
-isOriginal: true
+
 timeline: true
 order: 3
 ---

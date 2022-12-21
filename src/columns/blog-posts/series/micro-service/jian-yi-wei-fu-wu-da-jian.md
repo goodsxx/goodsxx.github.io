@@ -7,7 +7,7 @@ tag:
  - Nginx
  - Consul
  - Ocelot
-isOriginal: true
+
 timeline: true
 order: 1
 ---
