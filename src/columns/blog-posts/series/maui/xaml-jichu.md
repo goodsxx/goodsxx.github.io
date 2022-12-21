@@ -6,8 +6,8 @@ category:
 tag: 
  - MAUI
  - XAML
-
 timeline: true
+star: true
 order: 2
 ---
 ::: tip ✨✨✨✨✨

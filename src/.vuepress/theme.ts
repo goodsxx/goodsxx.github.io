@@ -31,6 +31,15 @@ export default hopeTheme({
     description: "一个.Net程序员",
     intro: "/intro.html",
     roundAvatar: true,
+    articleInfo:[
+      "Author", //作者
+      //"Original", //是否原创
+      "Date", //写作日期
+      "Category", //分类
+      "Tag", //标签
+      "Word",//字数
+      "ReadingTime",//预计阅读时间
+    ],
     medias: {
       Baidu: "https://example.com",
       BiliBili: "https://example.com",
@@ -127,7 +136,7 @@ export default hopeTheme({
     },
     comment: {
       provider: "Giscus",
-      repo: "goodsxx/my-blog",
+      repo: "goodsxx/goodsxx.github.io",
       repoId: "R_kgDOIahFXA",
       category: "General",
       categoryId: "DIC_kwDOIahFXM4CShvl",

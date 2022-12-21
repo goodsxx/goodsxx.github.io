@@ -3,6 +3,7 @@ icon: info
 sidebar: false
 headerDepth: false
 lastUpdated: false
+article: false
 ---
 
 <!--more-->
