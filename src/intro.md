@@ -10,6 +10,43 @@ article: false
 
 这是自我介绍页
 
+@slidestart
+
+<!-- .slide: data-transition="slide" data-auto-animate -->
+
+## 宋鑫鑫
+<!-- .element: class="r-fit-text" -->
+
+👇👇👇
+
+--
+
+<!-- .slide: data-auto-animate  -->
+
+## 宋鑫鑫
+
+一个.NET程序员
+<!-- .element: class="r-fit-text" -->
+
+--
+
+<!-- .slide: data-auto-animate  -->
+
+## 宋鑫鑫
+
+<p style="font-size:55px;">个人主页：<a target="_blank" href="https://goodsxx.github.io">https://goodsxx.github.io</a></p>
+
+<p style="font-size:55px;">电子邮箱：18637641131@163.com</p>
+
+<p style="font-size:55px;">联系电话：18637641131</p>
+
+---
+
+## 第二页
+
+@slideend
+
+
 <!-- @slidestart
 
 ## 宋鑫鑫个人介绍
