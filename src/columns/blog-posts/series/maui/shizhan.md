@@ -240,6 +240,7 @@ public partial class MainPageViewModel : ObservableObject
 ::: code-tabs
 
 @tab MenuButtonControl.xaml.cs
+
 ```csharp
 namespace Mediinfo_MAUI_Demo.Controls;
 
@@ -284,6 +285,7 @@ public partial class MenuButtonControl : ContentView
 ```
 
 @tab MenuButtonControl.xaml
+
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -319,6 +321,7 @@ public partial class MenuButtonControl : ContentView
     </VerticalStackLayout>
 </ContentView>
 ```
+
 :::
 
 ##### 使用自定义控件呈现分组菜单项
@@ -409,6 +412,7 @@ CollectionView.ItemTemplate 定义子数据外观模板
 
 ::: code-tabs
 @tab:active MainPageTitleView.xaml
+
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -451,7 +455,9 @@ CollectionView.ItemTemplate 定义子数据外观模板
     </Grid>
 </ContentView>
 ```
+
 @tab MainPageTitleView.xaml.cs
+
 ```csharp
 namespace Mediinfo_MAUI_Demo.Controls;
 
@@ -476,6 +482,7 @@ public partial class MainPageTitleView : ContentView
 	}
 }
 ```
+
 :::
 
 ### 引入自定义标题栏
@@ -503,6 +510,184 @@ public partial class MainPageTitleView : ContentView
 效果：
 
 ![自定义标题栏](./image/shizhan/1671070809226.png)
+
+## 状态栏
+
+借助 CommunityToolkit.Maui 社区工具包，我们可以对应用中每个页面的状态栏样式进行单独设置。
+
+### 安装社区工具包
+
+在项目中安装 `CommunityToolkit.Maui` 最新版NuGet包
+
+### 使用社区工具包修改状态栏颜色
+
+::: tabs
+@tab 方式一
+
+```xml{8,13-15}
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:Mediinfo_MAUI_Demo.Controls"
+    xmlns:model="clr-namespace:Mediinfo_MAUI_Demo.Models"
+    xmlns:viewmodel="clr-namespace:Mediinfo_MAUI_Demo.ViewModels"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+    x:Class="Mediinfo_MAUI_Demo.MainPage"
+    x:DataType="viewmodel:MainPageViewModel"
+    x:Name="this">
+
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="#e6f6ff" StatusBarStyle="DarkContent"/>
+    </ContentPage.Behaviors>
+
+    <!--其他代码-->
+</ContentPage>
+```
+
+@tab 方式二
+
+```xml{8,13-15}
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:Mediinfo_MAUI_Demo.Controls"
+    xmlns:model="clr-namespace:Mediinfo_MAUI_Demo.Models"
+    xmlns:viewmodel="clr-namespace:Mediinfo_MAUI_Demo.ViewModels"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+    x:Class="Mediinfo_MAUI_Demo.MainPage"
+    x:DataType="viewmodel:MainPageViewModel"
+    x:Name="this">
+
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior x:Name="_statusBarBehavior"/>
+    </ContentPage.Behaviors>
+
+    <!--其他代码-->
+</ContentPage>
+```
+
+```cs{13-17}
+using CommunityToolkit.Maui.Behaviors;
+using CommunityToolkit.Maui.Core;
+using Mediinfo_MAUI_Demo.ViewModels;
+
+namespace Mediinfo_MAUI_Demo;
+
+public partial class MainPage : ContentPage
+{
+    public MainPage(MainPageViewModel mainPageViewModel)
+    {
+        InitializeComponent();
+        BindingContext = mainPageViewModel;
+        _statusBarBehavior = new StatusBarBehavior
+        {
+            StatusBarColor = Color.FromRgba("#d2d5c1"),
+            StatusBarStyle = StatusBarStyle.DarkContent
+        };
+    }
+}
+```
+
+@tab 方式三
+
+```cs{13-14}
+using CommunityToolkit.Maui.Behaviors;
+using CommunityToolkit.Maui.Core;
+using Mediinfo_MAUI_Demo.ViewModels;
+
+namespace Mediinfo_MAUI_Demo;
+
+public partial class MainPage : ContentPage
+{
+    public MainPage(MainPageViewModel mainPageViewModel)
+    {
+        InitializeComponent();
+        BindingContext = mainPageViewModel;
+        CommunityToolkit.Maui.Core.Platform.StatusBar.SetColor(Color.FromRgba("#e6f6ff"));
+        CommunityToolkit.Maui.Core.Platform.StatusBar.SetStyle(StatusBarStyle.DarkContent);
+    }
+}
+```
+
+:::
+
+以上三种方式效果一致：
+
+![状态栏颜色设置](./image/shizhan/1672045321415.png)
+
+### 动态切换状态栏颜色
+
+有些需求要求我们的状态栏为不同的页面适配不同的颜色从而保持全局风格的统一，我们可以通过 .NET MAUI Shell 生命周期来实现这个功能。
+
+Shell 应用遵循 .NET MAUI 生命周期，并在页面即将在屏幕上显示时触发事件，当Disappearing页面即将从屏幕上消失时触发Appearing事件。 这些事件会传播到页面，可以通过重写页面上的 OnAppearing 或 OnDisappearing 方法进行处理。
+
+这里我们可以通过在不同页面重写 OnAppearing 方法的方式去设置状态栏的颜色
+
+::: tabs
+@tab 设置页面一状态栏
+
+```cs{21-22}
+using CommunityToolkit.Maui.Behaviors;
+using CommunityToolkit.Maui.Core;
+using Mediinfo_MAUI_Demo.ViewModels;
+
+namespace Mediinfo_MAUI_Demo.Views;
+
+public partial class DemoPage1 : ContentPage
+{
+    private readonly DemoPage1ViewModel _demoPage1ViewModel;
+    public DemoPage1(DemoPage1ViewModel demoPage1ViewModel)
+    {
+        InitializeComponent();
+        _demoPage1ViewModel = demoPage1ViewModel;
+        BindingContext = _demoPage1ViewModel;
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        _demoPage1ViewModel.SubscribeScanCode();
+        CommunityToolkit.Maui.Core.Platform.StatusBar.SetColor(Color.FromRgba("#d2d5c1"));
+        CommunityToolkit.Maui.Core.Platform.StatusBar.SetStyle(StatusBarStyle.DarkContent);
+    }
+}
+```
+
+打开页面二的效果：
+
+![打开页面二的效果](./image/shizhan/1672046034140.png)
+
+@tab 设置页面二状态栏
+
+```cs{16-17}
+using CommunityToolkit.Maui.Behaviors;
+using CommunityToolkit.Maui.Core;
+using Mediinfo_MAUI_Demo.ViewModels;
+
+namespace Mediinfo_MAUI_Demo;
+
+public partial class MainPage : ContentPage
+{
+    public MainPage(MainPageViewModel mainPageViewModel)
+    {
+        InitializeComponent();
+        BindingContext = mainPageViewModel;
+    }
+    protected override void OnAppearing()
+    {
+        CommunityToolkit.Maui.Core.Platform.StatusBar.SetColor(Color.FromRgba("#e6f6ff"));
+        CommunityToolkit.Maui.Core.Platform.StatusBar.SetStyle(StatusBarStyle.DarkContent);
+    }
+}
+```
+
+打开页面二的效果：
+
+![打开页面二的效果](./image/shizhan/1672046061668.png)
+
+:::
 
 ## 页面导航
 
