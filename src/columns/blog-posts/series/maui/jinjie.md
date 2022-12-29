@@ -327,7 +327,7 @@ public partial class PickControlView : Popup
 
 :::
 
-### 自定义下拉菜单控件
+### 自定义选取器触发控件
 
 上一步我们定义了 [选取器弹出控件](#自定义选取器弹出控件)，所以接下来我们需要定义一个选取器弹出层的载体，也就是触发弹出框的组件。
 
@@ -407,7 +407,7 @@ public partial class DropDownButton2 : ContentPage
 
 :::
 
-### 使用自定义选择器
+### 使用自定义选取器
 
 ::: tabs
 @tab DemoPage2.xaml
