@@ -93,6 +93,7 @@ order: 4
 ::: tabs
 @tab:active .xaml.cs
 在 MenuButtonControl.xaml.cs 文件中定义该控件的自定义属性
+
 ```csharp{5-9,11-35}
 namespace Mediinfo_MAUI_Demo.Controls;
 
@@ -135,8 +136,10 @@ public partial class MenuButtonControl : ContentView
     }
 }
 ```
+
 @tab .xaml
 在 MenuButtonControl.xaml 文件中定义该控件的外观
+
 ```xml{5-6,20,23,27,33}
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -174,6 +177,7 @@ public partial class MenuButtonControl : ContentView
     </VerticalStackLayout>
 </ContentView>
 ```
+
 :::info
 本段代码中，我们在根节点定义了一个别名 this ，并且通过 BindingContext="{x:Reference this}" 将当前控件对象绑定为数据源，这样我们在根结点中定义的任何控件便都可以通过 {Binding Source={x:Reference this},Path=Text} 的形式将隐藏代码文件中的自定义属性绑定在所需控件上了。
 
@@ -222,3 +226,260 @@ public partial class MenuButtonControl : ContentView
 效果：
 
 ![自定义控件示例](./image/jinjie/1671070115354.png)
+
+## 自定义选取器
+
+在很多场景中，我们都需要使用选取器来完成预期的功能和操作，但 MAUI 框架本身并没有提供一个支持高度自定义的选取器控件，这时我们可以使用社区工具包提供的 Popup 弹出组件来开发自定义选取器。
+
+::: warning
+Popup 只能在 Page 或继承于 Page 的类中使用。
+:::
+
+### 安装社区工具包
+
+参照[官方教程](https://learn.microsoft.com/zh-cn/dotnet/communitytoolkit/maui/get-started)安装
+
+### 自定义选取器弹出控件
+
+选取器弹出控件是点击某个选取器后弹出的内容，该控件是对弹出层的单独定义。
+
+选取器作为一个公共控件，弹出层的基本的外观及内容应该支持自定义，所以我们在封装选取器控件时应当开放出部分参数由外部传入。
+
+::: tabs
+@tab PickControlView.xaml
+
+选择器的外观由一个 Label 和一个 CollectionView 组成，Lable 显示选选取器标题，CollectionView 显示选项列表
+
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Class="Mediinfo_MAUI_Demo.Controls.PickControlView"
+    VerticalOptions="End"
+    Color="Transparent"
+    x:Name="this"
+    BindingContext="{x:Reference this}">
+    <Border StrokeShape="RoundRectangle 20,20,0,0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label 
+                Text="{Binding Title}" 
+                TextColor="Black" 
+                FontSize="16"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+            <CollectionView
+                Grid.Row="1"
+                x:Name="pickCollection"
+                HorizontalOptions="Center"
+                SelectionChanged="pickCollection_SelectionChanged"
+                SelectionMode="Single">
+            </CollectionView>
+        </Grid>
+    </Border>
+</toolkit:Popup>
+```
+
+@tab PickControlView.xaml.cs
+
+PickControlView 需继承 Popup 类。
+
+通过构造函数对 PickControlView 类做一定的限制，要求在外部初始化该选取器时指定 itemSource(数据源)、itemTemplate(数据模板)、size(弹窗尺寸)、title(选取器标题) 这几个参数的值。
+
+pickCollection_SelectionChanged 选择事件，定义了一个处理程序，在选择某个选项后通过 Popup.Close() 方法关闭选取器弹窗，并回传所选的值。
+
+```cs
+using CommunityToolkit.Maui.Views;
+using System.Collections;
+
+namespace Mediinfo_MAUI_Demo.Controls;
+
+public partial class PickControlView : Popup
+{
+    public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(PickControlView), string.Empty);
+
+    public string Title
+    {
+        get => (string)GetValue(TitleProperty);
+        set => SetValue(TitleProperty, value);
+    }
+    public PickControlView(IEnumerable itemSource, DataTemplate itemTemplate, Size size, string title)
+    {
+        InitializeComponent();
+        pickCollection.ItemTemplate = itemTemplate;
+        pickCollection.ItemsSource = itemSource;
+        Size = size;
+        Title = title;
+    }
+
+    private async void pickCollection_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var currentItem = e.CurrentSelection.FirstOrDefault();
+        Close(currentItem);
+    }
+}
+```
+
+:::
+
+### 自定义下拉菜单控件
+
+上一步我们定义了 [选取器弹出控件](#自定义选取器弹出控件)，所以接下来我们需要定义一个选取器弹出层的载体，也就是触发弹出框的组件。
+
+::: tabs
+@tab DropDownButton.xaml
+
+此处简单定义了一个 Lable 作为控件的呈现外观，并为控件绑定了 TapGestureRecognizer_Tapped 点击事件。
+
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        x:Class="Mediinfo_MAUI_Demo.Controls.DropDownButton2"
+        x:Name="this"
+        BindingContext="{x:Reference this}"
+        BackgroundColor="Transparent">
+
+    <ContentPage.Content>
+        <Border HorizontalOptions="Center">
+            <Label 
+                HorizontalOptions="Center" 
+                VerticalOptions="Center"
+                TextColor="#222222"
+                Text="{Binding Source={Reference this},Path=ButtonText}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </Border>
+    </ContentPage.Content>
+</ContentPage>
+```
+
+@tab DropDownButton.xaml.cs
+
+此处定义了一些自定义属性用于接收外部参数，并且为 TapGestureRecognizer_Tapped 点击事件定义了一个处理程序，当点击该 Lable 控件时，就根据传入参数通过 ShowPopupAsync() 方法初始化一个选择器，并以弹窗的形式展示选择的结果。
+
+```cs
+using CommunityToolkit.Maui.Views;
+using Mediinfo_MAUI_Demo.Models;
+using System.Collections;
+
+namespace Mediinfo_MAUI_Demo.Controls;
+
+public partial class DropDownButton2 : ContentPage
+{
+    public static readonly BindableProperty ButtonTextProperty = BindableProperty.Create(nameof(ButtonText), typeof(string), typeof(DropDownButton), string.Empty);
+    public static readonly BindableProperty ItemSourceProperty = BindableProperty.Create(nameof(ItemSource), typeof(IEnumerable), typeof(DropDownButton), defaultBindingMode: BindingMode.OneWay);
+    public string ButtonText
+    {
+        get => (string)GetValue(ButtonTextProperty);
+        set => SetValue(ButtonTextProperty, value);
+    }
+    public IEnumerable ItemSource
+    {
+        get => (IEnumerable)GetValue(ItemSourceProperty);
+        set => SetValue(ItemSourceProperty, value);
+    }
+    public DropDownButton2()
+    {
+        InitializeComponent();
+    }
+    public DataTemplate ItemTemplate { get; set; }
+    public Size Size { get; set; }
+
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        var resultObj = await this.ShowPopupAsync(new PickControlView(ItemSource, ItemTemplate, Size, Title));
+        var result = resultObj as SelectValueModel;
+        if (result != null)
+        {
+            await DisplayAlert(result.Title, result.Value.ToString(), "取消");
+        }
+    }
+}
+```
+
+:::
+
+### 使用自定义选择器
+
+::: tabs
+@tab DemoPage2.xaml
+
+引入自定义控件命名空间，指定相应的选取器按钮标题、弹出层标题、弹出层尺寸、弹出层数据模板等。
+
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:Mediinfo_MAUI_Demo.ViewModels"
+             xmlns:controls="clr-namespace:Mediinfo_MAUI_Demo.Controls"
+             x:Class="Mediinfo_MAUI_Demo.Views.DemoPage2"
+             Title="DemoPage2">
+    <ContentPage.BindingContext>
+        <viewmodel:DemoPage2ViewModel/>
+    </ContentPage.BindingContext>
+    <VerticalStackLayout>
+        <controls:DropDownButton2 
+            x:Name="dropDownControl"
+            Grid.Column="0" 
+            Title="切换病区"
+            ButtonText="点我触发选取器" 
+            HeightRequest="22"
+            Size="350,400">
+            <controls:DropDownButton2.ItemTemplate>
+                <DataTemplate>
+                    <Label 
+                        HorizontalOptions="Center" 
+                        Padding="0,5,0,5" 
+                        Text="{Binding Title}"></Label>
+                </DataTemplate>
+            </controls:DropDownButton2.ItemTemplate>
+        </controls:DropDownButton2>
+    </VerticalStackLayout>
+</ContentPage>
+```
+
+@tab DemoPage2.xaml.cs
+
+在构造函数中为选取器控件生成初始数据。
+
+```cs
+using Mediinfo_MAUI_Demo.Models;
+
+namespace Mediinfo_MAUI_Demo.Views;
+
+public partial class DemoPage2 : ContentPage
+{
+	public DemoPage2()
+	{
+		InitializeComponent();
+        List<SelectValueModel> list = new();
+        for (int i = 1; i <= 20; i++)
+        {
+            list.Add(new()
+            {
+                Title = $"选项{i}",
+                Value = i
+            });
+        }
+        dropDownControl.ItemSource = list;
+    }
+}
+```
+
+:::
+
+效果：
+
+![点击前](./image/jinjie/1672293055771.png)
+
+![点击后](./image/jinjie/1672293083751.png)
+
+![选择某一项](./image/jinjie/1672293100914.png)
