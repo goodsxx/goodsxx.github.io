@@ -18,8 +18,11 @@ order: 1
 # 什么是 .NET MAUI？
 
 .NET 多平台应用 UI (.NET MAUI) 是一个跨平台框架，用于使用 C# 和 XAML 创建本机移动和桌面应用
+
 使用 .NET MAUI，可从单个共享代码库开发可在 Android、iOS、macOS 和 Windows 上运行的应用
+
 。。。。。。
+
 简而言之 —— .NET MAUI 就是一个跨平台的前端开发框架
 
 # 安装
