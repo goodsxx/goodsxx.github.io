@@ -33,7 +33,7 @@ order: 5
 
 内容页主要有三个板块构成，每个板块内部有属于该板块的菜单项，单纯从显示效果上看有很多控件可以实现类似的效果，比如 Grid、HorizontalStackLayout、VerticalStackLayout、FlexLayout等。但是通常像这样的菜单结构并不是一成不变的，我们的板块或者板块内的菜单随时都可能有增减，或者根据权限有选择性的展示，这就意味着该页面的结构和内容是动态的，这时候我们就需要从后端获取当前要展示的菜单数据，并且选择那些支持动态渲染的控件来呈现在页面上。
 
-### 准备数据源
+### 创建Model
 
 ```csharp
 namespace Mediinfo_MAUI_Demo.Models;
@@ -168,6 +168,56 @@ public partial class MainPageViewModel : ObservableObject
     }
 }
 ```
+### 绑定数据源
+
+::: tabs
+@tab MainPage.xaml.cs
+```cs{7,10}
+using MauiAppDemo.ViewModels;
+
+namespace MauiAppDemo;
+
+public partial class MainPage : ContentPage
+{
+    public MainPage(MainPageViewModel mainPageViewModel)
+    {
+        InitializeComponent();
+        BindingContext = mainPageViewModel;
+    }
+}
+```
+@tab MauiProgram.cs
+```cs{23-24}
+using MauiAppDemo.ViewModels;
+using Microsoft.Extensions.Logging;
+
+namespace MauiAppDemo;
+
+public static class MauiProgram
+{
+	public static MauiApp CreateMauiApp()
+	{
+		var builder = MauiApp.CreateBuilder();
+		builder
+			.UseMauiApp<App>()
+			.ConfigureFonts(fonts =>
+			{
+				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+			});
+
+#if DEBUG
+		builder.Logging.AddDebug();
+#endif
+
+		builder.Services.AddSingleton<MainPage>();
+		builder.Services.AddSingleton<MainPageViewModel>();
+
+        return builder.Build();
+	}
+}
+```
+:::
 
 ### 页面呈现
 
