@@ -114,6 +114,7 @@ namespace XamlSamples
 
 若要在 XAML 文件中引用此类的静态字段，需要使用 XML 命名空间声明来指示此文件所在的位置
 `xmlns:local="clr-namespace:XamlSamples"`
+
 ```xml {3,9-10}
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -341,7 +342,7 @@ public partial class DemoPage1 : ContentPage
     }
 }
 ```
-由于这种方式用到了依赖注入，所以必须同时在项目的入口文件 MauiProgram 中注入对应的视图和ViewModel：
+由于这种方式用到了依赖注入，所以必须同时在项目的入口文件 MauiProgram 中注入对应的视图和 ViewModel：
 ```csharp{18-19}
 //MauiProgram.cs
 using Mediinfo_MAUI_Demo.ViewModels;

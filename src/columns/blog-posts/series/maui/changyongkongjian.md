@@ -144,7 +144,7 @@ MAUI 的 Shell.TitleView 属性可以用来自定义顶部标题栏，下面是�
 </ContentPage>
 ```
 
-我们通过 Shell.BackgroundColor 属性将 Shell 的背景色改为红色，再将 Shell.TitleView 下的根节点设为透明，如此我们便能实现预期的效果：
+我们通过 Shell.BackgroundColor 属性将 Shell 的背景色改为目标颜色，再将 Shell.TitleView 下的根节点设为透明，如此我们便能实现预期的效果：
 
 ![自定义标题栏(修复bug)](./image/changyongkongjian/1671070002597.png)
 

@@ -671,7 +671,7 @@ public partial class MainPage : ContentPage
 
 有些需求要求我们的状态栏为不同的页面适配不同的颜色从而保持全局风格的统一，我们可以通过 .NET MAUI Shell 生命周期来实现这个功能。
 
-Shell 应用遵循 .NET MAUI 生命周期，并在页面即将在屏幕上显示时触发事件，当Disappearing页面即将从屏幕上消失时触发Appearing事件。 这些事件会传播到页面，可以通过重写页面上的 OnAppearing 或 OnDisappearing 方法进行处理。
+Shell 应用遵循 .NET MAUI 生命周期，并在页面即将在屏幕上显示时触发事件，当 Disappearing 页面即将从屏幕上消失时触发 Appearing 事件。 这些事件会传播到页面，可以通过重写页面上的 OnAppearing 或 OnDisappearing 方法进行处理。
 
 这里我们可以通过在不同页面重写 OnAppearing 方法的方式去设置状态栏的颜色
 
@@ -880,7 +880,7 @@ namespace Mediinfo.Vela.YiDongHL.App.ViewModels
 
 #### 路由传参
 
-前面提到了 **`Shell.Current.GoToAsync()`** 是MAUI提供的页面跳转方法，该方法提供了重载可用于在页面间传递参数：
+前面提到了 **`Shell.Current.GoToAsync()`** 是 MAUI 提供的页面跳转方法，该方法提供了重载可用于在页面间传递参数：
 
 ```csharp
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -911,7 +911,7 @@ namespace Mediinfo.Vela.YiDongHL.App.ViewModels
 
 #### 读取参数
 
-首先为我们的目标页创建ViewModel
+首先为我们的目标页创建 ViewModel
 
 ```csharp
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -932,7 +932,7 @@ public partial class BaiYaoHDViewModel : ObservableObject, IQueryAttributable
 ```
 
 要读取路由中的参数其中一个方法是实现 **IQueryAttributable** 接口中的 **ApplyQueryAttributes** 方法，
-该方法的入参是一个字典，Key 即为我们上一步 Shell.Current.GoToAsync() 中第二个参数定义的 Key，值既为我们传递的对象，此处需要转换为我们定义的 Menu 对象，并赋值给监听属性 menuData。
+该方法的入参是一个字典，Key 即为我们上一步 Shell.Current.GoToAsync() 中第二个参数定义的 Key，值即为我们传递的对象，此处需要转换为我们定义的 Menu 对象，并赋值给监听属性 menuData。
 
 **页面数据绑定：**
 
