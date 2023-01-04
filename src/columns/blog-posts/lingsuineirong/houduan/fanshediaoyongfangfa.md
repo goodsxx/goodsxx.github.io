@@ -1,16 +1,18 @@
 ---
 title: 通过反射调用类中的方法
-date: 2022-01-07
+date: 2023-01-07
 category:
  - 后端
 tag: 
  - .NET
  - C#
+timeline: true
 ---
 ::: tip ✨✨✨✨✨
 在C#中利用反射调用类中的方法
 :::
-<!--more-->
+
+<!-- more -->
 
 ## 创建测试类
 
