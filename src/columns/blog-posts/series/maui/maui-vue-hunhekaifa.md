@@ -144,6 +144,7 @@ ComponentType="{x:Type local:Main}" 对应 Main.razor 文件
 ```
 
 @tab MainPage.xaml.cs
+
 ```cs
 namespace MauiVueDemo;
 
@@ -155,13 +156,14 @@ public partial class MainPage : ContentPage
 	}
 }
 ```
+
 :::
 
 ## 创建 Vue 项目
 
 使用 `vue init webpack maui-vue` 命令创建名为 maui-vue 的项目
 
-![创建 Vue 项目](./image/maui-vue-hunhekaifa/1672733574238.png)
+![1672990482091](image/maui-vue-hunhekaifa/1672990482091.png)
 
 ## Vue 项目改造
 
@@ -251,7 +253,7 @@ a {
 
 ![打包项目](./image/maui-vue-hunhekaifa/1672734732907.png)
 
-## 迁移 Vue 项目打包文件 
+## 迁移 Vue 项目打包文件
 
 Vue 项目默认打包路径为 ./dist，拷贝 dist 文件夹下的所有文件至 MAUI 项目的 wwwroot 文件夹下。
 
@@ -262,4 +264,3 @@ Vue 项目默认打包路径为 ./dist，拷贝 dist 文件夹下的所有文件
 ![启动 MAUI 项目](./image/maui-vue-hunhekaifa/1672735750862.png)
 
 ![点击 [测试调用C#代码] 按钮](./image/maui-vue-hunhekaifa/1672735773465.png)
-
