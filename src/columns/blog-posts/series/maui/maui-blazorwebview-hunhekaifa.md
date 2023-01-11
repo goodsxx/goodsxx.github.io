@@ -1,11 +1,12 @@
 ---
-title: MAUI + VUE 混合开发
+title: 基于BlazorWebView的混合开发
 date: 2023-01-03
 category:
  - MAUI
 tag: 
  - MAUI
  - Vue
+ - Blazor
 star: true
 timeline: true
 order: 6
