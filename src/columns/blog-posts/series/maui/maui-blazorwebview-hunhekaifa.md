@@ -164,7 +164,7 @@ public partial class MainPage : ContentPage
 
 使用 `vue init webpack maui-vue` 命令创建名为 maui-vue 的项目
 
-![1672990482091](image/maui-vue-hunhekaifa/1672990482091.png)
+![创建 Vue 项目](./image/maui-vue-hunhekaifa/1672990482091.png)
 
 ## Vue 项目改造
 
