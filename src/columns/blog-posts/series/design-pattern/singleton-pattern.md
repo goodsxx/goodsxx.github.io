@@ -3,208 +3,89 @@ title: 单例模式
 date: 2022-05-06
 category:
  - 设计模式
- - 创建型模式
 tag: 
  - 设计模式
+ - 创建型模式
 timeline: true
 order: 1
 ---
 ::: tip ✨✨✨✨✨
 单例模式（Singleton Pattern）是最简单的设计模式之一。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。
-这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。
+它的目的是确保某个类只有一个实例，并提供一个全局的访问点。
 :::
 
 <!-- more -->
 
-## 定义
+在.NET中，我们可以通过静态变量、静态构造函数、私有构造函数等方式来实现单例模式。
 
-确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例。
-
-## 类图
-
-![1652682984639.png](./image/singleton-pattern/1652682984639.png)
-
-## 应用场景
-
-避免产生多个对象消耗过多的资源（特别是一个对象需要频繁的创建和销毁时）；
-提供一个全局访问点，常常被用来管理系统中共享的资源(作为一个Manager)。
-
-## 实现
-
-### 1. 静态变量初始化(饿汉模式)
-
-仅适用于单线程应用程序
+下面是一个简单的单例模式的示例代码：
 
 ```cs
-namespace SingletonPattern
+public class Singleton
 {
-    /// <summary>
-    /// 单例模式实现方式一：
-    /// 静态变量初始化
-    /// </summary>
-    public class Singleton1
+    private static Singleton instance = null;
+
+    // 私有构造函数
+    private Singleton()
     {
-        /// <summary>
-        /// 定义为静态变量，由所有对象共享
-        /// </summary>
-        private static Singleton1 instance = new Singleton1();
+        // 初始化代码
+    }
 
-        /// <summary>
-        /// 构造函数私有化，禁止外部类实例化该类对象
-        /// </summary>
-        private Singleton1()
-        {
-            Console.WriteLine("Singleton1 被实例化");
-        }
+    // 静态构造函数
+    static Singleton()
+    {
+        instance = new Singleton();
+    }
 
-        public static Singleton1 GetInstance()
-        {
-            return instance;
-        }
+    // 全局访问点
+    public static Singleton GetInstance()
+    {
+        return instance;
     }
 }
 ```
 
-### 2. 延迟初始化(懒汉模式)
+在上面的代码中，Singleton类的构造函数是私有的，因此外部不能直接创建该类的实例。同时，Singleton类还有一个静态的instance变量，用于保存Singleton类的唯一实例。在Singleton类的静态构造函数中，我们对instance进行了初始化操作。最后，通过GetInstance方法来获取Singleton类的唯一实例。
+
+当我们需要使用Singleton类时，只需要调用GetInstance方法即可获取该类的唯一实例。由于Singleton类的构造函数是私有的，因此只能通过GetInstance方法来获取Singleton类的实例，从而确保了Singleton类只有一个实例存在。
+
+需要注意的是，单例模式有一些缺点，例如会增加代码的复杂度，同时也可能会导致线程安全问题，为了避免多线程下的线程安全问题，我们可以使用线程锁来确保只有一个线程可以访问Singleton实例。
+
+下面是一个使用线程锁实现的线程安全的Singleton示例代码：
 
 ```cs
-namespace SingletonPattern
+public class Singleton
 {
-    /// <summary>
-    /// 单例模式实现方式二：
-    /// 延迟初始化
-    /// </summary>
-    public class Singleton2
+    private static Singleton instance = null;
+    private static readonly object lockObj = new object();
+
+    // 私有构造函数
+    private Singleton()
     {
-        /// <summary>
-        /// 定义为静态变量，由所有对象共享
-        /// </summary>
-        private static Singleton2 _instance;
-
-        /// <summary>
-        /// 构造函数私有化，禁止外部类实例化该类对象
-        /// </summary>
-        private Singleton2()
-        {
-            Console.WriteLine("Singleton2 被实例化");
-        }
-
-        public static Singleton2 GetInstance()
-        {
-            return _instance ??= new Singleton2();
-        }
+        // 初始化代码
     }
-}
-```
 
-### 3. 锁机制(推荐)
-
-```cs
-namespace SingletonPattern
-{
-    /// <summary>
-    /// 单例模式实现方式三：
-    /// 锁机制，确保多线程只产生一个实例
-    /// </summary>
-    public class Singleton3
+    // 静态构造函数
+    static Singleton()
     {
-        private static Singleton3 _instance;
-
-        private static readonly object Locker = new object();
-
-        private Singleton3() 
-        {
-            Console.WriteLine("Singleton3 被实例化");
-        }
-
-        public static Singleton3 GetInstance()
-        {
-            //没有第一重 instance == null 的话，每一次有线程进入 GetInstance()时，均会执行锁定操作来实现线程同步，
-            //非常耗费性能 增加第一重instance ==null 成立时的情况下执行一次锁定以实现线程同步
-            if (_instance == null)
-            {
-                lock (Locker)
-                {
-                    //Double-Check Locking 双重检查锁定
-                    if (_instance == null)
-                    {
-                        _instance = new Singleton3();
-                    }
-                }
-            }
-            return _instance;
-        }
+        instance = new Singleton();
     }
-}
-```
 
-### 4. 泛型单例模式
-
-```cs
-namespace SingletonPattern
-{
-    /// <summary>
-    /// 单例模式实现方式四：
-    /// 泛型单例模式的实现
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class Singleton4<T> where T : class
+    // 全局访问点
+    public static Singleton GetInstance()
     {
-        private static T instance;
-
-        private static readonly object Locker = new object();
-
-        public static T GetInstance()
+        lock (lockObj)
         {
-            //没有第一重 instance == null 的话，每一次有线程进入 GetInstance()时，均会执行锁定操作来实现线程同步，
-            //非常耗费性能 增加第一重instance ==null 成立时的情况下执行一次锁定以实现线程同步
             if (instance == null)
             {
-                //Double-Check Locking 双重检查锁定
-                lock (Locker)
-                {
-                    if (instance == null)
-                    {
-                        //instance = new T();
-                        //需要非公共的无参构造函数，不能使用new T() ,new不支持非公共的无参构造函数 
-                        instance = (T)Activator.CreateInstance(typeof(T), true);//第二个参数防止异常：“没有为该对象定义无参数的构造函数。”
-                    }
-                }
+                instance = new Singleton();
             }
-            return instance;
         }
+        return instance;
     }
 }
 ```
 
-### 5. 调用
+在上述代码中，我们在GetInstance方法中使用了lock关键字来锁定一个对象（即lockObj）。这样，当多个线程同时调用GetInstance方法时，只有一个线程能够获得锁定对象，从而保证了只有一个线程能够创建Singleton实例。同时，我们也使用了双重检查锁定（double-checked locking）的方式，以避免重复创建Singleton实例的问题。
 
-```cs
-//调用
-using SingletonPattern;
-
-Singleton1.GetInstance();
-Singleton1.GetInstance();
-
-Singleton2.GetInstance();
-Singleton2.GetInstance();
-
-Singleton3.GetInstance();
-Singleton3.GetInstance();
-
-Singleton4<Car>.GetInstance();
-Singleton4<Car>.GetInstance();
-
-Console.ReadLine();
-
-```
-
-### 6. 输出
-
-```cs
-//输出
-Singleton1 被实例化
-Singleton2 被实例化
-Singleton3 被实例化
-Car is Run...
-```
+需要注意的是，虽然使用线程锁可以确保Singleton实例的线程安全性，但是过多的锁使用可能会导致性能问题，因此在使用锁时需要谨慎。

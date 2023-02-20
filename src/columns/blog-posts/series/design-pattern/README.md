@@ -91,9 +91,3 @@ date: 2022-04-29
 > 实心菱形精密关联不可分，是组合；
 
 ![1652682381005.png](./image/README/1652682381005.png "设计模式")
-
-**本系列参考：**
-
-[[设计模式]知多少——圣杰](https://www.jianshu.com/p/cff1ee13b78a)
-
-[设计模式——菜鸟教程](https://www.runoob.com/design-pattern/design-pattern-intro.html "设计模式")
