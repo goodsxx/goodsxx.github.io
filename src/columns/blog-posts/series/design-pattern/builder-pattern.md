@@ -11,232 +11,252 @@ order: 4
 ---
 
 ::: tip ✨✨✨✨✨
-建造者模式（Builder Pattern）是一种对象创建型模式，用于将一个复杂对象的构建过程和表示分离，使得同样的构建过程可以创建不同的表示。该模式通常由一个指挥者（Director）和一个建造者（Builder）组成，指挥者负责指导建造者进行构建，而建造者负责具体构建过程。建造者模式的核心思想是分步骤构建一个复杂对象，并且可以控制每个步骤的执行顺序，从而得到一个更加精细化的对象。
+建造者模式是一种创建型设计模式，它允许你将一个复杂对象的构建过程与其表示相分离，使得同样的构建过程可以创建不同的表示。建造者模式通常包含一个指挥者（Director）、抽象建造者（Builder）、具体建造者（ConcreteBuilder）和产品（Product）四个角色。
 :::
 
 <!-- more -->
 
-以下是一个简单的建造者模式示例代码：
+## 定义
 
+建造者模式是一种创建型设计模式，它允许你将一个复杂对象的构建过程与其表示相分离，使得同样的构建过程可以创建不同的表示。建造者模式通常包含一个指挥者（Director）、抽象建造者（Builder）、具体建造者（ConcreteBuilder）和产品（Product）四个角色。
+
+## 使用场景
+
+当一个产品有复杂的内部结构，其创建过程比较复杂且需要多个步骤时，可以考虑使用建造者模式。此外，建造者模式还适用于以下场景：
+
+如果需要对不同的表示进行创建，可以使用建造者模式。例如，需要使用不同的材料或风格创建房屋。
+如果需要在不知道产品内部构造的情况下直接创建复杂对象，可以使用建造者模式。例如，从数据库中读取数据并构建对象。
+如果需要更好地控制产品创建流程，可以使用建造者模式。例如，需要按照特定的顺序构建对象。
+
+## 优缺点
+**优点**
+- 可以隔离复杂对象的创建和使用，使得相同的创建过程可以创建不同的产品表示。
+- 可以更加精细地控制产品的创建过程，使得创建过程能够适应不同的需求。
+- 可以更加方便地增加或修改产品的部件，使得系统更加灵活。
+
+**缺点**
+- 建造者模式需要定义多个类，增加了代码量。
+- 建造者模式的使用范围受限，仅适用于相对复杂的产品创建过程。
+
+## 代码示例
+以下是建造者模式的 C# 代码示例。我们将创建一个包含多个部件的电脑，其中部件包括 CPU、主板、内存和硬盘等。具体建造者将实现创建不同种类的电脑。产品是由不同的部件组成的电脑。指挥者负责控制创建电脑的流程，具体建造者负责创建电脑的各个部件。
 ```cs
-// 产品类
-public class Product
+// 产品类，包含多个部件
+public class Computer
 {
     private List<string> parts = new List<string>();
 
-    public void Add(string part)
+    public void AddPart(string part)
     {
         parts.Add(part);
     }
 
-    public void Show()
+    public string GetParts()
     {
-        Console.WriteLine("Product Parts:");
-        foreach (string part in parts)
-        {
-            Console.WriteLine(part);
-        }
+        return string.Join(", ", parts);
     }
 }
 
-// 抽象建造者
-public abstract class Builder
+// 抽象建造者，定义创建各个部件的抽象方法
+public abstract class ComputerBuilder
 {
-    public abstract void BuildPartA();
-    public abstract void BuildPartB();
-    public abstract Product GetResult();
-}
+    protected Computer computer = new Computer();
 
-// 具体建造者A
-public class ConcreteBuilderA : Builder
-{
-    private Product product = new Product();
+    public abstract void BuildCpu();
+    public abstract void BuildMotherboard();
+    public abstract void BuildMemory();
+    public abstract void BuildHardDrive();
 
-    public override void BuildPartA()
+    public Computer GetComputer()
     {
-        product.Add("PartA");
-    }
-
-    public override void BuildPartB()
-    {
-        product.Add("PartB");
-    }
-
-    public override Product GetResult()
-    {
-        return product;
+        return computer;
     }
 }
 
-// 具体建造者B
-public class ConcreteBuilderB : Builder
+// 具体建造者，实现创建各个部件的方法
+public class DesktopBuilder : ComputerBuilder
 {
-    private Product product = new Product();
-
-    public override void BuildPartA()
+    public override void BuildCpu()
     {
-        product.Add("PartX");
+        computer.AddPart("Desktop CPU");
     }
 
-    public override void BuildPartB()
+    public override void BuildMotherboard()
     {
-        product.Add("PartY");
+        computer.AddPart("Desktop Motherboard");
     }
 
-    public override Product GetResult()
+    public override void BuildMemory()
     {
-        return product;
+        computer.AddPart("Desktop Memory");
+    }
+
+    public override void BuildHardDrive()
+    {
+        computer.AddPart("Desktop Hard Drive");
     }
 }
 
-// 指挥者
-public class Director
+public class LaptopBuilder : ComputerBuilder
 {
-    public void Construct(Builder builder)
+    public override void BuildCpu()
     {
-        builder.BuildPartA();
-        builder.BuildPartB();
+        computer.AddPart("Laptop CPU");
+    }
+
+    public override void BuildMotherboard()
+    {
+        computer.AddPart("Laptop Motherboard");
+    }
+
+    public override void BuildMemory()
+    {
+        computer.AddPart("Laptop Memory");
+    }
+
+    public override void BuildHardDrive()
+    {
+        computer.AddPart("Laptop Hard Drive");
     }
 }
 
-// 客户端代码
-public class Client
+// 指挥者，控制创建电脑的流程
+public class ComputerDirector
 {
-    public void Run()
+    private ComputerBuilder computerBuilder;
+
+    public ComputerDirector(ComputerBuilder computerBuilder)
     {
-        Director director = new Director();
+        this.computerBuilder = computerBuilder;
+    }
 
-        Builder builderA = new ConcreteBuilderA();
-        director.Construct(builderA);
-        Product productA = builderA.GetResult();
-        productA.Show();
-
-        Builder builderB = new ConcreteBuilderB();
-        director.Construct(builderB);
-        Product productB = builderB.GetResult();
-        productB.Show();
+    public void ConstructComputer()
+    {
+        computerBuilder.BuildCpu();
+        computerBuilder.BuildMotherboard();
+        computerBuilder.BuildMemory();
+        computerBuilder.BuildHardDrive();
     }
 }
 ```
 
-在这个示例代码中，我们使用建造者模式来构建一个Product对象，该对象由多个部分组成，具体的构建过程由Builder负责，由Director进行指导和控制。通过这种方式，我们可以得到不同的Product对象，而不需要在代码中重复编写构建逻辑。同时，建造者模式还可以使得代码的可读性和可维护性更高，因为我们可以在建造者中明确每个部分的构建逻辑，并且可以控制每个部分的执行顺序。
+下面是使用建造者模式创建电脑的代码示例：
+```cs
+// 创建一个具体的建造者，例如 DesktopBuilder 或 LaptopBuilder
+ComputerBuilder computerBuilder = new DesktopBuilder();
 
-如果这个示例代码中有漏洞，那么就是它只能构建一种类型的Product对象，如果要构建不同类型的Product对象，我们需要在建造者模式中进行扩展。一种常见的方式是使用抽象工厂模式，将建造者模式与抽象工厂模式结合起来。这样，我们就可以通过不同的抽象工厂来创建不同类型的建造者，从而构建不同类型的Product对象。以下是一个示例代码：
+// 创建指挥者并将具体的建造者传递给它
+ComputerDirector computerDirector = new ComputerDirector(computerBuilder);
 
+// 控制创建电脑的流程
+computerDirector.ConstructComputer();
+
+// 从具体的建造者中获取创建的电脑产品
+Computer computer = computerBuilder.GetComputer();
+
+// 输出电脑的各个部件
+Console.WriteLine("Computer parts: " + computer.GetParts());
+```
+上述代码输出的结果为：
+```shell
+Computer parts: Desktop CPU, Desktop Motherboard, Desktop Memory, Desktop Hard Drive
+```
+
+可以使用链式调用（Fluent Interface）的方式优化上述代码，让代码更加简洁易读。
+
+具体实现方法是，在每个 Builder 类的方法中返回 this，这样就可以进行链式调用了。下面是使用链式调用优化后的代码示例：
 ```cs
 // 产品类
-public class Product
+class Computer
 {
-    private List<string> parts = new List<string>();
+    public string Cpu { get; set; }
+    public string Motherboard { get; set; }
+    public string Memory { get; set; }
+    public string HardDisk { get; set; }
+}
 
-    public void Add(string part)
-    {
-        parts.Add(part);
-    }
+// 抽象建造者类
+abstract class ComputerBuilder
+{
+    protected Computer computer = new Computer();
 
-    public void Show()
+    public abstract ComputerBuilder BuildCpu(string cpu);
+    public abstract ComputerBuilder BuildMotherboard(string motherboard);
+    public abstract ComputerBuilder BuildMemory(string memory);
+    public abstract ComputerBuilder BuildHardDisk(string hardDisk);
+
+    public Computer GetComputer()
     {
-        Console.WriteLine("Product Parts:");
-        foreach (string part in parts)
-        {
-            Console.WriteLine(part);
-        }
+        return computer;
     }
 }
 
-// 抽象建造者
-public abstract class Builder
+// 具体建造者类1
+class ConcreteBuilder1 : ComputerBuilder
 {
-    public abstract void BuildPartA();
-    public abstract void BuildPartB();
-    public abstract Product GetResult();
-}
-
-// 具体建造者A
-public class ConcreteBuilderA : Builder
-{
-    private Product product = new Product();
-
-    public override void BuildPartA()
+    public override ComputerBuilder BuildCpu(string cpu)
     {
-        product.Add("PartA");
+        computer.Cpu = cpu;
+        return this;
     }
 
-    public override void BuildPartB()
+    public override ComputerBuilder BuildMotherboard(string motherboard)
     {
-        product.Add("PartB");
+        computer.Motherboard = motherboard;
+        return this;
     }
 
-    public override Product GetResult()
+    public override ComputerBuilder BuildMemory(string memory)
     {
-        return product;
-    }
-}
-
-// 具体建造者B
-public class ConcreteBuilderB : Builder
-{
-    private Product product = new Product();
-
-    public override void BuildPartA()
-    {
-        product.Add("PartX");
+        computer.Memory = memory;
+        return this;
     }
 
-    public override void BuildPartB()
+    public override ComputerBuilder BuildHardDisk(string hardDisk)
     {
-        product.Add("PartY");
-    }
-
-    public override Product GetResult()
-    {
-        return product;
+        computer.HardDisk = hardDisk;
+        return this;
     }
 }
 
-// 抽象工厂
-public abstract class AbstractFactory
+// 具体建造者类2
+class ConcreteBuilder2 : ComputerBuilder
 {
-    public abstract Builder CreateBuilder();
-}
-
-// 具体工厂A
-public class ConcreteFactoryA : AbstractFactory
-{
-    public override Builder CreateBuilder()
+    public override ComputerBuilder BuildCpu(string cpu)
     {
-        return new ConcreteBuilderA();
+        computer.Cpu = cpu;
+        return this;
+    }
+
+    public override ComputerBuilder BuildMotherboard(string motherboard)
+    {
+        computer.Motherboard = motherboard;
+        return this;
+    }
+
+    public override ComputerBuilder BuildMemory(string memory)
+    {
+        computer.Memory = memory;
+        return this;
+    }
+
+    public override ComputerBuilder BuildHardDisk(string hardDisk)
+    {
+        computer.HardDisk = hardDisk;
+        return this;
     }
 }
 
-// 具体工厂B
-public class ConcreteFactoryB : AbstractFactory
+// 指挥者类
+class Director
 {
-    public override Builder CreateBuilder()
+    public void Construct(ComputerBuilder builder, string cpu, string motherboard, string memory, string hardDisk)
     {
-        return new ConcreteBuilderB();
-    }
-}
-
-// 客户端代码
-public class Client
-{
-    public void Run()
-    {
-        AbstractFactory factoryA = new ConcreteFactoryA();
-        Builder builderA = factoryA.CreateBuilder();
-        Director director = new Director();
-        director.Construct(builderA);
-        Product productA = builderA.GetResult();
-        productA.Show();
-
-        AbstractFactory factoryB = new ConcreteFactoryB();
-        Builder builderB = factoryB.CreateBuilder();
-        director.Construct(builderB);
-        Product productB = builderB.GetResult();
-        productB.Show();
+        builder.BuildCpu(cpu)
+            .BuildMotherboard(motherboard)
+            .BuildMemory(memory)
+            .BuildHardDisk(hardDisk);
     }
 }
 ```
-
-在这个示例代码中，我们新增了一个AbstractFactory抽象工厂，该工厂用于创建Builder对象。具体的创建逻辑由具体工厂ConcreteFactoryA和ConcreteFactoryB实现。这样，我们就可以通过不同的抽象工厂来创建不同类型的建造者，从而构建不同类型的Product对象。这种方式将建造者模式和抽象工厂模式结合起来，既保持了建造者模式的灵活性，也使得我们能够构建不同类型的Product对象。
+上述代码中，每个具体建造者的方法都返回 this，这样就可以在使用时进行链式调用，可以看到，代码更加简洁易读，同时也可以避免漏掉某个步骤，提高了代码的健壮性。

@@ -16,76 +16,114 @@ order: 1
 
 <!-- more -->
 
-在.NET中，我们可以通过静态变量、静态构造函数、私有构造函数等方式来实现单例模式。
+## 定义
 
-下面是一个简单的单例模式的示例代码：
+单例模式是一种创建型设计模式，它保证一个类只有一个实例，并提供了一个全局访问点来访问这个实例。
+
+## 使用场景
+
+在以下情况下可以考虑使用单例模式：
+
+- 当一个对象只需要存在一个实例，例如线程池、缓存、日志、配置、数据库连接等。
+- 当对象的创建和销毁开销较大，需要复用时，例如游戏中的角色管理器。
+
+## 优缺点
+
+**单例模式的优点包括：**
+
+- 保证了一个类只有一个实例，避免了重复创建实例的开销，节省了内存。
+- 提供了一个全局访问点，方便了对象的访问和管理。
+
+**但是单例模式也有一些缺点：**
+
+- 单例模式的逻辑通常都集中在一个类中，会增加这个类的复杂度，不利于维护和测试。
+- 单例模式容易被滥用，过度使用会导致代码不易扩展和测试。
+
+## 代码示例
+
+下面是一个基本的单例模式的C#实现示例：
 
 ```cs
-public class Singleton
+public sealed class Singleton
 {
-    private static Singleton instance = null;
+    private static readonly Singleton instance = new Singleton();
 
-    // 私有构造函数
-    private Singleton()
+    private Singleton() { }
+
+    public static Singleton Instance
     {
-        // 初始化代码
+        get
+        {
+            return instance;
+        }
     }
 
-    // 静态构造函数
-    static Singleton()
+    public void SomeMethod()
     {
-        instance = new Singleton();
-    }
-
-    // 全局访问点
-    public static Singleton GetInstance()
-    {
-        return instance;
+        Console.WriteLine("Some method in singleton instance");
     }
 }
 ```
 
-在上面的代码中，Singleton类的构造函数是私有的，因此外部不能直接创建该类的实例。同时，Singleton类还有一个静态的instance变量，用于保存Singleton类的唯一实例。在Singleton类的静态构造函数中，我们对instance进行了初始化操作。最后，通过GetInstance方法来获取Singleton类的唯一实例。
+这里定义了一个名为 Singleton 的类，它的构造函数被声明为私有的，以确保不能从外部实例化该类的对象。类的实例被存储在名为 instance 的静态变量中，并通过公共静态属性 Instance 进行访问。
 
-当我们需要使用Singleton类时，只需要调用GetInstance方法即可获取该类的唯一实例。由于Singleton类的构造函数是私有的，因此只能通过GetInstance方法来获取Singleton类的实例，从而确保了Singleton类只有一个实例存在。
-
-需要注意的是，单例模式有一些缺点，例如会增加代码的复杂度，同时也可能会导致线程安全问题，为了避免多线程下的线程安全问题，我们可以使用线程锁来确保只有一个线程可以访问Singleton实例。
-
-下面是一个使用线程锁实现的线程安全的Singleton示例代码：
+下面是一个使用 Singleton 类的示例：
 
 ```cs
-public class Singleton
+class Program
 {
-    private static Singleton instance = null;
-    private static readonly object lockObj = new object();
-
-    // 私有构造函数
-    private Singleton()
+    static void Main(string[] args)
     {
-        // 初始化代码
+        Singleton instance1 = Singleton.Instance;
+        Singleton instance2 = Singleton.Instance;
+
+        if (instance1 == instance2)
+        {
+            Console.WriteLine("Singleton works!");
+        }
+
+        instance1.SomeMethod();
     }
+}
+```
 
-    // 静态构造函数
-    static Singleton()
-    {
-        instance = new Singleton();
-    }
+在这个示例中，我们从 Singleton.Instance 属性中获取 Singleton 类的实例，并将它赋值给两个不同的变量 instance1 和 instance2。然后我们比较这两个变量是否相等，如果相等，说明只有一个实例被创建，单例模式有效。最后，我们调用 instance1 的 SomeMethod() 方法，输出 "Some method in singleton instance"。
 
-    // 全局访问点
-    public static Singleton GetInstance()
+## 优化
+
+这个示例是一个基本的单例模式实现，但它可能存在线程安全性问题。如果多个线程同时调用 Singleton.Instance 属性，可能会创建多个 Singleton 类的实例。要解决这个问题，我们可以通过双重检查锁定（Double-Checked Locking）来确保只有一个实例被创建：
+
+```cs
+public sealed class Singleton
+{
+    private static volatile Singleton instance;
+    private static object syncRoot = new object();
+
+    private Singleton() { }
+
+    public static Singleton Instance
     {
-        lock (lockObj)
+        get
         {
             if (instance == null)
             {
-                instance = new Singleton();
+                lock (syncRoot)
+                {
+                    if (instance == null)
+                    {
+                        instance = new Singleton();
+                    }
+                }
             }
+            return instance;
         }
-        return instance;
+    }
+
+    public void SomeMethod()
+    {
+        Console.WriteLine("Some method in singleton instance");
     }
 }
 ```
 
-在上述代码中，我们在GetInstance方法中使用了lock关键字来锁定一个对象（即lockObj）。这样，当多个线程同时调用GetInstance方法时，只有一个线程能够获得锁定对象，从而保证了只有一个线程能够创建Singleton实例。同时，我们也使用了双重检查锁定（double-checked locking）的方式，以避免重复创建Singleton实例的问题。
-
-需要注意的是，虽然使用线程锁可以确保Singleton实例的线程安全性，但是过多的锁使用可能会导致性能问题，因此在使用锁时需要谨慎。
+在这个示例中，我们添加了一个名为 syncRoot 的对象作为锁定对象。在访问 Singleton.Instance 属性时，首先检查实例是否已经存在，如果不存在，就使用 lock 关键字锁定 syncRoot 对象，并再次检查实例是否已经被创建。如果没有，就创建一个新的实例并将其赋值给 instance。这种双重检查锁定的方式可以确保只有一个实例被创建，并且能够避免性能上的开销。

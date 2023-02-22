@@ -15,346 +15,149 @@ order: 3
 
 <!-- more -->
 
-下面是一个抽象工厂模式的示例代码：
+## 定义
 
-```csharp
-// 抽象产品A
-public abstract class AbstractProductA
-{
-    public abstract void Show();
-}
+抽象工厂模式是一种创建型设计模式，它可以提供一个接口用于创建一系列相关或相互依赖的对象，而无需指定具体类。这种模式属于对象创建型模式。
 
-// 具体产品A1
-public class ProductA1 : AbstractProductA
-{
-    public override void Show()
-    {
-        Console.WriteLine("Product A1");
-    }
-}
+## 使用场景
+- 当一个系统需要一系列相互关联或相互依赖的对象时，可以使用抽象工厂模式，这些对象之间存在固定的依赖关系。
+- 当一个系统需要多个产品族中的产品对象，而且这些产品族中的产品对象之间存在一定的约束或逻辑关系时，可以使用抽象工厂模式。
 
-// 具体产品A2
-public class ProductA2 : AbstractProductA
-{
-    public override void Show()
-    {
-        Console.WriteLine("Product A2");
-    }
-}
+## 优缺点
 
-// 抽象产品B
-public abstract class AbstractProductB
-{
-    public abstract void Show();
-}
+**优点**
+- 可以保证同一工厂生产的所有产品对象都是相互兼容的。这样可以使得客户端代码无需关心具体产品的类名，只需关心产品所属的接口或抽象类。
+- 可以封装创建产品对象的过程，使得客户端代码和具体产品实现分离，从而使系统更易于扩展和维护。
+- 可以更容易地替换产品系列，只需要更改具体工厂即可。
 
-// 具体产品B1
-public class ProductB1 : AbstractProductB
-{
-    public override void Show()
-    {
-        Console.WriteLine("Product B1");
-    }
-}
+**缺点**
+- 抽象工厂模式的最大缺点是扩展新的产品族比较困难，因为需要更改抽象工厂接口及其所有的实现类。
+- 在增加新的产品等级结构时，需要更改所有的具体工厂类，这可能会带来较大的代码量。
 
-// 具体产品B2
-public class ProductB2 : AbstractProductB
-{
-    public override void Show()
-    {
-        Console.WriteLine("Product B2");
-    }
-}
+## 代码示例
 
-// 抽象工厂
-public abstract class AbstractFactory
-{
-    public abstract AbstractProductA CreateProductA();
-    public abstract AbstractProductB CreateProductB();
-}
-
-// 具体工厂1
-public class ConcreteFactory1 : AbstractFactory
-{
-    public override AbstractProductA CreateProductA()
-    {
-        return new ProductA1();
-    }
-
-    public override AbstractProductB CreateProductB()
-    {
-        return new ProductB1();
-    }
-}
-
-// 具体工厂2
-public class ConcreteFactory2 : AbstractFactory
-{
-    public override AbstractProductA CreateProductA()
-    {
-        return new ProductA2();
-    }
-
-    public override AbstractProductB CreateProductB()
-    {
-        return new ProductB2();
-    }
-}
-
-// 客户端代码
-public class Client
-{
-    public void Run(AbstractFactory factory)
-    {
-        AbstractProductA productA = factory.CreateProductA();
-        productA.Show();
-
-        AbstractProductB productB = factory.CreateProductB();
-        productB.Show();
-    }
-}
-```
-
-在上述示例代码中，我们定义了两个抽象产品 AbstractProductA 和 AbstractProductB ，分别有两个具体产品 ProductA1 、ProductA2 和 ProductB1 、ProductB2 。然后定义了一个抽象工厂 AbstractFactory ，里面包含两个创建抽象产品的抽象方法 CreateProductA 和 CreateProductB 。接着，定义了两个具体工厂 ConcreteFactory1 和 ConcreteFactory2 ，它们分别实现了 AbstractFactory 中的两个抽象方法，用于创建一组产品族。最后，客户端代码通过传入具体的工厂对象，来获取一组产品对象并进行操作。
-
-抽象工厂模式的优点在于，它可以提供一个统一的接口，用于创建一组相关的对象，从而降低了客户端与具体产品之间的耦合度，使得客户端可以更加灵活地使用不同的产品组合。此外，抽象工厂模式还可以保证一组产品的一致性，即同一个工厂生产的产品族具有相同的风格和特征。
-
-当然，抽象工厂模式也存在一些缺点，如增加新的具体产品或者具体工厂需要修改抽象工厂的接口，这将导致所有的具体工厂都需要进行相应的修改，同时也会影响到客户端代码的改动。
-
-如果要完善上面的示例代码，可以考虑使用反射来动态创建具体产品 或者 引入工厂的注册机制来动态注册和创建具体工厂对象。
-
-下面是一个使用反射来动态创建具体产品的改进版的示例代码：
+下面是一个使用抽象工厂模式的示例程序，该程序使用抽象工厂模式来创建不同类型的按钮和文本框：
 
 ```cs
-// 抽象产品A
-public abstract class AbstractProductA
+// 抽象产品类：按钮
+public abstract class Button
 {
-    public abstract void Show();
+    public abstract void Paint();
 }
 
-// 具体产品A1
-public class ProductA1 : AbstractProductA
+// 具体产品类：Windows 按钮
+public class WindowsButton : Button
 {
-    public override void Show()
+    public override void Paint()
     {
-        Console.WriteLine("Product A1");
+        Console.WriteLine("Painting a Windows button.");
     }
 }
 
-// 具体产品A2
-public class ProductA2 : AbstractProductA
+// 具体产品类：MacOS 按钮
+public class MacOSButton : Button
 {
-    public override void Show()
+    public override void Paint()
     {
-        Console.WriteLine("Product A2");
+        Console.WriteLine("Painting a MacOS button.");
     }
 }
 
-// 抽象产品B
-public abstract class AbstractProductB
+// 抽象产品类：文本框
+public abstract class TextBox
 {
-    public abstract void Show();
+    public abstract void Paint();
 }
 
-// 具体产品B1
-public class ProductB1 : AbstractProductB
+// 具体产品类：Windows 文本框
+public class WindowsTextBox : TextBox
 {
-    public override void Show()
+    public override void Paint()
     {
-        Console.WriteLine("Product B1");
+        Console.WriteLine("Painting a Windows text box.");
     }
 }
 
-// 具体产品B2
-public class ProductB2 : AbstractProductB
+// 具体产品类：MacOS 文本框
+public class MacOSTextBox : TextBox
 {
-    public override void Show()
+    public override void Paint()
     {
-        Console.WriteLine("Product B2");
+        Console.WriteLine("Painting a MacOS text box.");
     }
 }
 
-// 抽象工厂
-public abstract class AbstractFactory
+// 抽象工厂类
+public abstract class GUIFactory
 {
-    public abstract AbstractProductA CreateProductA();
-    public abstract AbstractProductB CreateProductB();
+    public abstract Button CreateButton();
+    public abstract TextBox CreateTextBox();
 }
 
-// 具体工厂1
-public class ConcreteFactory1 : AbstractFactory
+// 具体工厂类：Windows 工厂
+public class WindowsFactory : GUIFactory
 {
-    public override AbstractProductA CreateProductA()
+    public override Button CreateButton()
     {
-        Type type = Type.GetType("AbstractFactoryPattern.ProductA1");
-        return Activator.CreateInstance(type) as AbstractProductA;
+        return new WindowsButton();
     }
 
-    public override AbstractProductB CreateProductB()
+    public override TextBox CreateTextBox()
     {
-        Type type = Type.GetType("AbstractFactoryPattern.ProductB1");
-        return Activator.CreateInstance(type) as AbstractProductB;
+        return new WindowsTextBox();
     }
 }
 
-// 具体工厂2
-public class ConcreteFactory2 : AbstractFactory
+// 具体工厂类：MacOS 工厂
+public class MacOSFactory : GUIFactory
 {
-    public override AbstractProductA CreateProductA()
+    public override Button CreateButton()
     {
-        Type type = Type.GetType("AbstractFactoryPattern.ProductA2");
-        return Activator.CreateInstance(type) as AbstractProductA;
+        return new MacOSButton();
     }
 
-    public override AbstractProductB CreateProductB()
+    public override TextBox CreateTextBox()
     {
-        Type type = Type.GetType("AbstractFactoryPattern.ProductB2");
-        return Activator.CreateInstance(type) as AbstractProductB;
+        return new MacOSTextBox();
     }
 }
 
 // 客户端代码
 public class Client
 {
-    public void Run(AbstractFactory factory)
-    {
-        AbstractProductA productA = factory.CreateProductA();
-        productA.Show();
+    private GUIFactory factory;
 
-        AbstractProductB productB = factory.CreateProductB();
-        productB.Show();
+    public Client(GUIFactory factory)
+    {
+        this.factory = factory;
+    }
+
+    public void Paint()
+    {
+        Button button = factory.CreateButton();
+        button.Paint();
+
+        TextBox textBox = factory.CreateTextBox();
+        textBox.Paint();
+    }
+}
+
+// 示例程序
+public class Program
+{
+    static void Main(string[] args)
+    {
+        // 使用 Windows 工厂创建控件
+        GUIFactory windowsFactory = new WindowsFactory();
+        Client windowsClient = new Client(windowsFactory);
+        windowsClient.Paint();
+
+        // 使用 MacOS 工厂创建控件
+        GUIFactory macosFactory = new MacOSFactory();
+        Client macosClient = new Client(macosFactory);
+        macosClient.Paint();
     }
 }
 ```
-在这个示例代码中，我们使用了反射来动态创建具体产品，从而避免了修改抽象工厂和具体工厂的问题。这种方法虽然增加了一些运行时的开销，但是可以提高代码的灵活性和可扩展性。
 
-
-下面是一个引入工厂的注册机制的改进版的示例代码：
-
-```csharp
-// 工厂注册表
-public static class FactoryRegistry
-{
-    private static readonly Dictionary<string, AbstractFactory> Factories = new Dictionary<string, AbstractFactory>();
-
-    public static void Register(string key, AbstractFactory factory)
-    {
-        Factories[key] = factory;
-    }
-
-    public static AbstractFactory GetFactory(string key)
-    {
-        return Factories[key];
-    }
-}
-
-// 客户端代码
-public class Client
-{
-    public void Run(string factoryKey)
-    {
-        AbstractFactory factory = FactoryRegistry.GetFactory(factoryKey);
-
-        AbstractProductA productA = factory.CreateProductA(); 
-        AbstractProductB productB = factory.CreateProductB();
-
-
-        // 使用产品对象
-        productA.MethodA();
-        productB.MethodB();
-    }
-}
-
-// 抽象工厂类 
-public abstract class AbstractFactory 
-{ 
-    public abstract AbstractProductA CreateProductA(); 
-    public abstract AbstractProductB CreateProductB(); 
-    }
-
-// 具体工厂类A 
-public class ConcreteFactoryA : AbstractFactory 
-{ 
-    public override AbstractProductA CreateProductA() 
-    { 
-        return new ConcreteProductA1(); 
-    }
-
-
-    public override AbstractProductB CreateProductB()
-    {
-        return new ConcreteProductB1();
-    }
-}
-
-// 具体工厂类B 
-public class ConcreteFactoryB : AbstractFactory 
-{ 
-    public override AbstractProductA CreateProductA() 
-    {
-        return new ConcreteProductA2(); 
-    }
-
-    public override AbstractProductB CreateProductB()
-    {
-        return new ConcreteProductB2();
-    }
-}
-
-// 抽象产品A 
-public abstract class AbstractProductA 
-{ 
-    public abstract void MethodA(); 
-}
-
-// 具体产品A1 
-public class ConcreteProductA1 : AbstractProductA 
-{ 
-    public override void MethodA() 
-    { 
-        Console.WriteLine("ConcreteProductA1.MethodA"); 
-    } 
-}
-
-// 具体产品A2 
-public class ConcreteProductA2 : AbstractProductA 
-{ 
-    public override void MethodA() 
-    {
-        Console.WriteLine("ConcreteProductA2.MethodA"); 
-    } 
-}
-
-// 抽象产品B 
-public abstract class AbstractProductB 
-{ 
-    public abstract void MethodB(); 
-}
-
-// 具体产品B1 
-public class ConcreteProductB1 : AbstractProductB 
-{ 
-    public override void MethodB() 
-    { 
-        Console.WriteLine("ConcreteProductB1.MethodB"); 
-    } 
-}
-
-// 具体产品B2 
-public class ConcreteProductB2 : AbstractProductB 
-{ 
-    public override void MethodB() 
-    { 
-        Console.WriteLine("ConcreteProductB2.MethodB"); 
-    } 
-}
-
-// 客户端代码使用 
-Client client = new Client(); 
-FactoryRegistry.Register("FactoryA", new ConcreteFactoryA()); 
-FactoryRegistry.Register("FactoryB", new ConcreteFactoryB()); 
-client.Run("FactoryA"); 
-client.Run("FactoryB");
-```
-
-在这个改进版的示例代码中，我们通过工厂注册表来注册具体工厂对象，并在客户端代码中通过传入工厂的 key 来获取相应的工厂对象，从而动态创建产品对象，避免了客户端代码的强依赖。这种注册机制也是很多现代框架和库所采用的方式，如 `ASP.NET Core` 中的依赖注入。
+在上述示例代码中，抽象工厂模式使用了抽象工厂类 GUIFactory 和其具体实现类 WindowsFactory 和 MacOSFactory。每个具体工厂类都可以创建一组相关的产品对象（按钮和文本框），并实现抽象工厂类中定义的抽象方法。客户端代码使用特定的工厂对象创建按钮和文本框，并使用这些控件执行任务。
