@@ -17,7 +17,6 @@ export default hopeTheme({
     end: ["Search","Outlook","Repo"],
   },
 
-
   //首页左上角图标
   logo: "/images/s.png",
   docsDir: "docs",
@@ -89,7 +88,7 @@ export default hopeTheme({
   sidebarSorter: ["readme", "order", "title"],
   headerDepth: 5,
   //路径导航
-  breadcrumb: true,
+  breadcrumb: false,
   breadcrumbIcon: true,
   prevLink: true,
   nextLink: true,
