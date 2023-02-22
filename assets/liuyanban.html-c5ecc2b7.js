@@ -1,1 +1,0 @@
-import{_ as t,Z as a,$ as n,a0 as c,a2 as e}from"./framework-e7ac220c.js";const o={},s=e("div",{class:"custom-container tip"},[e("p",{class:"custom-container-title"},"提示"),e("p",null,"欢迎留言！")],-1);function l(r,_){return a(),n("div",null,[s,c(" more ")])}const m=t(o,[["render",l],["__file","liuyanban.html.vue"]]);export{m as default};
