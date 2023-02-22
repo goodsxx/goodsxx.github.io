@@ -12,9 +12,9 @@ export default hopeTheme({
     //url: "https://mrhope.site",
   },
   navbarLayout: {
-    left: ["Brand"],
+    start: ["Brand"],
     center: ["Links"],
-    right: ["Search","Outlook","Repo"],
+    end: ["Search","Outlook","Repo"],
   },
 
 
@@ -160,8 +160,9 @@ export default hopeTheme({
       figure: true,
       flowchart: true,
       gfm: true,
-      imageLazyload: true,
-      imageSize: true,
+      imgLazyload: true,
+      imgSize: true,
+      imgMark:true,
       include: true,
       katex: true,
       mark: true,
