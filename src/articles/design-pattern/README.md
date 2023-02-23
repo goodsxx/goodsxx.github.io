@@ -1,5 +1,5 @@
 ---
-title: 设计模式系列介绍
+title: 设计模式
 date: 2022-04-29
 ---
 ::: tip ✨✨✨✨✨
@@ -15,7 +15,7 @@ date: 2022-04-29
 
 ## 设计模式的类型
 
-设计模式一共有23种，这些模式可以分为三大类：**创建型模式**、**行为型模式**、结构**型模式**。
+设计模式一共有23种，这些模式可以分为三大类：**创建型模式**、**行为型模式**、**结构型模式**。
 
 <table>
     <tr>
@@ -47,9 +47,9 @@ date: 2022-04-29
          <a href="./iterator-pattern.html">6. 迭代器模式</a><br />
          <a href="./command-pattern.html">7. 命令模式</a><br />
          <a href="./interpreter-pattern.html">8. 解释器模式</a><br />
-         <a href="./iterator-pattern.html">9. 责任链模式</a><br />
-         <a href="./iterator-pattern.html">10. 观察者模式</a><br />
-         <a href="./iterator-pattern.html">11. 中介者模式</a><br />
+         <a href="./chain-of-responsibility-pattern.html">9. 责任链模式</a><br />
+         <a href="./observer-pattern.html">10. 观察者模式</a><br />
+         <a href="./mediator-pattern.html">11. 中介者模式</a><br />
          <a href="./iterator-pattern.html">12. 备忘录模式</a><br />
          <a href="./iterator-pattern.html">13. 状态模式</a><br />
          <a href="./iterator-pattern.html">14. 策略模式</a><br />

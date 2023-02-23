@@ -65,9 +65,9 @@ public sealed class Singleton
 }
 ```
 
-这里定义了一个名为 Singleton 的类，它的构造函数被声明为私有的，以确保不能从外部实例化该类的对象。类的实例被存储在名为 instance 的静态变量中，并通过公共静态属性 Instance 进行访问。
+这里定义了一个名为 `Singleton` 的类，它的构造函数被声明为私有的，以确保不能从外部实例化该类的对象。类的实例被存储在名为 `instance` 的静态变量中，并通过公共静态属性 `Instance` 进行访问。
 
-下面是一个使用 Singleton 类的示例：
+下面是一个使用 `Singleton` 类的示例：
 
 ```cs
 class Program
@@ -87,11 +87,11 @@ class Program
 }
 ```
 
-在这个示例中，我们从 Singleton.Instance 属性中获取 Singleton 类的实例，并将它赋值给两个不同的变量 instance1 和 instance2。然后我们比较这两个变量是否相等，如果相等，说明只有一个实例被创建，单例模式有效。最后，我们调用 instance1 的 SomeMethod() 方法，输出 "Some method in singleton instance"。
+在这个示例中，我们从 `Singleton.Instance` 属性中获取 `Singleton` 类的实例，并将它赋值给两个不同的变量 `instance1` 和 `instance2`。然后我们比较这两个变量是否相等，如果相等，说明只有一个实例被创建，单例模式有效。最后，我们调用 `instance1` 的 `SomeMethod()` 方法，输出 `"Some method in singleton instance"`。
 
 ## 优化
 
-这个示例是一个基本的单例模式实现，但它可能存在线程安全性问题。如果多个线程同时调用 Singleton.Instance 属性，可能会创建多个 Singleton 类的实例。要解决这个问题，我们可以通过双重检查锁定（Double-Checked Locking）来确保只有一个实例被创建：
+这个示例是一个基本的单例模式实现，但它可能存在线程安全性问题。如果多个线程同时调用 `Singleton.Instance` 属性，可能会创建多个 `Singleton` 类的实例。要解决这个问题，我们可以通过双重检查锁定（Double-Checked Locking）来确保只有一个实例被创建：
 
 ```cs
 public sealed class Singleton
@@ -126,4 +126,4 @@ public sealed class Singleton
 }
 ```
 
-在这个示例中，我们添加了一个名为 syncRoot 的对象作为锁定对象。在访问 Singleton.Instance 属性时，首先检查实例是否已经存在，如果不存在，就使用 lock 关键字锁定 syncRoot 对象，并再次检查实例是否已经被创建。如果没有，就创建一个新的实例并将其赋值给 instance。这种双重检查锁定的方式可以确保只有一个实例被创建，并且能够避免性能上的开销。
+在这个示例中，我们添加了一个名为 `syncRoot` 的对象作为锁定对象。在访问 `Singleton.Instance` 属性时，首先检查实例是否已经存在，如果不存在，就使用 `lock` 关键字锁定 `syncRoot` 对象，并再次检查实例是否已经被创建。如果没有，就创建一个新的实例并将其赋值给 `instance`。这种双重检查锁定的方式可以确保只有一个实例被创建，并且能够避免性能上的开销。

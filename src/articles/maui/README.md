@@ -1,5 +1,5 @@
 ---
-title: MAUI系列介绍
+title: MAUI系列
 date: 2022-12-01
 sticky: 1
 ---

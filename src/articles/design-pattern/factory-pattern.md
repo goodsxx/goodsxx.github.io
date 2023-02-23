@@ -76,7 +76,7 @@ public abstract class Factory
     public abstract Product CreateProduct();
 }
 ```
-最后，我们定义两个具体的工厂类，它们分别用于创建 ConcreteProductA 和 ConcreteProductB：
+最后，我们定义两个具体的工厂类，它们分别用于创建 `ConcreteProductA` 和 `ConcreteProductB`：
 
 ```cs
 public class ConcreteFactoryA : Factory
@@ -95,9 +95,9 @@ public class ConcreteFactoryB : Factory
     }
 }
 ```
-在这个示例中，抽象工厂类 Factory 中的 CreateProduct() 方法是工厂方法，它的具体实现由具体工厂类 ConcreteFactoryA 和 ConcreteFactoryB 来实现。这两个具体工厂类分别用于创建 ConcreteProductA 和 ConcreteProductB。
+在这个示例中，抽象工厂类 `Factory` 中的 `CreateProduct()` 方法是工厂方法，它的具体实现由具体工厂类 `ConcreteFactoryA` 和 `ConcreteFactoryB` 来实现。这两个具体工厂类分别用于创建 `ConcreteProductA` 和 `ConcreteProductB`。
 
-下面是一个示例程序，它使用工厂模式来创建产品，并调用产品的 Use() 方法：
+下面是一个示例程序，它使用工厂模式来创建产品，并调用产品的 `Use()` 方法：
 ```cs
 class Program
 {
@@ -190,7 +190,7 @@ public class Client
 }
 ```
 
-在上述代码中，我们首先定义了一个抽象的产品类 Product ，然后定义了两个具体的产品类 ProductA 和 ProductB 。接着，我们定义了一个工厂接口 IFactory ，其中定义了一个 CreateProduct 方法用于创建产品对象。最后，我们定义了两个具体的工厂类 FactoryA 和 FactoryB ，分别用于创建 ProductA 和 ProductB 对象。
+在上述代码中，我们首先定义了一个抽象的产品类 `Product` ，然后定义了两个具体的产品类 `ProductA` 和 `ProductB` 。接着，我们定义了一个工厂接口 `IFactory` ，其中定义了一个 `CreateProduct` 方法用于创建产品对象。最后，我们定义了两个具体的工厂类 `FactoryA` 和 `FactoryB` ，分别用于创建 `ProductA` 和 `ProductB` 对象。
 
 在客户端代码中，我们首先创建一个工厂对象，然后通过工厂接口来获取具体的产品对象，最后调用产品对象的 Show 方法来展示产品信息。
 
@@ -309,4 +309,4 @@ public class Client
 }
 ```
 
-在完善后的代码中，我们增加了一个工厂管理类 FactoryManager，用于管理各个具体工厂对象的创建与销毁。客户端代码通过调用工厂管理类的 RegisterFactory 方法来注册具体工厂，然后通过 CreateProduct 方法来创建具体产品对象。这样，客户端就无法直接创建具体产品对象，而只能通过工厂管理类来获取。同时，我们还使用了单例模式来确保工厂管理类的唯一性，以及使用线程安全的方式来初始化单例对象。
+在完善后的代码中，我们增加了一个工厂管理类 `FactoryManager`，用于管理各个具体工厂对象的创建与销毁。客户端代码通过调用工厂管理类的 `RegisterFactory` 方法来注册具体工厂，然后通过 `CreateProduct` 方法来创建具体产品对象。这样，客户端就无法直接创建具体产品对象，而只能通过工厂管理类来获取。同时，我们还使用了单例模式来确保工厂管理类的唯一性，以及使用线程安全的方式来初始化单例对象。

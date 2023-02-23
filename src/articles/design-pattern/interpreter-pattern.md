@@ -43,9 +43,9 @@ order: 8
 
 ## 代码示例
 
-下面是一个使用解释器模式实现的简单案例，我们将解释一个包含加减乘除的表达式，例如"1 + 2 - 3 * 4 / 2"。我们将通过解释器模式来计算该表达式的值。
+下面是一个使用解释器模式实现的简单案例，我们将解释一个包含加减乘除的表达式，例如 "1 + 2 - 3 * 4 / 2"。我们将通过解释器模式来计算该表达式的值。
 
-首先，我们定义一个抽象表达式类 Expression，该类包含一个抽象方法 Interpret，用于计算表达式的值。
+首先，我们定义一个抽象表达式类 `Expression`，该类包含一个抽象方法 `Interpret`，用于计算表达式的值。
 ```cs
 // 抽象表达式类
 abstract class Expression
@@ -53,7 +53,7 @@ abstract class Expression
     public abstract int Interpret();
 }
 ```
-然后，我们定义数字表达式类 NumberExpression，该类表示一个数字表达式。
+然后，我们定义数字表达式类 `NumberExpression`，该类表示一个数字表达式。
 ```cs
 // 数字表达式类
 class NumberExpression : Expression
@@ -72,7 +72,7 @@ class NumberExpression : Expression
 }
 ```
 
-接下来，我们定义运算符表达式类 OperatorExpression，该类表示一个运算符表达式。该类包含左操作数和右操作数两个表达式对象。
+接下来，我们定义运算符表达式类 `OperatorExpression`，该类表示一个运算符表达式。该类包含左操作数和右操作数两个表达式对象。
 ```cs
 // 运算符表达式类
 class OperatorExpression : Expression
@@ -110,7 +110,7 @@ class OperatorExpression : Expression
 }
 ```
 
-最后，我们定义一个解释器类 Interpreter，该类包含一个 Parse 方法，用于解析一个字符串形式的表达式，并返回表达式的计算结果。
+最后，我们定义一个解释器类 `Interpreter`，该类包含一个 `Parse` 方法，用于解析一个字符串形式的表达式，并返回表达式的计算结果。
 ```cs
 // 解释器类
 class Interpreter
