@@ -11,6 +11,12 @@ head:
   - - meta
     - name: baidu-site-verification
       content: codeva-3WYDFWEZup
+  - - meta
+    - name: msvalidate.01
+      content: B203CBD1576DBD14E51A9B4AAD85386C
+  - - meta
+    - name: google-site-verification
+      content: qxA3JVZhNxhf9pq5_quneWi6N4WCugQ-3oy3fI6TuuU
 projects:
   - icon: article
     name: 本站指南
