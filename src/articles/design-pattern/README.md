@@ -1,5 +1,5 @@
 ---
-title: 设计模式
+title: 设计模式系列介绍
 date: 2022-04-29
 ---
 ::: tip ✨✨✨✨✨
@@ -44,17 +44,17 @@ date: 2022-04-29
          这些设计模式特别关注对象之间的通信。
         </td>
         <td style='width:30%'>
-        <a href="./iterator-pattern.html">6. 迭代器模式</a><br />
-        7. 命令模式<br />
-        8. 8. 解释器模式<br />
-        9. 9. 责任链模式<br />
-        10. 10. 观察者模式<br />
-        11. 11. 中介者模式<br />
-        12. 12. 备忘录模式<br />
-        13. 13. 状态模式<br />
-        14. 14. 策略模式<br />
-        15. 15. 模板方法模式<br />
-        16. 16. 访问者模式
+         <a href="./iterator-pattern.html">6. 迭代器模式</a><br />
+         <a href="./command-pattern.html">7. 命令模式</a><br />
+         <a href="./interpreter-pattern.html">8. 解释器模式</a><br />
+         <a href="./iterator-pattern.html">9. 责任链模式</a><br />
+         <a href="./iterator-pattern.html">10. 观察者模式</a><br />
+         <a href="./iterator-pattern.html">11. 中介者模式</a><br />
+         <a href="./iterator-pattern.html">12. 备忘录模式</a><br />
+         <a href="./iterator-pattern.html">13. 状态模式</a><br />
+         <a href="./iterator-pattern.html">14. 策略模式</a><br />
+         <a href="./iterator-pattern.html">15. 模板方法模式</a><br />
+         <a href="./iterator-pattern.html">16. 访问者模式</a>
         </td>
     </tr>
     <tr>
@@ -64,7 +64,13 @@ date: 2022-04-29
          这些设计模式关注类和对象的组合。继承的概念被用来组合接口和定义组合对象获得新功能的方式。
         </td>
         <td style='width:30%'>
-        17. 适配器模式<br />18. 组合模式<br />19. 代理模式<br />20. 桥梁模式<br />21. 装饰模式<br />22. 门面模式<br />23. 享元模式
+        <a href="./iterator-pattern.html">17. 适配器模式</a><br />
+        <a href="./iterator-pattern.html">18. 组合模式</a><br />
+        <a href="./iterator-pattern.html">19. 代理模式</a><br />
+        <a href="./iterator-pattern.html">20. 桥梁模式</a><br />
+        <a href="./iterator-pattern.html">21. 装饰模式</a><br />
+        <a href="./iterator-pattern.html">22. 门面模式</a><br />
+        <a href="./iterator-pattern.html">23. 享元模式</a>
         </td>
     </tr>
 </table>

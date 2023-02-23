@@ -6,7 +6,7 @@ export const Navbar = navbar([
   { 
     text: "本站指南", 
     icon: "autumn", 
-    link: "/columns/about-this-website/",
+    link: "/about-this-website/",
   },
   {
     text: "文章",
@@ -14,7 +14,7 @@ export const Navbar = navbar([
     children: [
       {
         text: "系列",
-        prefix: "/columns/blog-posts/series/",
+        prefix: "/articles/",
         children: [
           { text: "MAUI系列", icon: "blog", link: "maui/" },
           { text: "Linux系列", icon: "blog", link: "linux/" },
@@ -25,11 +25,11 @@ export const Navbar = navbar([
       },
       {
         text: "零碎内容",
-        prefix: "/columns/blog-posts/lingsuineirong/",
+        prefix: "/articles/",
         children: [
           { text: "前端", icon: "blog", link: "qianduan/" },
           { text: "后端", icon: "blog", link: "houduan/" },
-          { text: "其他", icon: "blog", link: "others/" },
+          { text: "其它", icon: "blog", link: "others/" },
         ],
       },
     ],

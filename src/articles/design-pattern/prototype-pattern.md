@@ -105,8 +105,8 @@ class Client
 }
 ```
 
-在上面的代码中，我们首先定义了一个ElectronicProductPrototype抽象类，它包含一个Model属性和一个Clone()方法。Clone()方法返回一个克隆出来的对象，因为在原型模式中我们可以使用现有的对象作为原型，根据需要创建新的对象。
+在上面的代码中，我们首先定义了一个 ElectronicProductPrototype 抽象类，它包含一个 Model 属性和一个 Clone() 方法。Clone() 方法返回一个克隆出来的对象，因为在原型模式中我们可以使用现有的对象作为原型，根据需要创建新的对象。
 
-接着，我们定义了两个具体的原型类PhonePrototype和TabletPrototype，它们继承自 ElectronicProductPrototype，并实现了Clone()方法。在Clone()方法中，我们使用了 MemberwiseClone()方法来复制对象。这个方法会复制对象中的所有值类型成员，并对于引用类型成员只复制引用而不复制对象本身。
+接着，我们定义了两个具体的原型类 PhonePrototype 和 TabletPrototype，它们继承自  ElectronicProductPrototype，并实现了 Clone() 方法。在 Clone() 方法中，我们使用了  MemberwiseClone() 方法来复制对象。这个方法会复制对象中的所有值类型成员，并对于引用类型成员只复制引用而不复制对象本身。
 
-最后，我们在客户端代码中创建了原型对象，并通过调用Clone()方法来克隆它们。我们可以通过克隆后的对象的Model属性来检查它们是否被成功克隆。
+最后，我们在客户端代码中创建了原型对象，并通过调用 Clone() 方法来克隆它们。我们可以通过克隆后的对象的 Model 属性来检查它们是否被成功克隆。

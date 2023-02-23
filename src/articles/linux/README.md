@@ -1,5 +1,5 @@
 ---
-title: Linux系列
+title: Linux系列介绍
 date: 2022-04-10
 ---
 

@@ -1,5 +1,6 @@
 ---
 title: 本站指南
+icon: autumn
 category:
  - VuePress
 tag: 
