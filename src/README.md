@@ -7,6 +7,10 @@ bgImage: /images/bg1.jpg
 heroText: Growing Notes
 tagline: 慢慢理解世界 慢慢更新自己
 heroFullScreen: true
+head:
+  - - meta
+    - name: baidu-site-verification
+      content: codeva-3WYDFWEZup
 projects:
   - icon: article
     name: 本站指南
