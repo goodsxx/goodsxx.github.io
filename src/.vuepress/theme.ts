@@ -1,4 +1,4 @@
-import { hopeTheme } from "vuepress-theme-hope";
+import { hopeTheme } from "vuepress-theme-hope/perf";
 import { Navbar } from "./navbar.js";
 import { Sidebar } from "./sidebar.js";
 

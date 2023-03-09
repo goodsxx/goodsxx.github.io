@@ -39,4 +39,9 @@ export const Navbar = navbar([
     icon: "edit", 
     link: "/liuyanban",
   },
+  { 
+    text: "ChatGpt", 
+    icon: "wechat", 
+    link: "/chatgpt",
+  },
 ]);
