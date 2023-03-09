@@ -40,7 +40,7 @@ export const Navbar = navbar([
     link: "/liuyanban",
   },
   { 
-    text: "ChatGpt", 
+    text: "ChatGPT", 
     icon: "wechat", 
     link: "/chatgpt",
   },

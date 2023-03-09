@@ -6,7 +6,7 @@ export default hopeTheme({
 
   //基本配置
   //https://vuepress-theme-hope.github.io/v2/zh/config/theme/basic.html
-  hostname: "http://goodsxx.cn",
+  hostname: "http://blog.goodsxx.cn",
   author: {
     name: "SongXinXin",
     //url: "https://mrhope.site",
