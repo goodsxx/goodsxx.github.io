@@ -4,6 +4,7 @@ export const Sidebar = sidebar({
   
   "/about-this-website/": "structure",
   "/articles/": "structure",
+  "/articles/distributed-middleware/": "structure",
   "/articles/linux/": "structure",
   "/articles/micro-service/": "structure",
   "/articles/maui/": "structure",

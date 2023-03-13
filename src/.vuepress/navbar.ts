@@ -16,6 +16,7 @@ export const Navbar = navbar([
         text: "系列",
         prefix: "/articles/",
         children: [
+          { text: "分布式中间件系列", icon: "blog", link: "distributed-middleware/" },
           { text: "MAUI系列", icon: "blog", link: "maui/" },
           { text: "Linux系列", icon: "blog", link: "linux/" },
           { text: "微服务系列", icon: "blog", link: "micro-service/" },
