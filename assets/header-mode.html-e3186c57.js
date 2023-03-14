@@ -1,1 +1,0 @@
-import{_ as t,X as o,Y as a,Z as c,$ as e}from"./framework-8e4c1295.js";const n={},r=e("div",{class:"hint-container tip"},[e("p",{class:"hint-container-title"},"✨✨✨✨✨")],-1);function s(_,i){return o(),a("div",null,[r,c(" more ")])}const l=t(n,[["render",s],["__file","header-mode.html.vue"]]);export{l as default};
