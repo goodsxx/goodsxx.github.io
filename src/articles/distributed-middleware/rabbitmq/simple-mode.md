@@ -17,63 +17,58 @@ RabbitMQ 简单模式（Simple Mode）是 RabbitMQ 最基础的一种使用模�
 
 ## 介绍
 
-RabbitMQ 简单模式（Simple Mode）是 RabbitMQ 最基础的一种使用模式，也称为点对点模式。在简单模式中，一个生产者向一个消费者发送消息，消费者从队列中获取并处理该消息。这种模式非常适用于只有一个消费者需要处理任务的场景，如日志处理、计算任务等。
+RabbitMQ 简单模式（Simple Mode）是 RabbitMQ 最基础的一种使用模式，也称为“Hello World”模式，它包括一个生产者将消息发送到队列中，然后一个消费者从该队列接收并处理该消息。
+
+![简单模式](./image/simple-mode/1678761415001.png)
 
 ## 使用场景
 
-- 需要对消息进行可靠传输，确保消息不会因为网络或其他问题而丢失。
-- 需要实现简单的异步消息通信方式，以提高应用程序的响应性和可扩展性。
-- 需要解耦应用程序中的各个组件，通过消息队列来实现组件之间的协作和数据交换。
+简单队列模式适用于需要单个消费者处理任务的场景，例如：
 
-## 优缺点
-
-### 优点
-
-- 实现简单，易于理解和使用。
-- 可靠的消息传输机制，保障消息的可靠性和稳定性。
-- 支持多语言和平台，具有很好的兼容性。
-
-### 缺点
-
-- 不支持多个消费者共享同一个队列，不能实现任务分发和负载均衡。
-- 无法处理消息重复消费的问题。
+- 异步处理任务：通过将任务放入队列中，让消费者异步处理任务，从而提高系统的吞吐量和性能。
+- 消息传递：通过消息代理传递消息，使得不同的应用程序可以异步地进行解耦合的通信。
 
 ## 代码示例
 
 :::tabs
 @tab 生产者
+
 ```cs
-class Producer
-{
-    static void Main(string[] args)
-    {
-        // 创建连接工厂对象，指定主机名和登录凭据信息
-        ConnectionFactory factory = new() 
-        { 
-            HostName = "192.168.3.100", 
-            Port=5672, //默认端口
-            UserName = "guest", 
-            Password = "guest" 
-        };
+using RabbitMQ.Client;
+using System.Text;
 
-        // 创建连接对象
-        using var connection = factory.CreateConnection();
-        // 创建信道对象
-        using var channel = connection.CreateModel();
-        // 声明队列，如果不存在就创建
-        channel.QueueDeclare(queue: "hello", durable: false, exclusive: false, autoDelete: false, arguments: null);
+// 创建ConnectionFactory实例，设置RabbitMQ节点的主机名
+ConnectionFactory factory = new() 
+{ 
+    HostName = "192.168.3.100", 
+    Port=5672, 
+    UserName = "guest", 
+    Password = "guest" 
+};
+using var connection = factory.CreateConnection(); // 创建连接
+using var channel = connection.CreateModel(); // 创建通道
 
-        // 发送消息到队列中
-        string message = "Hello World!";
-        var body = Encoding.UTF8.GetBytes(message);
-        channel.BasicPublish(exchange: "", routingKey: "hello", basicProperties: null, body: body);
-        Console.WriteLine(" [生产者] 发送： {0}", message);
+// 声明队列，如果该队列不存在，则会自动创建
+channel.QueueDeclare(queue: "hello",
+                     durable: false,
+                     exclusive: false,
+                     autoDelete: false,
+                     arguments: null);
 
-        Console.WriteLine(" 按 [enter] 键退出");
-        Console.ReadLine();
-    }
-}
+string message = "Hello World!"; // 待发送的消息
+var body = Encoding.UTF8.GetBytes(message); // 将消息转换成字节数组
+
+// 发布消息到队列中，exchange参数为空表示默认交换器
+channel.BasicPublish(exchange: "",
+                     routingKey: "hello", // 消息的路由键为hello
+                     basicProperties: null,
+                     body: body);
+Console.WriteLine("[生产者] 发送消息：{0}", message); // 输出发送的消息内容
+
+Console.WriteLine("按[Enter]键退出");
+Console.ReadLine();
 ```
+
 **参数说明**
 
 >  **QueueDeclare：**
@@ -90,46 +85,50 @@ class Producer
 > - **`body`** : 消息体，即要发送的消息内容，可以是二进制数据流或 UTF-8 编码的文本。
 
 @tab 消费者
+
 ```cs
-class Consumer
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System.Text;
+
+// 创建连接工厂对象，指定主机名和登录凭据信息
+ConnectionFactory factory = new()
 {
-    static void Main(string[] args)
-    {
-        // 创建连接工厂对象，指定主机名和登录凭据信息
-        ConnectionFactory factory = new()
-        {
-            HostName = "192.168.3.100",
-            Port = 5672,
-            UserName = "guest",
-            Password = "guest"
-        };
+    HostName = "192.168.3.100",
+    Port = 5672,
+    UserName = "guest",
+    Password = "guest"
+};
+using var connection = factory.CreateConnection(); // 创建连接
+using var channel = connection.CreateModel(); // 创建通道
 
+// 声明队列，如果该队列不存在，则会自动创建
+channel.QueueDeclare(queue: "hello",
+                     durable: false,
+                     exclusive: false,
+                     autoDelete: false,
+                     arguments: null);
 
-        // 创建连接对象
-        using var connection = factory.CreateConnection();
-            // 创建信道对象
-        using var channel = connection.CreateModel();
-        // 声明队列，如果不存在就创建
-        channel.QueueDeclare(queue: "hello", durable: false, exclusive: false, autoDelete: false, arguments: null);
+// 创建一个事件基本消费者
+var consumer = new EventingBasicConsumer(channel);
+consumer.Received += (model, ea) =>
+{
+    ReadOnlyMemory<byte> body = ea.Body.ToArray(); // 获取消息体的字节数组
+    string message = Encoding.UTF8.GetString(body.Span); // 将字节数组转换成字符串
+    Console.WriteLine(" [消费者] 收到消息：{0}", message); // 输出接收到的消息
+    //成功时手动确认消息
+    channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+    //失败时打回队列
+    //channel.BasicNack(deliveryTag: ea.DeliveryTag, multiple: false, requeue: true);
+};
 
-        // 创建消费者对象
-        var consumer = new EventingBasicConsumer(channel);
+// 启动消费者
+channel.BasicConsume(queue: "hello",
+                     autoAck: false, // 是否自动确认消息已经被消费
+                     consumer: consumer); // 指定消费者
 
-        // 消息接收事件处理
-        consumer.Received += (model, ea) =>
-        {
-            byte[] body = ea.Body.ToArray();             // 获取消息体
-            string message = Encoding.UTF8.GetString(body);   // 将消息体转换成字符串
-            Console.WriteLine(" [消费者] 接收： {0}", message);
-        };
-
-        // 订阅队列并开始消费消息
-        channel.BasicConsume(queue: "hello", autoAck: true, consumer: consumer);
-
-        Console.WriteLine(" 按 [enter] 键退出");
-        Console.ReadLine();
-    }
-}
+Console.WriteLine("按[Enter]键退出");
+Console.ReadLine(); 
 ```
 **参数说明**
 
@@ -142,12 +141,6 @@ class Consumer
 > **BasicConsume：**
 > - **`autoAck`** : 是否自动确认消息，如果为 true，则 RabbitMQ 在向该消费者发送一条消息时，会自动将该消息标记为已经确认（ack），无需手动调用 BasicAck 方法进行确认。默认为 false。
 > - **`consumer`** : EventingBasicConsumer 对象，用于实现消费者的事件处理和状态管理。
-
-其中，Received 事件是在消费者接收到消息时触发的，事件处理函数中获取了消息体并将其转换为字符串，然后进行输出。在订阅队列时，我们可以通过设置 autoAck 参数来控制是否需要手动确认消息处理完成。在这里，由于简单模式下只有一个消费者，所以我们将 autoAck 设置为 true，即表示收到消息后立即确认，可以避免消息被重复消费或丢失的问题。
 :::
 
-以上代码展示了 .NET6 中 RabbitMQ 简单模式下的生产者和消费者的实现。其中，生产者端声明了名为 "hello" 的队列，并向该队列发送了一条消息，而消费者端则监听了 "hello" 队列，并在收到消息时进行处理。
-
-:::info
-在简单模式中，消息直接发送给队列，没有经过交换机的路由。为了将消息发送到指定的队列，需要在消费者端指定队列的名称，并在生产者端声明该队列。这种模式下通常使用默认的 Direct 类型交换机（Exchange），该交换机会将消息按照发布者指定的 Routing Key 直接发送到指定的队列中。
-:::
+简单队列模式是 RabbitMQ 中最简单的消息模式之一，适用于需要单个消费者处理任务的场景。本文演示了如何使用 RabbitMQ 实现简单队列模式，包括生产者将消息发送到队列中，消费者从队列中接收并处理该消息。

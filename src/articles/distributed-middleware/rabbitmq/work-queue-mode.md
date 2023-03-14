@@ -16,203 +16,436 @@ order: 2
 
 ## 介绍
 
-工作队列模式（Work Queue Mode）是一个常见的消息队列应用模式，通常是一个生产者对多个消费者的模型。在该模式下，生产者将待处理的任务放入队列中，由多个消费者从队列中获取任务并进行处理。例如将耗时的任务异步地分配给多个工作者进行处理。在工作队列中，消息生产者将待处理的任务放入队列中，由一组工作者来竞争性地消费这些任务，并将处理结果返回给消息代理或存储到数据仓库中。
+工作队列模式（Work Queue Mode）是一个常见的消息队列应用模式，通它包括一个或多个生产者将消息发送到队列中，然后一个或多个消费者从该队列接收并处理消息。工作队列模式的特点在于可以在多个消费者之间分配和平衡负载，并且可以确保每个消息只被消费一次。
 
-具体来说，当有消息到达队列时，消息代理会轮询地将其派发给空闲的消费者，以达到任务负载均衡的效果。因此，在工作队列模式中，多个消费者可以同时处理不同的任务，提高了处理的吞吐量和响应速度。
-
-需要注意的是，在工作队列模式中，一个消息只能被一个消费者消费，即每个消息只会被发送给其中的一个消费者处理。但是，可以通过设置 channel.BasicQos 方法来控制每个消费者最多只能处理一条消息，以避免某个消费者被过多任务占用而导致其他消费者处于闲置状态的问题。
+![工作队列模式](./image/work-queue-mode/1678764104231.png)
 
 ## 使用场景
 
-工作队列模式适用于需要对大量数据进行处理、计算或转换的场景。例如：
+工作队列模式适用于需要处理大量任务的场景，例如：
 
-- 数据备份或归档：将数据库或文件系统中的数据备份或归档，可能需要花费数小时或数天的时间。
-- 图像或音视频处理：对大量的图像或音视频进行处理，需要进行格式转换、压缩、加密等操作，可能需要数分钟或数小时的时间。
-- 批量任务调度：根据用户提交的任务列表进行批量处理，例如定时刷新缓存、发送邮件等。
+- 后台任务处理：通过将任务放入队列中，让多个消费者异步处理任务，从而提高系统的吞吐量和性能。
+- 负载均衡：通过多个消费者共同处理队列中的任务，实现任务的分配和负载均衡。
 
-## 优缺点
+## 循环调度
 
-### 优点
+在循环调度模式中，RabbitMQ 会尝试将消息平均分配给所有可用的消费者，而不考虑每个消费者的处理能力和负载情况。当消费者数量不变时，每个消费者将在轮换周期内依次接收到消息。
 
-- 可以有效地处理大量的请求和任务，并且可以横向扩展，适用于高并发、大规模的场景。
-- 可以实现任务的异步处理，提高了系统的吞吐量和响应速度。
-- 可以实现多个工作者之间的负载均衡，避免某个工作者被过多任务占用而导致其他工作者处于闲置状态。
-
-### 缺点
-
-- 需要复杂的设计和管理，包括队列的创建、消息的发送、消费者的监控和异常处理等。
-- 在任务处理失败时很难进行回滚和恢复，可能需要重新启动整个任务流程。[^1]
-
-## 负载均衡
-
-在工作者模式中，为了实现消费者之间的负载均衡，通常采用以下两种机制：
-
-1. **轮询机制**：当消息到达队列时，RabbitMQ 会轮询地将其分发给任一空闲的消费者。这种机制能够确保所有消费者平等地处理任务，并使得任务的负载均衡比较均匀。但是，如果某些消费者的处理能力强于其他消费者，那么这种机制可能会导致某些消费者被过度负载而无法及时完成任务。
-
-2. **消息确认机制**：在默认情况下，RabbitMQ 会自动确认收到的消息，并从队列中删除该消息。如果某个消费者在处理消息时出现错误或异常，就可能会导致该消息永久丢失或无法及时处理。为了避免这种情况，可以使用消息确认机制来实现消息的可靠性处理。具体来说，当消费者处理完消息后，可以向 RabbitMQ 发送 Ack 操作来确认消息已经被成功处理。如果消费者无法处理消息，则可以发送 Nack 操作或重新推送消息以进行重试。
-
-## 代码示例
-
-由于消息确认机制比轮询机制更加完善，故此处代码仅展示消息确认机制的示例。
+### 代码示例
 
 :::tabs
 @tab 生产者
 
 ```cs
-class Producer
+using RabbitMQ.Client;
+using System.Text;
+
+// 创建ConnectionFactory实例，设置RabbitMQ节点的主机名
+ConnectionFactory factory = new()
 {
-    static void Main(string[] args)
-    {
-        // 创建连接工厂对象，指定主机名和登录凭据信息
-        ConnectionFactory factory = new()
-        {
-            HostName = "192.168.3.100",
-            Port = 5672,
-            UserName = "guest",
-            Password = "guest"
-        };
-        using var connection = factory.CreateConnection();
-        using var channel = connection.CreateModel();
+    HostName = "192.168.3.100",
+    Port = 5672,
+    UserName = "guest",
+    Password = "guest"
+};
+using var connection = factory.CreateConnection(); // 创建连接
+using var channel = connection.CreateModel(); // 创建通道
 
-        // 声明一个队列，如果不存在则创建
-        var queueName = "task_queue";
-        channel.QueueDeclare(queue: queueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
+// 声明队列，如果该队列不存在，则会自动创建
+channel.QueueDeclare(queue: "work_queue",
+                     durable: true, //设置队列为持久化
+                     exclusive: false,
+                     autoDelete: false,
+                     arguments: null);
+// 设置消息为持久化
+var properties = channel.CreateBasicProperties();
+properties.Persistent = true;
 
-        string[] messages = new string[]
-        {
-            "Hello", "World", "Welcome", "to", "RabbitMQ"
-        };
+for (int i = 0; i < 10; i++)
+{
+    string message = $"任务消息 {i}"; // 待发送的消息
+    var body = Encoding.UTF8.GetBytes(message); // 将消息转换成字节数组
 
-        // 向队列中发送多个消息，并设置消息持久化
-        foreach (var message in messages)
-        {
-            var body = Encoding.UTF8.GetBytes(message);
-            var properties = channel.CreateBasicProperties();
-            properties.Persistent = true; // 设置消息持久化
-
-            channel.BasicPublish(exchange: "", routingKey: queueName, basicProperties: properties, body: body);
-            Console.WriteLine("[生产者] 发送： {0}", message);
-        }
-
-        Console.WriteLine("按 [enter] 键退出");
-        Console.ReadLine();
-    }
+    // 发布消息到队列中，exchange参数为空表示默认交换器
+    channel.BasicPublish(exchange: "",
+                         routingKey: "work_queue", // 消息的路由键为work_queue
+                         basicProperties: properties,
+                         body: body);
+    Console.WriteLine("[生产者] 发送消息：{0}", message); // 输出发送的消息内容
 }
+Console.WriteLine("按[Enter]键退出");
+Console.ReadLine(); // 阻塞等待用户按回车键
 ```
 
 @tab 消费者1
 ```cs
-class Consumer
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System.Text;
+
+// 创建连接工厂对象，指定主机名和登录凭据信息
+ConnectionFactory factory = new()
 {
-    static void Main(string[] args)
-    {
-        // 创建连接工厂对象，指定主机名和登录凭据信息
-        ConnectionFactory factory = new()
-        {
-            HostName = "192.168.3.100",
-            Port = 5672,
-            UserName = "guest",
-            Password = "guest"
-        };
-        using var connection = factory.CreateConnection();
-        using var channel = connection.CreateModel();
+    HostName = "192.168.3.100",
+    Port = 5672,
+    UserName = "guest",
+    Password = "guest"
+};
+using var connection = factory.CreateConnection(); // 创建连接
+using var channel = connection.CreateModel(); // 创建通道
 
-        // 声明一个队列，如果不存在则创建
-        var queueName = "task_queue";
-        channel.QueueDeclare(queue: queueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
+// 声明队列，如果该队列不存在，则会自动创建
+channel.QueueDeclare(queue: "work_queue",
+                     durable: true, // 设置队列为持久化
+                     exclusive: false,
+                     autoDelete: false,
+                     arguments: null);
 
-        // 设置每个消费者最多只能处理一条消息，避免某些消费者被过度负载而导致其他消费者处于空闲状态
-        channel.BasicQos(0, 1, false);
+Random random = new();
 
-        Console.WriteLine(" [消费者1] 等待消息.");
+var totalTimes = 0;//总耗时
+var num = 0;//处理消息数
 
-        // 创建一个工作者队列，每个消息都会被多个工作者中的一个处理
-        var consumer = new EventingBasicConsumer(channel);
-        consumer.Received += (model, ea) =>
-        {
-            var body = ea.Body.ToArray();
-            var message = Encoding.UTF8.GetString(body);
-            Console.WriteLine(" [消费者1] 接收： {0}", message);
+// 创建一个事件基本消费者
+var consumer = new EventingBasicConsumer(channel);
+consumer.Received += async (model, ea) =>
+{
+    ReadOnlyMemory<byte> body = ea.Body.ToArray();
+    string message = Encoding.UTF8.GetString(body.Span);
+    Console.WriteLine($"[消费者1] 收到消息：{message}");
 
-            int dots = message.Split('.').Length - 1;
-            System.Threading.Thread.Sleep(dots * 1000); // 模拟任务处理时间
+    // 模拟耗时的任务处理
+    var time = random.Next(0, 5000);
+    await Task.Delay(time);
 
-            Console.WriteLine(" [消费者1] 完成");
+    Console.WriteLine($"[消费者1] 完成: 耗时{time}ms");
 
-            // 手动确认消息已经处理完成
-            channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
-        };
+    // 当消费者完成任务后，手动确认消息已经被消费
+    channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
 
-        // 订阅队列并开始消费消息
-        channel.BasicConsume(queue: queueName, autoAck: false, consumer: consumer);
+    totalTimes += time;
+    num += 1;
 
-        Console.WriteLine(" 按 [enter] 键退出");
-        Console.ReadLine();
-    }
-}
+    Console.WriteLine($"[消费者1] 目前处理{num}条消息，共耗时{totalTimes}ms");
+};
+// 启动消费者
+channel.BasicConsume(queue: "work_queue",
+                     autoAck: false, // 关闭自动确认消息消费
+                     consumer: consumer); // 指定消费者
+Console.WriteLine("按[Enter]键退出");
+Console.ReadLine();
 ```
 
 @tab 消费者2
 ```cs
-class Consumer
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System.Text;
+
+// 创建连接工厂对象，指定主机名和登录凭据信息
+ConnectionFactory factory = new()
 {
-    static void Main(string[] args)
-    {
-        // 创建连接工厂对象，指定主机名和登录凭据信息
-        ConnectionFactory factory = new()
-        {
-            HostName = "192.168.3.100",
-            Port = 5672,
-            UserName = "guest",
-            Password = "guest"
-        };
-        using var connection = factory.CreateConnection();
-        using var channel = connection.CreateModel();
+    HostName = "192.168.3.100",
+    Port = 5672,
+    UserName = "guest",
+    Password = "guest"
+};
+using var connection = factory.CreateConnection(); // 创建连接
+using var channel = connection.CreateModel(); // 创建通道
 
-        // 声明一个队列，如果不存在则创建
-        var queueName = "task_queue";
-        channel.QueueDeclare(queue: queueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
+// 声明队列，如果该队列不存在，则会自动创建
+channel.QueueDeclare(queue: "work_queue",
+                     durable: true, // 设置队列为持久化
+                     exclusive: false,
+                     autoDelete: false,
+                     arguments: null);
 
-        // 设置每个消费者最多只能处理一条消息，避免某些消费者被过度负载而导致其他消费者处于空闲状态
-        channel.BasicQos(0, 1, false);
+Random random = new();
 
-        Console.WriteLine(" [消费者2] 等待消息.");
+var totalTimes = 0;//总耗时
+var num = 0;//处理消息数
 
-        // 创建一个工作者队列，每个消息都会被多个工作者中的一个处理
-        var consumer = new EventingBasicConsumer(channel);
-        consumer.Received += (model, ea) =>
-        {
-            var body = ea.Body.ToArray();
-            var message = Encoding.UTF8.GetString(body);
-            Console.WriteLine(" [消费者2] 接收： {0}", message);
+// 创建一个事件基本消费者
+var consumer = new EventingBasicConsumer(channel);
+consumer.Received += async (model, ea) =>
+{
+    ReadOnlyMemory<byte> body = ea.Body.ToArray();
+    string message = Encoding.UTF8.GetString(body.Span);
+    Console.WriteLine($"[消费者2] 收到消息：{message}");
 
-            int dots = message.Split('.').Length - 1;
-            System.Threading.Thread.Sleep(dots * 1000); // 模拟任务处理时间
+    // 模拟耗时的任务处理
+    var time = random.Next(0, 5000);
+    await Task.Delay(time);
 
-            Console.WriteLine(" [消费者2] 完成");
+    Console.WriteLine($"[消费者2] 完成: 耗时{time}ms");
 
-            // 手动确认消息已经处理完成
-            channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
-        };
+    // 当消费者完成任务后，手动确认消息已经被消费
+    channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
 
-        // 订阅队列并开始消费消息
-        channel.BasicConsume(queue: queueName, autoAck: false, consumer: consumer);
+    totalTimes += time;
+    num += 1;
 
-        Console.WriteLine(" 按 [enter] 键退出");
-        Console.ReadLine();
-    }
-}
+    Console.WriteLine($"[消费者2] 目前处理{num}条消息，共耗时{totalTimes}ms");
+};
+// 启动消费者
+channel.BasicConsume(queue: "work_queue",
+                     autoAck: false, // 关闭自动确认消息消费
+                     consumer: consumer); // 指定消费者
+Console.WriteLine("按[Enter]键退出");
+Console.ReadLine();
 ```
 :::
 
+分别启动消费者及生产者客户端，得到如下输出：
 
-[^1]:
-    工作队列模式在任务处理失败时很难进行回滚和恢复，主要是因为它具有以下特点：
+:::tabs
+@tab 生产者
+```shell
+[生产者] 发送消息：任务消息 0
+[生产者] 发送消息：任务消息 1
+[生产者] 发送消息：任务消息 2
+[生产者] 发送消息：任务消息 3
+[生产者] 发送消息：任务消息 4
+[生产者] 发送消息：任务消息 5
+[生产者] 发送消息：任务消息 6
+[生产者] 发送消息：任务消息 7
+[生产者] 发送消息：任务消息 8
+[生产者] 发送消息：任务消息 9
+```
+@tab 消费者1
+```shell
+按任意键退出
+[消费者1] 收到消息：任务消息 1
+[消费者1] 收到消息：任务消息 3
+[消费者1] 收到消息：任务消息 5
+[消费者1] 收到消息：任务消息 7
+[消费者1] 收到消息：任务消息 9
+[消费者1] 完成: 耗时118ms
+[消费者1] 目前处理1条消息，共耗时118ms
+[消费者1] 完成: 耗时4135ms
+[消费者1] 目前处理2条消息，共耗时4253ms
+[消费者1] 完成: 耗时4324ms
+[消费者1] 目前处理3条消息，共耗时8577ms
+[消费者1] 完成: 耗时4512ms
+[消费者1] 目前处理4条消息，共耗时13089ms
+[消费者1] 完成: 耗时4575ms
+[消费者1] 目前处理5条消息，共耗时17664ms
+```
+@tab 消费者2
+```shell
+ 按任意键退出
+[消费者2] 收到消息：任务消息 0
+[消费者2] 收到消息：任务消息 2
+[消费者2] 收到消息：任务消息 4
+[消费者2] 收到消息：任务消息 6
+[消费者2] 收到消息：任务消息 8
+[消费者2] 完成: 耗时286ms
+[消费者2] 目前处理1条消息，共耗时286ms
+[消费者2] 完成: 耗时386ms
+[消费者2] 目前处理2条消息，共耗时672ms
+[消费者2] 完成: 耗时1516ms
+[消费者2] 目前处理3条消息，共耗时2188ms
+[消费者2] 完成: 耗时3755ms
+[消费者2] 目前处理4条消息，共耗时5943ms
+[消费者2] 完成: 耗时4894ms
+[消费者2] 目前处理5条消息，共耗时10837ms
+```
+:::
 
-    - 消息的自动确认机制：在默认情况下，RabbitMQ 会自动确认收到的消息。即使消费者在处理消息时发生异常或错误，也不会将该消息重新放回队列中，而是直接将其删除或标记为已消费。因此，如果任务处理失败，就无法通过简单地重试或将消息重新发送来恢复任务流程(**此问题可通过手动确认机制解决**)。
+从输出结果中我们可以看到，消费者1和消费者2都处理了5条消息，但是耗时却相差距大，由此我们可以验证，在循环调度模式中，RabbitMQ 将消息平均分配给所有可用的消费者，而不考虑每个消费者的处理能力和负载情况。当消费者数量不变时，每个消费者将在轮换周期内依次接收到消息。
 
-    - 并发性和顺序性问题：由于工作队列模式通常涉及多个消费者同时处理不同的任务，因此可能存在并发性和顺序性问题。例如，如果一个消费者正在处理某个任务并且出现了错误，另一个消费者可能已经从队列中获取了相同的任务并开始处理。这样就会导致任务执行的结果无法预测，从而增加了任务处理失败的风险。
+## 公平调度
 
-    - 消息持久化的限制：虽然可以通过设置消息持久化属性来避免消息在 RabbitMQ 服务重启时丢失，但消息持久化并不能完全解决任务处理失败的问题。如果消费者在处理消息时发生硬件故障、系统崩溃等问题，消息仍然可能会丢失，从而导致任务失败。
+在公平调度模式中，RabbitMQ 会尝试将消息均匀地分配给所有可用的消费者，并确保每个消费者一次只接收一个消息。这样，即使某个消费者的处理时间较长或负载较重，也不会影响其他消费者的正常处理。
 
-    基于以上原因，工作队列模式在任务处理失败时很难进行回滚和恢复。如果需要实现任务的可靠性处理，可以考虑使用其他更加可靠的消息队列模式，如事务性消息或消息确认机制更加完善的消息队列模式。
+![公平调度](./image/work-queue-mode/1678768614953.png)
+
+### 代码示例
+
+生产者代码与[循环调度](#循环调度)中一致。
+
+:::tabs
+@tab 消费者1
+```cs{23-24}
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System.Text;
+
+// 创建连接工厂对象，指定主机名和登录凭据信息
+ConnectionFactory factory = new()
+{
+    HostName = "192.168.3.100",
+    Port = 5672,
+    UserName = "guest",
+    Password = "guest"
+};
+using var connection = factory.CreateConnection(); // 创建连接
+using var channel = connection.CreateModel(); // 创建通道
+
+// 声明队列，如果该队列不存在，则会自动创建
+channel.QueueDeclare(queue: "work_queue",
+                     durable: true, // 设置队列为持久化
+                     exclusive: false,
+                     autoDelete: false,
+                     arguments: null);
+
+// 设置每个消费者最多只能处理一条消息，避免某些消费者被过度负载而导致其他消费者处于空闲状态
+channel.BasicQos(0, 1, false);
+
+Random random = new();
+
+var totalTimes = 0;//总耗时
+var num = 0;//处理消息数
+
+// 创建一个事件基本消费者
+var consumer = new EventingBasicConsumer(channel);
+consumer.Received += async (model, ea) =>
+{
+    ReadOnlyMemory<byte> body = ea.Body.ToArray();
+    string message = Encoding.UTF8.GetString(body.Span);
+    Console.WriteLine($"[消费者1] 收到消息：{message}");
+
+    // 模拟耗时的任务处理
+    var time = random.Next(0, 5000);
+    await Task.Delay(time);
+
+    Console.WriteLine($"[消费者1] 完成: 耗时{time}ms");
+
+    // 当消费者完成任务后，手动确认消息已经被消费
+    channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+
+    totalTimes += time;
+    num += 1;
+
+    Console.WriteLine($"[消费者1] 目前处理{num}条消息，共耗时{totalTimes}ms");
+};
+// 启动消费者
+channel.BasicConsume(queue: "work_queue",
+                     autoAck: false, // 关闭自动确认消息消费
+                     consumer: consumer); // 指定消费者
+Console.WriteLine("按任意键退出");
+Console.ReadLine();
+```
+
+@tab 消费者2
+```cs{23-24}
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System.Text;
+
+// 创建连接工厂对象，指定主机名和登录凭据信息
+ConnectionFactory factory = new()
+{
+    HostName = "192.168.3.100",
+    Port = 5672,
+    UserName = "guest",
+    Password = "guest"
+};
+using var connection = factory.CreateConnection(); // 创建连接
+using var channel = connection.CreateModel(); // 创建通道
+
+// 声明队列，如果该队列不存在，则会自动创建
+channel.QueueDeclare(queue: "work_queue",
+                     durable: true, // 设置队列为持久化
+                     exclusive: false,
+                     autoDelete: false,
+                     arguments: null);
+
+// 设置每个消费者最多只能处理一条消息，避免某些消费者被过度负载而导致其他消费者处于空闲状态
+channel.BasicQos(0, 1, false);
+
+Random random = new();
+
+var totalTimes = 0;//总耗时
+var num = 0;//处理消息数
+
+// 创建一个事件基本消费者
+var consumer = new EventingBasicConsumer(channel);
+consumer.Received += async (model, ea) =>
+{
+    ReadOnlyMemory<byte> body = ea.Body.ToArray();
+    string message = Encoding.UTF8.GetString(body.Span);
+    Console.WriteLine($"[消费者2] 收到消息：{message}");
+
+    // 模拟耗时的任务处理
+    var time = random.Next(1000, 5000);
+    await Task.Delay(time);
+
+    Console.WriteLine($"[消费者2] 完成: 耗时{time}ms");
+
+    // 当消费者完成任务后，手动确认消息已经被消费
+    channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+
+    totalTimes += time;
+    num += 1;
+
+    Console.WriteLine($"[消费者2] 目前处理{num}条消息，共耗时{totalTimes}ms");
+};
+// 启动消费者
+channel.BasicConsume(queue: "work_queue",
+                     autoAck: false, // 关闭自动确认消息消费
+                     consumer: consumer); // 指定消费者
+Console.WriteLine(" 按任意键退出");
+Console.ReadLine();
+```
+:::
+
+分别启动消费者及生产者客户端，得到如下输出：
+
+:::tabs
+@tab 生产者
+```shell
+[生产者] 发送消息：任务消息 0
+[生产者] 发送消息：任务消息 1
+[生产者] 发送消息：任务消息 2
+[生产者] 发送消息：任务消息 3
+[生产者] 发送消息：任务消息 4
+[生产者] 发送消息：任务消息 5
+[生产者] 发送消息：任务消息 6
+[生产者] 发送消息：任务消息 7
+[生产者] 发送消息：任务消息 8
+[生产者] 发送消息：任务消息 9
+```
+@tab 消费者1
+```shell
+按任意键退出
+[消费者1] 收到消息：任务消息 1
+[消费者1] 完成: 耗时4609ms
+[消费者1] 目前处理1条消息，共耗时4609ms
+[消费者1] 收到消息：任务消息 3
+[消费者1] 完成: 耗时1905ms
+[消费者1] 目前处理2条消息，共耗时6514ms
+[消费者1] 收到消息：任务消息 5
+[消费者1] 完成: 耗时337ms
+[消费者1] 目前处理3条消息，共耗时6851ms
+[消费者1] 收到消息：任务消息 6
+[消费者1] 完成: 耗时3092ms
+[消费者1] 目前处理4条消息，共耗时9943ms
+[消费者1] 收到消息：任务消息 8
+[消费者1] 完成: 耗时2613ms
+[消费者1] 目前处理5条消息，共耗时12556ms
+[消费者1] 收到消息：任务消息 9
+[消费者1] 完成: 耗时1898ms
+[消费者1] 目前处理6条消息，共耗时14454ms
+```
+@tab 消费者2
+```shell
+按任意键退出
+[消费者2] 收到消息：任务消息 0
+[消费者2] 完成: 耗时2560ms
+[消费者2] 目前处理1条消息，共耗时2560ms
+[消费者2] 收到消息：任务消息 2
+[消费者2] 完成: 耗时3316ms
+[消费者2] 目前处理2条消息，共耗时5876ms
+[消费者2] 收到消息：任务消息 4
+[消费者2] 完成: 耗时3738ms
+[消费者2] 目前处理3条消息，共耗时9614ms
+[消费者2] 收到消息：任务消息 7
+[消费者2] 完成: 耗时4111ms
+[消费者2] 目前处理4条消息，共耗时13725m
+```
+:::
+
+从输出结果中我们可以看到，消费者1和消费者2因为处理能力的不同，分别处理了不同数量的消息。
+
+所以我们可以在代码中通过 `channel.BasicQos(0, 1, false)` 设置每个消费者最多只能处理一条消息，避免某些消费者被过度负载而导致其他消费者处于空闲状态。
