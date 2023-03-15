@@ -1,0 +1,1 @@
+import{_ as t,X as s,Y as c,$ as e}from"./framework-8e4c1295.js";const n={},a=e("div",{class:"hint-container tip"},[e("p",{class:"hint-container-title"},"✨✨✨✨✨"),e("p",null,"本系列基于 Elasticsearch 官方文档翻译")],-1),o=[a];function i(_,l){return s(),c("div",null,o)}const h=t(n,[["render",i],["__file","jieshao.html.vue"]]);export{h as default};
