@@ -12,7 +12,7 @@ containerClass: chatgpt-container
 
 <iframe 
 name="chatgpt"
-src="https://chat2.goodsxx.cn" 
+src="https://chat.goodsxx.cn" 
 width="100%"
 height="800" 
 frameborder="0"

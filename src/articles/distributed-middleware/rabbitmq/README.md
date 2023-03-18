@@ -1,6 +1,7 @@
 ---
 title: RabbitMQ
 date: 2023-03-04
+order: 1
 category:
  - 分布式中间件
 ---
