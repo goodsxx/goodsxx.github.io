@@ -50,11 +50,11 @@ date: 2022-04-29
          <a href="./chain-of-responsibility-pattern.html">9. 责任链模式</a><br />
          <a href="./observer-pattern.html">10. 观察者模式</a><br />
          <a href="./mediator-pattern.html">11. 中介者模式</a><br />
-         <a href="./iterator-pattern.html">12. 备忘录模式</a><br />
-         <a href="./iterator-pattern.html">13. 状态模式</a><br />
-         <a href="./iterator-pattern.html">14. 策略模式</a><br />
-         <a href="./iterator-pattern.html">15. 模板方法模式</a><br />
-         <a href="./iterator-pattern.html">16. 访问者模式</a>
+         <a href="./memento-pattern.html">12. 备忘录模式</a><br />
+         <a href="./state-pattern.html">13. 状态模式</a><br />
+         <a href="./strategy-pattern.html">14. 策略模式</a><br />
+         <a href="./template-method-pattern.html">15. 模板方法模式</a><br />
+         <a href="./visitor-pattern.html">16. 访问者模式</a>
         </td>
     </tr>
     <tr>
@@ -64,13 +64,13 @@ date: 2022-04-29
          这些设计模式关注类和对象的组合。继承的概念被用来组合接口和定义组合对象获得新功能的方式。
         </td>
         <td style='width:30%'>
-        <a href="./iterator-pattern.html">17. 适配器模式</a><br />
-        <a href="./iterator-pattern.html">18. 组合模式</a><br />
-        <a href="./iterator-pattern.html">19. 代理模式</a><br />
-        <a href="./iterator-pattern.html">20. 桥梁模式</a><br />
-        <a href="./iterator-pattern.html">21. 装饰模式</a><br />
-        <a href="./iterator-pattern.html">22. 门面模式</a><br />
-        <a href="./iterator-pattern.html">23. 享元模式</a>
+        <a href="./adapter-pattern.html">17. 适配器模式</a><br />
+        <a href="./composite-pattern.html">18. 组合模式</a><br />
+        <a href="./proxy-pattern.html">19. 代理模式</a><br />
+        <a href="./bridge-pattern.html">20. 桥梁模式</a><br />
+        <a href="./decorator-pattern.html">21. 装饰模式</a><br />
+        <a href="./facade-pattern.html">22. 门面模式</a><br />
+        <a href="./flyweight-pattern.html">23. 享元模式</a>
         </td>
     </tr>
 </table>
