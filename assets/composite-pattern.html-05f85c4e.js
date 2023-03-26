@@ -1,0 +1,1 @@
+import{_ as t,X as o,Y as c,Z as n,$ as e}from"./framework-8e4c1295.js";const s={},a=e("div",{class:"hint-container tip"},[e("p",{class:"hint-container-title"},"✨✨✨✨✨")],-1);function r(i,_){return o(),c("div",null,[a,n(" more ")])}const m=t(s,[["render",r],["__file","composite-pattern.html.vue"]]);export{m as default};
