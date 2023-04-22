@@ -1,0 +1,1 @@
+import{_ as e,X as t,Y as n,Z as c}from"./framework-8e4c1295.js";const o={};function r(_,a){return t(),n("div",null,[c(" more ")])}const l=e(o,[["render",r],["__file","index.html.vue"]]);export{l as default};
