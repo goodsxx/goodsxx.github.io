@@ -437,7 +437,7 @@ Pragma: no-cache
 
 授权码流程基本上有两个步骤：授权请求/响应 和 令牌请求/响应。
 
-![授权码流程](image/openiddict/1682253053752.png)
+![授权码流程](./image/openiddict/1682253053752.png)
 
 - **步骤1：授权请求**
 
@@ -459,7 +459,7 @@ Host: server.example.com
 
 身份提供者处理授权请求的方式因实现而异，但在大多数情况下，会显示一个同意表单询问用户是否同意与客户端应用程序共享他/她的个人数据。
 
-![](image/openiddict/1682253626677.png)
+![](./image/openiddict/1682253626677.png)
 
 当授权被给予时，用户代理将被重定向回客户端应用程序，并返回一个名为授权码的唯一且生命周期短暂的令牌，客户端将能够通过发送令牌请求来交换它以获取访问令牌。
 
@@ -510,7 +510,7 @@ Pragma: no-cache
 
 隐式流程类似于授权码流程，但没有令牌请求/响应步骤：访问令牌直接作为授权响应的 URI 片段（或在使用 response_mode=form_post 时作为请求表单的一部分）返回给客户端应用程序。
 
-![隐式流程](image/openiddict/1682254336605.png)
+![隐式流程](./image/openiddict/1682254336605.png)
 
 ```js
 GET /connect/authorize?response_type=token&client_id=s6BhdRkqt3&redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb&scope=openid&state=af0ifjsldkj&nonce=n-0S6_WzA2Mj HTTP/1.1
