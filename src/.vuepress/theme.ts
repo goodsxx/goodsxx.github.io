@@ -125,8 +125,7 @@ export default hopeTheme({
 
   encrypt: {
     config: {
-      "/intro.html": ["goodsxx"],
-      "/chatgpt.html": ["goodsxx"],
+      "/intro.html": ["goodsxx"]
     },
   },
 
