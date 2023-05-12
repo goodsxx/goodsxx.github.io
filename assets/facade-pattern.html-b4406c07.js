@@ -1,1 +1,0 @@
-import{_ as t,X as a,Y as c,Z as n,$ as e}from"./framework-8e4c1295.js";const o={},r=e("div",{class:"hint-container tip"},[e("p",{class:"hint-container-title"},"✨✨✨✨✨")],-1);function s(_,i){return a(),c("div",null,[r,n(" more ")])}const d=t(o,[["render",s],["__file","facade-pattern.html.vue"]]);export{d as default};

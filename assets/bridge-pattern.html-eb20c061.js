@@ -1,0 +1,1 @@
+import{_ as e}from"./plugin-vue_export-helper-c27b6911.js";import{o as n,c,a as t}from"./app-e2ce661c.js";const o={},r=t("div",{class:"hint-container tip"},[t("p",{class:"hint-container-title"},"✨✨✨✨✨")],-1),s=[r];function a(i,_){return n(),c("div",null,s)}const f=e(o,[["render",a],["__file","bridge-pattern.html.vue"]]);export{f as default};

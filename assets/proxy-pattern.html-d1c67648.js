@@ -1,1 +1,0 @@
-import{_ as t,X as n,Y as o,Z as r,$ as e}from"./framework-8e4c1295.js";const a={},c=e("div",{class:"hint-container tip"},[e("p",{class:"hint-container-title"},"✨✨✨✨✨")],-1);function s(_,i){return n(),o("div",null,[c,r(" more ")])}const m=t(a,[["render",s],["__file","proxy-pattern.html.vue"]]);export{m as default};

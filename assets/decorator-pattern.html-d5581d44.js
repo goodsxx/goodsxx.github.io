@@ -1,1 +1,0 @@
-import{_ as t,X as o,Y as r,Z as a,$ as e}from"./framework-8e4c1295.js";const c={},n=e("div",{class:"hint-container tip"},[e("p",{class:"hint-container-title"},"✨✨✨✨✨")],-1);function s(_,i){return o(),r("div",null,[n,a(" more ")])}const d=t(c,[["render",s],["__file","decorator-pattern.html.vue"]]);export{d as default};
