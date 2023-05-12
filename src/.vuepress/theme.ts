@@ -159,7 +159,7 @@ export default hopeTheme({
       figure: true,
       flowchart: true,
       gfm: true,
-      linkCheck: false,
+      linkCheck: "never",
       imgLazyload: true,
       imgSize: true,
       imgMark:true,
