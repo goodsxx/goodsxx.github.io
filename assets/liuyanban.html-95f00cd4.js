@@ -1,1 +1,0 @@
-import{_ as e}from"./plugin-vue_export-helper-c27b6911.js";import{o as n,c as a,a as t}from"./app-e2ce661c.js";const c={},o=t("div",{class:"hint-container tip"},[t("p",{class:"hint-container-title"},"提示"),t("p",null,"欢迎留言！")],-1),s=[o];function i(l,r){return n(),a("div",null,s)}const f=e(c,[["render",i],["__file","liuyanban.html.vue"]]);export{f as default};

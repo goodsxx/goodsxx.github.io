@@ -1,0 +1,1 @@
+import{_ as e}from"./plugin-vue_export-helper-c27b6911.js";import{o,c as n,a as t}from"./app-bd8f263d.js";const c={},r=t("div",{class:"hint-container tip"},[t("p",{class:"hint-container-title"},"✨✨✨✨✨")],-1),s=[r];function a(_,i){return o(),n("div",null,s)}const d=e(c,[["render",a],["__file","proxy-pattern.html.vue"]]);export{d as default};
