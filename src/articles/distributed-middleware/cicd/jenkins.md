@@ -25,6 +25,7 @@ version: '3'
 services:
   jenkins:
     image: jenkins/jenkins:jdk11
+    user: root # 设置Jenkins 容器内的所有进程都将以 root 用户身份运行，避免权限问题
     ports:
       - "8100:8080"
       - "50000:50000"
@@ -39,12 +40,15 @@ services:
 ### 为相应文件授权
 
 权限不足可能造成之后 Jenkins 流水线失败
+若 jenkins.yml 文件中设置 `user: root` 仍无效可采用下面的方式授权：
 
 ```shell
 chmod 777 /var/jenkins_home
 chmod 777 /var/run/docker.sock
 chmod 777 usr/bin/docker
 ```
+
+注意，重启服务器可能需要重新授权
 
 ### 运行 jenkins.yml 脚本创建容器
 
