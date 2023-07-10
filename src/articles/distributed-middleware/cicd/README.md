@@ -1,12 +1,13 @@
 ---
 title: CI/CD
 date: 2023-05-01
-order: 4
+dir:
+  text: CI/CD
+  order: 3
 category:
  - 分布式中间件
 ---
 <!-- more -->
-
 
 ::: tip ✨✨✨✨✨
 CI/CD是指持续集成（Continuous Integration）和持续交付/部署（Continuous Delivery/Deployment）。它们是软件开发中自动化流程的核心，并且可以在整个软件开发生命周期中帮助团队更快、更稳定地交付高质量的软件。

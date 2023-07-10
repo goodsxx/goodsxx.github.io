@@ -1,19 +1,24 @@
 ---
-title: RabbitMQ
+title: RabbitMQ 简介
 date: 2023-03-04
-order: 2
+dir:
+  text: RabbitMQ
+  order: 1
 category:
  - 分布式中间件
 ---
-<!-- more -->
 
-## 介绍
-
+::: tip ✨✨✨✨✨
 RabbitMQ 是一种消息代理，它接受并转发消息。你可以将其看作一个邮局：当你把信件放进邮箱时，你可以确信邮递员最终会将信件送到收件人手中。在这个比喻中，RabbitMQ 就像是一个邮箱、一个邮局和一个邮递员。
 
 RabbitMQ 与邮局的主要区别在于，它不处理纸质文件，而是接受、存储和转发二进制数据块——即消息。
+:::
 
-RabbitMQ 以及消息传递通常使用一些术语。
+<!-- more -->
+
+RabbitMQ 与邮局的主要区别在于，它不处理纸质文件，而是接受、存储和转发二进制数据块——即消息。
+
+RabbitMQ 以及消息传递通常使用一些术语：
 
 - Producing 意味着发送。发送消息的程序被称为生产者（producer）：
 
