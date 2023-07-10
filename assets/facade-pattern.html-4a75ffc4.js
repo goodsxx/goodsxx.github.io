@@ -1,0 +1,1 @@
+import{_ as t}from"./plugin-vue_export-helper-c27b6911.js";import{o as a,c,a as n,b as e}from"./app-203f50af.js";const o={},r=e("div",{class:"hint-container tip"},[e("p",{class:"hint-container-title"},"✨✨✨✨✨")],-1);function s(i,_){return a(),c("div",null,[r,n(" more ")])}const d=t(o,[["render",s],["__file","facade-pattern.html.vue"]]);export{d as default};
