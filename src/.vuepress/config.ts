@@ -1,6 +1,7 @@
 import { defineUserConfig } from "vuepress";
 import { searchPlugin } from "@vuepress/plugin-search";
 import theme from "./theme.js";
+import { viteBundler } from '@vuepress/bundler-vite'
 
 export default defineUserConfig({
   base: "/",
@@ -9,6 +10,10 @@ export default defineUserConfig({
   description: "SongXinXin的笔记本",
   theme,
   shouldPrefetch: false,
+  bundler: viteBundler({
+    viteOptions: {},
+    vuePluginOptions: {},
+  }),
   markdown:{
     headers:{
       level:[2,3,4,5]

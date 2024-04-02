@@ -29,5 +29,5 @@ projects:
     link: /columns/blog-posts/series/linux/
 
 footer: <a href="https://beian.miit.gov.cn/#/Integrated/recordQuery">豫ICP备2021036390号</a>
-copyright: Copyright © 2022-SongXinXin
+copyright: Copyright © 2021-2024 SongXinXin
 ---
