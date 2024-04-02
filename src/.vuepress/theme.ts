@@ -6,17 +6,16 @@ export default hopeTheme({
 
   //基本配置
   //https://vuepress-theme-hope.github.io/v2/zh/config/theme/basic.html
-  hostname: "http://goodsxx.cn",
+  hostname: "http://blog.goodsxx.cn",
   author: {
     name: "SongXinXin",
     //url: "https://mrhope.site",
   },
   navbarLayout: {
-    left: ["Brand"],
+    start: ["Brand"],
     center: ["Links"],
-    right: ["Search","Outlook","Repo"],
+    end: ["Search","Outlook","Repo"],
   },
-
 
   //首页左上角图标
   logo: "/images/s.png",
@@ -41,37 +40,37 @@ export default hopeTheme({
       "ReadingTime",//预计阅读时间
     ],
     medias: {
-      Baidu: "https://example.com",
-      BiliBili: "https://example.com",
-      Bitbucket: "https://example.com",
-      Dingding: "https://example.com",
-      Discord: "https://example.com",
-      Dribbble: "https://example.com",
-      Email: "https://example.com",
-      Evernote: "https://example.com",
-      Facebook: "https://example.com",
-      Flipboard: "https://example.com",
-      Gitee: "https://example.com",
-      GitHub: "https://example.com",
-      Gitlab: "https://example.com",
-      Gmail: "https://example.com",
-      Instagram: "https://example.com",
-      Lark: "https://example.com",
-      Lines: "https://example.com",
-      Linkedin: "https://example.com",
-      Pinterest: "https://example.com",
-      Pocket: "https://example.com",
-      QQ: "https://example.com",
-      Qzone: "https://example.com",
-      Reddit: "https://example.com",
-      Rss: "https://example.com",
-      Steam: "https://example.com",
-      Twitter: "https://example.com",
-      Wechat: "https://example.com",
-      Weibo: "https://example.com",
-      Whatsapp: "https://example.com",
-      Youtube: "https://example.com",
-      Zhihu: "https://example.com",
+      // Baidu: "https://example.com",
+      // BiliBili: "https://example.com",
+      // Bitbucket: "https://example.com",
+      // Dingding: "https://example.com",
+      // Discord: "https://example.com",
+      // Dribbble: "https://example.com",
+      // Email: "https://example.com",
+      // Evernote: "https://example.com",
+      // Facebook: "https://example.com",
+      // Flipboard: "https://example.com",
+      Gitee: "https://gitee.com/goodsxx",
+      GitHub: "https://github.com/goodsxx",
+      // Gitlab: "https://example.com",
+      // Gmail: "https://example.com",
+      // Instagram: "https://example.com",
+      // Lark: "https://example.com",
+      // Lines: "https://example.com",
+      // Linkedin: "https://example.com",
+      // Pinterest: "https://example.com",
+      // Pocket: "https://example.com",
+      // QQ: "https://example.com",
+      // Qzone: "https://example.com",
+      // Reddit: "https://example.com",
+      // Rss: "https://example.com",
+      // Steam: "https://example.com",
+      // Twitter: "https://example.com",
+      // Wechat: "https://example.com",
+      // Weibo: "https://example.com",
+      // Whatsapp: "https://example.com",
+      // Youtube: "https://example.com",
+      // Zhihu: "https://example.com",
     },
   },
   //布局配置
@@ -126,7 +125,7 @@ export default hopeTheme({
 
   encrypt: {
     config: {
-      "/intro.html": ["1131"],
+      "/intro.html": ["goodsxx"]
     },
   },
 
@@ -160,8 +159,10 @@ export default hopeTheme({
       figure: true,
       flowchart: true,
       gfm: true,
-      imageLazyload: true,
-      imageSize: true,
+      linkCheck: "never",
+      imgLazyload: true,
+      imgSize: true,
+      imgMark:true,
       include: true,
       katex: true,
       mark: true,
@@ -194,8 +195,9 @@ export default hopeTheme({
     // uncomment these if you want a PWA
     pwa: {
       favicon: "/favicon.ico",
-      cacheHTML: true,
+      cacheHTML: false,
       cachePic: true,
+      update:"available",
       appendBase: true,
       apple: {
         icon: "/assets/icon/apple-icon-152.png",

@@ -6,7 +6,7 @@ export const Navbar = navbar([
   { 
     text: "本站指南", 
     icon: "autumn", 
-    link: "/columns/about-this-website/",
+    link: "/about-this-website/",
   },
   {
     text: "文章",
@@ -14,8 +14,9 @@ export const Navbar = navbar([
     children: [
       {
         text: "系列",
-        prefix: "/columns/blog-posts/series/",
+        prefix: "/articles/",
         children: [
+          { text: "分布式中间件系列", icon: "blog", link: "distributed-middleware/" },
           { text: "MAUI系列", icon: "blog", link: "maui/" },
           { text: "Linux系列", icon: "blog", link: "linux/" },
           { text: "微服务系列", icon: "blog", link: "micro-service/" },
@@ -25,11 +26,11 @@ export const Navbar = navbar([
       },
       {
         text: "零碎内容",
-        prefix: "/columns/blog-posts/lingsuineirong/",
+        prefix: "/articles/",
         children: [
           { text: "前端", icon: "blog", link: "qianduan/" },
           { text: "后端", icon: "blog", link: "houduan/" },
-          { text: "其他", icon: "blog", link: "others/" },
+          { text: "其它", icon: "blog", link: "others/" },
         ],
       },
     ],
@@ -38,5 +39,10 @@ export const Navbar = navbar([
     text: "留言板", 
     icon: "edit", 
     link: "/liuyanban",
+  },
+  { 
+    text: "ChatGPT", 
+    icon: "wechat", 
+    link: "/chatgpt",
   },
 ]);
