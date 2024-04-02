@@ -1,7 +1,6 @@
 import { hopeTheme } from "vuepress-theme-hope";
 import { Navbar } from "./navbar.js";
 import { Sidebar } from "./sidebar.js";
-import { getDirname, path } from "vuepress/utils";
 
 export default hopeTheme({
 
@@ -130,6 +129,7 @@ export default hopeTheme({
     blog: {
       excerpt: true,
     },
+    searchPro:true,
     comment: {
       provider: "Giscus",
       repo: "goodsxx/goodsxx.github.io",
@@ -142,21 +142,23 @@ export default hopeTheme({
       darkTheme: "dark"
     },
     components:{
-      components:["AudioPlayer","Badge","BiliBili","CodePen","FontIcon","PDF","StackBlitz","VideoPlayer","YouTube"]
+      components:["VidStack","Badge","BiliBili","CodePen","FontIcon","PDF","StackBlitz"]
     },
-    // Disable features you don’t want here 
+    // https://theme-hope.vuejs.press/zh/config/plugins/md-enhance.html#%E4%BB%8B%E7%BB%8D
     mdEnhance: {
-      align: true,
+      gfm: true,
+      hint: true,
+      breaks:true,
+      linkify: false,
       attrs: true,
+      tabs: true,
+      codetabs:true,
+      align: true,
       chart: true,
-      codetabs: true,
-      container: true,
       demo: true,
       echarts: true,
       figure: true,
       flowchart: true,
-      gfm: true,
-      linkCheck: "never",
       imgLazyload: true,
       imgSize: true,
       imgMark:true,
@@ -166,9 +168,6 @@ export default hopeTheme({
       mermaid: true,
       playground: {
         presets: ["ts", "vue"],
-      },
-      presentation: {
-        plugins: ["highlight", "math", "search", "notes", "zoom"],
       },
       stylize: [
         {
@@ -185,15 +184,13 @@ export default hopeTheme({
       ],
       sub: true,
       sup: true,
-      tabs: true,
       vPre: true,
       vuePlayground: true,
     },
-    // uncomment these if you want a PWA
+    // https://ecosystem.vuejs.press/zh/plugins/pwa/config.html#options
     pwa: {
       favicon: "/favicon.ico",
       cacheHTML: false,
-      cachePic: true,
       update:"available",
       appendBase: true,
       apple: {

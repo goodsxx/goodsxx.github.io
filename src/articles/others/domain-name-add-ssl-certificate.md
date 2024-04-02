@@ -50,7 +50,7 @@ timeline: true
 
 ## 利用Nginx安装SSL证书
 
-1. [在Linux上安装Nginx并设置开机启动](/docs/linux/installation-nginx.md)
+1. [在Linux上安装Nginx并设置开机启动](/articles/linux/installation-nginx.md)
 2. 将上一步下载的两个证书文件上传至Nginx的配置文件**nginx.conft同级**的根目录下
 3. 修改Nginx配置文件，并在**http节点**中添加如下代码
 

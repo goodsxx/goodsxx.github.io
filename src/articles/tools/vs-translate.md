@@ -1,7 +1,7 @@
 ---
 title: VS代码提示翻译工具
 date: 2022-06-28
-sidebar: auto
+sidebar: true
 category:
  - 工具
 tag: 

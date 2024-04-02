@@ -12,13 +12,19 @@
   },
   "devDependencies": {
     "@vuepress/bundler-vite": "^2.0.0-rc.9",
-    "@vuepress/plugin-search": "2.0.0-rc.21",
     "vue": "^3.4.21",
     "vuepress": "2.0.0-rc.9",
     "vuepress-plugin-search-pro": "2.0.0-rc.33",
     "vuepress-theme-hope": "2.0.0-rc.33"
   },
   "dependencies": {
-    "@vuepress/plugin-pwa": "^2.0.0-rc.23"
+    "@vue/repl": "^4.1.1",
+    "@vuepress/plugin-pwa": "^2.0.0-rc.23",
+    "chart.js": "^4.4.2",
+    "echarts": "^5.5.0",
+    "flowchart.ts": "^3.0.0",
+    "katex": "^0.16.10",
+    "mermaid": "^10.9.0",
+    "vidstack": "^1.11.6"
   }
 }
