@@ -1,6 +1,7 @@
 import { hopeTheme } from "vuepress-theme-hope";
 import { Navbar } from "./navbar.js";
 import { Sidebar } from "./sidebar.js";
+import { getDirname, path } from "vuepress/utils";
 
 export default hopeTheme({
 
@@ -114,14 +115,10 @@ export default hopeTheme({
   toc: true,
 
   //外观配置
-  iconAssets: "iconfont",
+  iconAssets: "iconify",
   darkmode: "switch",
   fullscreen: true,
-  themeColor: {
-    blue: "#2196f3",
-    red: "#f26d6d",
-    orange: "#fb9b5f",
-  },
+  themeColor: true,
 
   encrypt: {
     config: {

@@ -11,11 +11,14 @@
     "dev": "vuepress dev src --port=8080 --clean-cache"
   },
   "devDependencies": {
-    "@vuepress/client": "2.0.0-beta.64",
-    "@vuepress/plugin-search": "2.0.0-beta.64",
-    "vue": "^3.3.4",
-    "vuepress": "2.0.0-beta.64",
-    "vuepress-plugin-search-pro": "2.0.0-beta.231",
-    "vuepress-theme-hope": "2.0.0-beta.231"
+    "@vuepress/bundler-vite": "^2.0.0-rc.9",
+    "@vuepress/plugin-search": "2.0.0-rc.21",
+    "vue": "^3.4.21",
+    "vuepress": "2.0.0-rc.9",
+    "vuepress-plugin-search-pro": "2.0.0-rc.33",
+    "vuepress-theme-hope": "2.0.0-rc.33"
+  },
+  "dependencies": {
+    "@vuepress/plugin-pwa": "^2.0.0-rc.23"
   }
 }
