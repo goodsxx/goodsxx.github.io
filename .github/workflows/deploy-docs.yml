@@ -29,7 +29,7 @@ jobs:
       # - name: 安装依赖
       #   run: yarn install --frozen-lockfile
 
-      - name: Install pnpm
+      - name: 安装 pnpm
         run: npm install -g pnpm
 
 
@@ -40,7 +40,7 @@ jobs:
           cache: pnpm
 
       - name: 安装依赖
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: 构建文档
         env:
