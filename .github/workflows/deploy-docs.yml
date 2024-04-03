@@ -28,10 +28,15 @@ jobs:
 
       # - name: 安装依赖
       #   run: yarn install --frozen-lockfile
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+
       - name: 设置 Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
           cache: pnpm
 
       - name: 安装依赖
