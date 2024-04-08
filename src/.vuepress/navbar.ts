@@ -17,6 +17,7 @@ export const Navbar = navbar([
         prefix: "/articles/",
         children: [
           { text: "分布式中间件系列", icon: "blog", link: "distributed-middleware/" },
+          { text: "Elsa Workflow", icon: "blog", link: "elsa-workflow/" },
           { text: "MAUI系列", icon: "blog", link: "maui/" },
           { text: "Linux系列", icon: "blog", link: "linux/" },
           { text: "微服务系列", icon: "blog", link: "micro-service/" },
@@ -40,9 +41,9 @@ export const Navbar = navbar([
     icon: "edit", 
     link: "/liuyanban",
   },
-  { 
-    text: "ChatGPT", 
-    icon: "wechat", 
-    link: "/chatgpt",
-  },
+  // { 
+  //   text: "ChatGPT", 
+  //   icon: "wechat", 
+  //   link: "/chatgpt",
+  // },
 ]);

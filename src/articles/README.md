@@ -9,6 +9,8 @@ icon: align
 
 - [分布式中间件系列](/articles/distributed-middleware/)
 
+- [Elsa Workflow](/articles/elsa-workflow/)
+
 - [MAUI系列](/articles/maui/)
 
 - [Linux系列](/articles/linux/)
